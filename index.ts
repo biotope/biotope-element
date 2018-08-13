@@ -44,6 +44,14 @@ export interface BioElementConstructor<T extends BioElement<any, any>> {
 }
 
 
+export function withPropsAndState<TProps extends object, TState>() {
+
+  class C extends BioElement<TProps, TState> { }
+
+  return <BioElementConstructor<BioElement<TProps, TState>>>C;
+}
+
+
 export interface WithOnChildrenUpdated {
     onChildrenUpdated(changes: MutationRecord[]): void;
 }
