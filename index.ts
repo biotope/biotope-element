@@ -35,3 +35,33 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
     this.render();
   }
 }
+
+
+export interface BioElementConstructor<T extends BioElement<any, any>> {
+    new (...args: any[]): T;
+
+    define(name: string, options?: ElementDefinitionOptions): void;
+}
+
+
+export interface WithOnChildrenUpdated {
+    onChildrenUpdated(changes: MutationRecord[]): void;
+}
+
+export function withOnChildrenUpdated<T extends BioElement<any, any>>(SuperClass: BioElementConstructor<T>) {
+  
+    class C extends (<BioElementConstructor<BioElement<any, any>>>SuperClass) {
+        constructor() {
+            super();
+
+            const observer = new MutationObserver(changes => this.onChildrenUpdated(changes));
+            observer.observe(this, {childList: true});
+        }
+
+        onChildrenUpdated(changes: MutationRecord[]) {
+            this.render();
+        }
+    }
+
+    return <BioElementConstructor<T & WithOnChildrenUpdated>>C;
+}
