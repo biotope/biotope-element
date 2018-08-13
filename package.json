@@ -3,9 +3,11 @@
   "title": "Biotope Element",
   "version": "1.0.0",
   "description": "Biotope Element",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
     "hyperhtml-element": "^2.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.1"
   }
 }
