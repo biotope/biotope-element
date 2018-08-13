@@ -1,4 +1,13 @@
 import HyperHTMLElement from 'hyperhtml-element';
+import dasherize from 'dasherize';
+
+const isRegistered = (name: string) => {
+  switch (document.createElement(name).constructor) {
+    case HTMLElement: return false;
+    case HTMLUnknownElement: return false;
+  }
+  return true;
+};
 
 const attributeName = (attr: string|BioAttribute) => typeof attr === 'string' ? attr : attr.name;
 
@@ -10,6 +19,13 @@ export interface BioAttribute {
 export default class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
   private _props: TProps;
+
+  static register(): void {
+    const dashedName = dasherize(this.name);
+    if (!isRegistered(dashedName)) {
+      this.define(dashedName);
+    }
+  }
 
   // overwrite if some attributes should be auto-merged to your props
   static bioAttributes: (string|BioAttribute)[] = [];
