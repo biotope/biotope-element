@@ -10,7 +10,7 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
   };
 
   attributeChangedCallback() {
-    this.render();
+    this.onPropsChanged();
   }
 
   get props(): TProps {
