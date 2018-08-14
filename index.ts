@@ -12,16 +12,28 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
 
   private _props: TProps;
 
+  // overwrite if some attributes should be auto-merged to your props
   static get observedAttributes(): string[] {
     return [];
   };
 
-  attributeChangedCallback() {
-    this.onPropsChanged();
+  attributeChangedCallback(name: string, _: string, newValue: string): void {
+    this.props = {
+      ...(this.props as any),
+      [name]: parseAttribute(newValue),
+    };
+  }
+
+  // overwrite if you want default props in your component
+  get defaultProps(): TProps {
+    return null;
   }
 
   get props(): TProps {
-    return { ...(<any>this.defaultProps), ...(<any>this.propsFromAttributes), ...(<any>this._props) };
+    return {
+      ...(this.defaultProps as any),
+      ...(this._props as any),
+    };
   }
 
   set props(value) {
@@ -30,11 +42,13 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
   }
 
   get propsFromAttributes(): TProps {
-    return null;
-  }
-
-  get defaultProps(): TProps {
-    return null;
+    return BioElement.observedAttributes.reduce((collection: TProps, attributeName: string) => ({
+      ...(collection as any),
+      ...(this.hasAttribute(attributeName)
+        ? { [attributeName]: parseAttribute(this.getAttribute(attributeName)) }
+        : {}
+      ),
+    }), {}) as TProps;
   }
 
   // overwrite if you eg need to merge into your state
