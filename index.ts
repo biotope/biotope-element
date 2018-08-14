@@ -1,5 +1,12 @@
 import HyperHTMLElement from 'hyperhtml-element';
 
+const parseAttribute = (value: string) => {
+  let parsedValue: string|number|object = value;
+  if (!isNaN(value as any)) {
+    parsedValue = +value;
+  }
+  return parsedValue;
+};
 
 export default class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
