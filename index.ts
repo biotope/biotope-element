@@ -8,19 +8,31 @@ const parseAttribute = (value: string) => {
   return parsedValue;
 };
 
+const attributeName = (attr: string|BioAttribute) => typeof attr === 'string' ? attr : attr.name;
+
+export interface BioAttribute {
+  name: string;
+  converter: Function;
+}
+
 export default class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
   private _props: TProps;
 
   // overwrite if some attributes should be auto-merged to your props
+  static bioAttributes: (string|BioAttribute)[] = [];
+
   static get observedAttributes(): string[] {
-    return [];
+    return this.bioAttributes.map(attributeName);
   };
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
+    const attribute = BioElement.bioAttributes.find(attr => attributeName(attr) === newValue);
     this.props = {
       ...(this.props as any),
-      [name]: parseAttribute(newValue),
+      [name]: typeof attribute === 'string'
+        ? parseAttribute(newValue)
+        : attribute.converter(newValue),
     };
   }
 
@@ -39,16 +51,6 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
   set props(value) {
     this._props = value;
     this.onPropsChanged();
-  }
-
-  get propsFromAttributes(): TProps {
-    return BioElement.observedAttributes.reduce((collection: TProps, attributeName: string) => ({
-      ...(collection as any),
-      ...(this.hasAttribute(attributeName)
-        ? { [attributeName]: parseAttribute(this.getAttribute(attributeName)) }
-        : {}
-      ),
-    }), {}) as TProps;
   }
 
   // overwrite if you eg need to merge into your state
