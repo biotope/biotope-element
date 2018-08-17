@@ -1,4 +1,4 @@
-import BioElement from '../index';
+import BioElement, {BioAttribute} from '../index';
 
 /**
  * Allows to pass a BioElement (as it's constructor function value) as a parameter to a function.
@@ -7,6 +7,7 @@ import BioElement from '../index';
 export interface BioElementConstructor<T extends BioElement<any, any>> {
     new (...args: any[]): T;
 
-    readonly bioAttributes: string[];
+    readonly bioAttributes: (string|BioAttribute)[];
+    
     define(name: string, options?: ElementDefinitionOptions): void;
 }
