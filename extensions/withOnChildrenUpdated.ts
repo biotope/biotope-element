@@ -1,5 +1,5 @@
 import BioElement from '../index';
-import BioElementConstructor from './BioElementConstructor';
+import {BioElementConstructor} from './BioElementConstructor';
 
 export interface WithOnChildrenUpdated {
     onChildrenUpdated(changes: MutationRecord[]): void;

@@ -1,5 +1,5 @@
 import BioElement, {BioAttribute} from '../index';
-import BioElementConstructor from './BioElementConstructor';
+import {BioElementConstructor} from './BioElementConstructor';
 
 export interface WithPropsFromAttributes<TProps> {
     propsFromAttributes: TProps;
@@ -17,7 +17,7 @@ export function withPropsFromAttributes<TProps extends object, T extends BioElem
     class C extends (<BioElementConstructor<BioElement<any, any>>>SuperClass) {
 
         get propsFromAttributes(): TProps {
-            return SuperClass.bioAttributes.reduce((collection: TProps, attribute: (string|BioAttribute)) => {
+            return (<any>this.constructor).bioAttributes.reduce((collection: TProps, attribute: (string|BioAttribute)) => {
                 const {name, converter} = typeof attribute === 'string' ? {name: attribute, converter: (_: string) => _} : attribute;
 
                 return {

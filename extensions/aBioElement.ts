@@ -1,8 +1,8 @@
 import BioElement from '../index';
-import BioElementConstructor from './BioElementConstructor';
+import {BioElementConstructor} from './BioElementConstructor';
 
 /**
- * Creator function for a custom BioElement class. Use in conjunction with other extensions, like so:
+ * Creator function for a custom BioElement class. Use in conjunction with other extensions for a more readable syntax:
  *
  *  public class MyClass extends withOnChildrenUpdated(aBioElement<MyProps, MyState>()) {
  *    ...
