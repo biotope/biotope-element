@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "esModuleInterop": true,
     "target": "es6",
-    "noImplicitAny": true,
-    "declaration": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "lib",
+    "declaration": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
     "baseUrl": ".",
+    "outDir": "lib",
     "paths": {
       "*": [
         "node_modules/*",
