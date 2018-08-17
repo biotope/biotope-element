@@ -1,13 +1,5 @@
 import HyperHTMLElement from 'hyperhtml-element';
 
-const parseAttribute = (value: string) => {
-  let parsedValue: string|number|object = value;
-  if (!isNaN(value as any)) {
-    parsedValue = +value;
-  }
-  return parsedValue;
-};
-
 const attributeName = (attr: string|BioAttribute) => typeof attr === 'string' ? attr : attr.name;
 
 export interface BioAttribute {
@@ -30,9 +22,7 @@ export default class BioElement<TProps extends object, TState> extends HyperHTML
     const attribute = BioElement.bioAttributes.find(attr => attributeName(attr) === newValue);
     this.props = {
       ...(this.props as any),
-      [name]: typeof attribute === 'string'
-        ? parseAttribute(newValue)
-        : attribute.converter(newValue),
+      [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
     };
   }
 
