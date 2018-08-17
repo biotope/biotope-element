@@ -17,7 +17,7 @@ export function withPropsFromAttributes<TProps extends object, T extends BioElem
     class C extends (<BioElementConstructor<BioElement<any, any>>>SuperClass) {
 
         get propsFromAttributes(): TProps {
-            return (<any>this.constructor).bioAttributes.reduce((collection: TProps, attribute: (string|BioAttribute)) => {
+            return (this.constructor as BioElementConstructor<T>).bioAttributes.reduce((collection: TProps, attribute: (string|BioAttribute)) => {
                 const {name, converter} = typeof attribute === 'string' ? {name: attribute, converter: (_: string) => _} : attribute;
 
                 return {
