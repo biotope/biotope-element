@@ -1,20 +1,11 @@
 import HyperHTMLElement from 'hyperhtml-element';
 import dasherize from 'dasherize';
 
-const isRegistered = (name: string) => {
-  switch (document.createElement(name).constructor) {
-    case HTMLElement: return false;
-    case HTMLUnknownElement: return false;
-  }
-  return true;
-};
+import { BioAttribute } from './types';
+import { isRegistered } from './is-registered';
+import { attributeName } from './attribute-name';
 
-const attributeName = (attr: string|BioAttribute) => typeof attr === 'string' ? attr : attr.name;
-
-export interface BioAttribute {
-  name: string;
-  converter: Function;
-}
+export { BioAttribute };
 
 export default abstract class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
