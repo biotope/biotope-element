@@ -1,7 +1,7 @@
 {
   "name": "@biotope/element",
   "title": "Biotope Element",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Biotope Element",
   "main": "lib/index.js",
   "module": "lib/index.js",
