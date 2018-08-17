@@ -16,7 +16,7 @@ export interface BioAttribute {
   converter: Function;
 }
 
-export default class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
+export default abstract class BioElement<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
   private _props: TProps;
 
