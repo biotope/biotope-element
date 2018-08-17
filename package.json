@@ -1,7 +1,7 @@
 {
   "name": "@biotope/element",
   "title": "Biotope Element",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Biotope Element",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
+    "dasherize": "^2.0.0",
     "hyperhtml-element": "^2.1.1"
   },
   "devDependencies": {
