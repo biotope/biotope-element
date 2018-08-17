@@ -35,7 +35,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   };
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = BioElement.bioAttributes.find(attr => attributeName(attr) === newValue);
+    const attribute = (this.constructor as any).bioAttributes.find((attr: string) => attributeName(attr) === name);
     this.props = {
       ...(this.props as any),
       [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
