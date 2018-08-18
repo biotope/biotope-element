@@ -1,4 +1,5 @@
 import HyperHTMLElement from 'hyperhtml-element';
+import HyperHTML from 'hyperhtml';
 import dasherize from 'dasherize';
 
 import { BioAttribute } from './types';
@@ -48,6 +49,10 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   set props(value) {
     this._props = value;
     this.onPropsChanged();
+  }
+
+  get wire() {
+    return HyperHTML.wire(this);
   }
 
   // overwrite if you eg need to merge into your state
