@@ -12,7 +12,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   private _props: TProps;
 
   static register(): void {
-    const dashedName = dasherize(this.name);
+    const dashedName = dasherize(this.name || this.toString().match(/^function\s*([^\s(]+)/)[1]);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
