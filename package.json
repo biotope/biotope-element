@@ -1,12 +1,13 @@
 {
   "name": "@biotope/element",
   "title": "Biotope Element",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Biotope Element",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsc"
   },
   "repository": {
