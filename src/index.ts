@@ -12,6 +12,16 @@ export default abstract class BioElement<TProps extends object, TState> extends 
 
   private _props: TProps;
 
+  // overwrite to set dependencies
+  get dependencies(): any[] {
+    return [];
+  }
+
+  constructor() {
+    super();
+    this.dependencies.forEach(dep => dep.register());
+  }
+
   static register(): void {
     const dashedName = dasherize(this.name || this.toString().match(/^function\s*([^\s(]+)/)[1]);
     if (!isRegistered(dashedName)) {
@@ -20,7 +30,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   }
 
   // overwrite if some attributes should be auto-merged to your props
-  static bioAttributes: (string|BioAttribute)[] = [];
+  static bioAttributes: (string | BioAttribute)[] = [];
 
   static get observedAttributes(): string[] {
     return this.bioAttributes.map(attributeName);
