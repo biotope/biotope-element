@@ -31,6 +31,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
 
   constructor() {
     super();
+    this.attachShadow({ mode: 'open' });
     (this.constructor as any).dependencies.forEach((dep: any) => dep.register());
   }
 
