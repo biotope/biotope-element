@@ -12,6 +12,9 @@ export default abstract class BioElement<TProps extends object, TState> extends 
 
   private _props: TProps;
 
+  // overwrite to set dependencies
+  static dependencies: Function[] = [];
+
   static register(): void {
     const dashedName = dasherize(this.name || this.toString().match(/^function\s*([^\s(]+)/)[1]);
     if (!isRegistered(dashedName)) {
@@ -29,6 +32,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    (this.constructor as any).dependencies.forEach((dep: any) => dep.register());
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
