@@ -1,8 +1,8 @@
 import HyperHTMLElement from 'hyperhtml-element';
 import HyperHTML from 'hyperhtml';
-import dasherize from 'dasherize';
 
 import { BioAttribute } from './types';
+import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-name';
 
@@ -15,8 +15,11 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   // overwrite to set dependencies
   static dependencies: Function[] = [];
 
+  // overwrite if you have a minifier/uglifier in your project
+  static componentName: string;
+
   static register(): void {
-    const dashedName = dasherize(this.name || this.toString().match(/^function\s*([^\s(]+)/)[1]);
+    const dashedName = getComponentName(this);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
