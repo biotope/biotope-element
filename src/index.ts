@@ -4,7 +4,7 @@ import HyperHTML from 'hyperhtml';
 import { BioAttribute } from './types';
 import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
-import { attributeName } from './attribute-name';
+import { attributeNameMapper } from './attribute-name-mapper';
 
 export { BioAttribute };
 
@@ -29,7 +29,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   static bioAttributes: (string | BioAttribute)[] = [];
 
   static get observedAttributes(): string[] {
-    return this.bioAttributes.map(attributeName);
+    return this.bioAttributes.map(attributeNameMapper);
   };
 
   constructor() {
@@ -39,7 +39,9 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = (this.constructor as any).bioAttributes.find((attr: string) => attributeName(attr) === name);
+    const attribute = (this.constructor as any).bioAttributes
+      .find((attr: string) => attributeNameMapper(attr) === name);
+
     this.props = {
       ...(this.props as any),
       [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
