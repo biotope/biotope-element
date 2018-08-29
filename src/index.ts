@@ -1,10 +1,10 @@
 import HyperHTMLElement from 'hyperhtml-element';
 import HyperHTML from 'hyperhtml';
-import dasherize from 'dasherize';
 
 import { BioAttribute } from './types';
+import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
-import { attributeName } from './attribute-name';
+import { attributeNameMapper } from './attribute-name-mapper';
 
 export { BioAttribute };
 
@@ -15,8 +15,11 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   // overwrite to set dependencies
   static dependencies: Function[] = [];
 
+  // overwrite if you have a minifier/uglifier in your project
+  static componentName: string;
+
   static register(): void {
-    const dashedName = dasherize(this.name || this.toString().match(/^function\s*([^\s(]+)/)[1]);
+    const dashedName = getComponentName(this);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
@@ -26,7 +29,7 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   static bioAttributes: (string | BioAttribute)[] = [];
 
   static get observedAttributes(): string[] {
-    return this.bioAttributes.map(attributeName);
+    return this.bioAttributes.map(attributeNameMapper);
   };
 
   constructor() {
@@ -36,7 +39,9 @@ export default abstract class BioElement<TProps extends object, TState> extends 
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = (this.constructor as any).bioAttributes.find((attr: string) => attributeName(attr) === name);
+    const attribute = (this.constructor as any).bioAttributes
+      .find((attr: string) => attributeNameMapper(attr) === name);
+
     this.props = {
       ...(this.props as any),
       [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
