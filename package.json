@@ -8,7 +8,10 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc"
+    "build": "tsc",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "netlify": "yarn docz:build && cp netlify.toml ./docs-dist/netlify.toml"
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
     "hyperhtml-element": "^2.1.1"
   },
   "devDependencies": {
+    "docz": "^0.11.0",
     "typescript": "^3.0.1"
   }
 }
