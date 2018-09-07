@@ -23,6 +23,7 @@ export default abstract class Element<TProps extends object, TState> extends Hyp
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
+    (this.constructor as any).dependencies.forEach((dep: any) => dep.register());
   }
 
   // overwrite if some attributes should be auto-merged to your props
@@ -35,7 +36,6 @@ export default abstract class Element<TProps extends object, TState> extends Hyp
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    (this.constructor as any).dependencies.forEach((dep: any) => dep.register());
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
