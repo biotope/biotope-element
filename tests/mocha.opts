@@ -1,0 +1,3 @@
+--require ts-node/register
+--require tests/help.js
+tests/**/*.spec.ts

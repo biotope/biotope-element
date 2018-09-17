@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "typeRoots": [
+      "node_modules/@types",
+      "typings"
+    ]
   }
 }
