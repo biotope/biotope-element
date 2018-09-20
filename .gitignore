@@ -2,3 +2,4 @@
 /lib
 /.docz
 /docs-dist
+*.log
