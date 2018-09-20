@@ -8,7 +8,7 @@ import { attributeNameMapper } from './attribute-name-mapper';
 
 export { BioAttribute };
 
-export default abstract class Element<TProps extends object, TState> extends HyperHTMLElement<TState> {
+export default abstract class Component<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
   private _props: TProps;
 
@@ -23,7 +23,7 @@ export default abstract class Element<TProps extends object, TState> extends Hyp
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
-    (this.constructor as any).dependencies.forEach((dep: any) => dep.register());
+    this.dependencies.forEach((dep: any) => dep.register());
   }
 
   // overwrite if some attributes should be auto-merged to your props
@@ -39,7 +39,7 @@ export default abstract class Element<TProps extends object, TState> extends Hyp
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = (this.constructor as any).attributes
+    const attribute = (this.constructor as any)._attributes
       .find((attr: string) => attributeNameMapper(attr) === name);
 
     this.props = {
