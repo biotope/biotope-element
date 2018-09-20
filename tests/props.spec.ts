@@ -30,7 +30,6 @@ describe('props', () => {
             }
             const testComponent = Object.create(Test.prototype, {});
 
-
             expect(testComponent.props).to.be.empty;
         })
 

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Component from '../src/index';
+import Component from '../src';
 
 describe('attributeChangedCallback', () => {
     it('does not let an unwatched attribute pass through to props', () => {
@@ -13,7 +13,7 @@ describe('attributeChangedCallback', () => {
         expect(testComponent.props.myAttribute).to.be.undefined;
     })
 
-    it('does write watched attributes to props', () => {
+    it('writes watched attributes to props', () => {
         class Test extends Component<{ myAttribute: string }, {}> {
             static componentName = 'x-test';
             static _attributes = ['myAttribute']

@@ -42,7 +42,9 @@ export default abstract class Element<TProps extends object, TState> extends Hyp
     const attribute = (this.constructor as any)._attributes
       .find((attr: string) => attributeNameMapper(attr) === name);
 
-    if (!attribute) { return };
+    if (!attribute) {
+      return
+    };
     this.props = {
       ...(this.props as any),
       [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),

@@ -2,4 +2,4 @@
 /lib
 /.docz
 /docs-dist
-yarn-error.log
+*.log

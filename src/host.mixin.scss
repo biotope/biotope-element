@@ -1,9 +1,9 @@
 @mixin host($componentName) {
-    #{$componentName} {
-      @content;
-    }
-  
-    :host {
-      @content;
-    }
+  #{$componentName} {
+    @content;
   }
+
+  :host {
+    @content;
+  }
+}
