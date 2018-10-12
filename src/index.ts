@@ -13,9 +13,9 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   public static dependencies: (typeof Component)[] = [];
 
   // overwrite if you have a minifier/uglifier in your project
-  static componentName: string;
+  public static componentName: string;
 
-  static register(): void {
+  public static register(): void {
     const dashedName = getComponentName(this);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
@@ -23,12 +23,14 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     this.dependencies.forEach(dependency => dependency.register());
   }
 
-  // overwrite if some attributes should be auto-merged to your props
-  protected static _attributes: (string | Attribute)[] = [];
-
-  static get observedAttributes(): string[] {
-    return this._attributes.map(attributeNameMapper);
+  public static get observedAttributes(): string[] {
+    return this.attributes.map(attributeNameMapper);
   };
+
+  // overwrite if some attributes should be auto-merged to your props
+  protected static attributes: (string | Attribute)[] = [];
+
+  private currentProps: TProps;
 
   constructor() {
     super();
@@ -41,33 +43,32 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     }
   }
 
-  attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = (this.constructor as any)._attributes
+  public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    const attribute = (this.constructor as any).attributes
       .find((attr: string) => attributeNameMapper(attr) === name);
 
-    if (!attribute) {
-      return
-    };
-    this.props = {
-      ...(this.props as any),
-      [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+    if (attribute) {
+      this.props = {
+        ...(this.props as any),
+        [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+      };
     };
   }
 
   // overwrite if you want default props in your component
-  get defaultProps(): TProps {
+  protected get defaultProps(): TProps {
     return null;
   }
 
-  get props(): TProps {
+  protected get props(): TProps {
     return {
       ...(this.defaultProps as any),
-      ...(this._props as any),
+      ...(this.currentProps as any),
     };
   }
 
-  set props(value: TProps) {
-    this._props = value;
+  protected set props(value: TProps) {
+    this.currentProps = value;
     this.onPropsChanged();
   }
 
@@ -79,8 +80,8 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     return HyperHTML.hyper;
   }
 
-  // overwrite if you eg need to merge into your state
-  onPropsChanged() {
+  // overwrite if you, for example, need to merge props into your state
+  protected onPropsChanged() {
     this.render();
   }
 }

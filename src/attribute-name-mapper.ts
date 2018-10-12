@@ -1,3 +1,5 @@
-import { BioAttribute } from './types';
+import { Attribute } from './types';
 
-export const attributeNameMapper = (attr: string|BioAttribute) => typeof attr === 'string' ? attr : attr.name;
+export const attributeNameMapper = (attr: string | Attribute) => typeof attr === 'string'
+  ? attr
+  : attr.name;

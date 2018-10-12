@@ -5,6 +5,5 @@ interface NamedComponent extends Function {
 }
 
 export const getComponentName = (context: NamedComponent) => context.componentName || dasherize(
-  context.name ||
-  context.toString().match(/^function\s*([^\s(]+)/)[1]
+  context.name || context.toString().match(/^function\s*([^\s(]+)/)[1],
 );
