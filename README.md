@@ -24,11 +24,11 @@ To use the biotope element, you have to extend it with your custom class:
 import Element from '@biotope/element';
 
 export class MyButton extends Element {
-    static componentName = 'my-button';
-    
-    render() {
-        return this.html`Hello World`;
-    }
+  public static componentName = 'my-button';
+  
+  public render() {
+    return this.html`Hello World`;
+  }
 }
 ```
 
@@ -38,11 +38,11 @@ index.js
 import Element from '@biotope/element';
 
 export class MyButton extends Element {
-    static componentName = 'my-button';
-    
-    render() {
-        return this.html`Hello World 🐤`;
-    }
+  public static componentName = 'my-button';
+  
+  public render() {
+    return this.html`Hello World 🐤`;
+  }
 }
 
 MyButton.register();
@@ -58,6 +58,6 @@ index.html
 This will result inthe following html:
 ```html
 <my-button>
-    Hello world 🐤
+  Hello world 🐤
 </my-button>
 ```
