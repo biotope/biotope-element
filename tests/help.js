@@ -3,7 +3,7 @@ const sinonChai = require('sinon-chai');
 const { JSDOM } = require('jsdom');
 
 chai.use(sinonChai);
-const expect = chai.expect;
+const { expect } = chai;
 
 const dom = new JSDOM('<!DOCTYPE html><html><head></head><body></body></html>');
 class HTMLUnknownElement { }
