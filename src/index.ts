@@ -42,6 +42,9 @@ export default abstract class Component<TProps extends object, TState> extends H
     const attribute = (this.constructor as any)._attributes
       .find((attr: string) => attributeNameMapper(attr) === name);
 
+    if (!attribute) {
+      return
+    };
     this.props = {
       ...(this.props as any),
       [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
