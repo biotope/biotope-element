@@ -1,19 +1,16 @@
 import HyperHTMLElement from 'hyperhtml-element';
 import HyperHTML from 'hyperhtml';
 
-import { BioAttribute } from './types';
+import { Attribute } from './types';
 import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeNameMapper } from './attribute-name-mapper';
 
-export { BioAttribute };
+export { Attribute };
 
-export default abstract class Component<TProps extends object, TState> extends HyperHTMLElement<TState> {
-
-  private _props: TProps;
-
+export default abstract class Component<TProps, TState> extends HyperHTMLElement<TState> {
   // overwrite to set dependencies
-  static dependencies: Function[] = [];
+  public static dependencies: (typeof Component)[] = [];
 
   // overwrite if you have a minifier/uglifier in your project
   static componentName: string;
@@ -23,11 +20,11 @@ export default abstract class Component<TProps extends object, TState> extends H
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
-    this.dependencies.forEach((dep: any) => dep.register());
+    this.dependencies.forEach(dependency => dependency.register());
   }
 
   // overwrite if some attributes should be auto-merged to your props
-  static _attributes: (string | BioAttribute)[] = [];
+  protected static _attributes: (string | Attribute)[] = [];
 
   static get observedAttributes(): string[] {
     return this._attributes.map(attributeNameMapper);
@@ -36,6 +33,12 @@ export default abstract class Component<TProps extends object, TState> extends H
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    if (
+      !(this.constructor as typeof Component).attributes
+      || !(this.constructor as typeof Component).attributes.length
+    ) {
+      this.render();
+    }
   }
 
   attributeChangedCallback(name: string, _: string, newValue: string): void {
@@ -68,8 +71,12 @@ export default abstract class Component<TProps extends object, TState> extends H
     this.onPropsChanged();
   }
 
-  get wire() {
-    return HyperHTML.wire(this);
+  protected get wire() {
+    return HyperHTML.wire;
+  }
+
+  protected get hyper() {
+    return HyperHTML.hyper;
   }
 
   // overwrite if you eg need to merge into your state
