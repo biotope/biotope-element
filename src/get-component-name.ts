@@ -1,7 +1,7 @@
 import dasherize from 'dasherize';
 
 interface NamedComponent extends Function {
-  componentName: string;
+  componentName?: string;
 }
 
 export const getComponentName = (context: NamedComponent) => context.componentName || dasherize(

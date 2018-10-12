@@ -12,5 +12,8 @@
       "node_modules/@types",
       "typings"
     ]
-  }
+  },
+  "include": [
+    "src/*.ts"
+  ]
 }

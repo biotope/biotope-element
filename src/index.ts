@@ -16,11 +16,12 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   public static componentName: string;
 
   public static register(): void {
+    this.dependencies.forEach(dependency => dependency.register());
+
     const dashedName = getComponentName(this);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
-    this.dependencies.forEach(dependency => dependency.register());
   }
 
   public static get observedAttributes(): string[] {
