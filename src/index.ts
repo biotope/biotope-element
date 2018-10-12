@@ -8,7 +8,7 @@ import { attributeNameMapper } from './attribute-name-mapper';
 
 export { BioAttribute };
 
-export default abstract class Element<TProps extends object, TState> extends HyperHTMLElement<TState> {
+export default abstract class Component<TProps extends object, TState> extends HyperHTMLElement<TState> {
 
   private _props: TProps;
 
