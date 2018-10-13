@@ -56,7 +56,7 @@ export default abstract class Component<TProps extends object, TState> extends H
       `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
       {
         bubbles: true,
-        ...(detail ? { detail } : {}),
+        ...(detail !== undefined ? { detail } : {}),
       },
     ));
   }
