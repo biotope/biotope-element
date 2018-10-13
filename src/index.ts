@@ -51,6 +51,16 @@ export default abstract class Component<TProps extends object, TState> extends H
     };
   }
 
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+    return this.dispatchEvent(new CustomEvent(
+      `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
+      {
+        bubbles: true,
+        ...(detail ? { detail } : {}),
+      },
+    ));
+  }
+
   // overwrite if you want default props in your component
   get defaultProps(): TProps {
     return null;
