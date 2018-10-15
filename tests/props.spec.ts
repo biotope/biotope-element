@@ -3,48 +3,56 @@ import * as sinon from 'sinon';
 import Component from '../src/index';
 
 describe('props', () => {
-    describe('setter', () => {
-        it('calls onPropsChanged callback when props setter is called', () => {
-            const onPropsChangedSpy = sinon.spy();
-            class Test extends Component<{}, {}> {
-                static componentName = 'x-test';
+  describe('setter', () => {
+    it('calls onPropsChanged callback when props setter is called', () => {
+      const onPropsChangedSpy = sinon.spy();
 
-                onPropsChanged() {
-                    onPropsChangedSpy();
-                };
-            }
-            const testComponent = Object.create(Test.prototype, {});
+      class Test extends Component<object, object> {
+        public static componentName = 'x-test';
 
-            testComponent.props = {
-                test: 'someValue'
-            };
+        protected onPropsChanged() {
+          onPropsChangedSpy();
+        };
+      }
 
-            expect(onPropsChangedSpy).to.have.been.calledOnce;
-        })
+      const testComponent = Object.create(Test.prototype, {});
+
+      testComponent.props = {
+        test: 'someValue',
+      };
+
+      expect(onPropsChangedSpy).to.have.been.calledOnce;
+    })
+  })
+
+  describe('getter', () => {
+    it('returns empty object for no set props', () => {
+      class Test extends Component<object, object> {
+        public static componentName = 'x-test';
+      }
+
+      const testComponent = Object.create(Test.prototype, {});
+
+      expect(testComponent.props).to.be.empty;
     })
 
-    describe('getter', () => {
-        it('returns empty object for no set props', () => {
-            class Test extends Component<{}, {}> {
-                static componentName = 'x-test';
-            }
-            const testComponent = Object.create(Test.prototype, {});
+    it('returns default props if set', () => {
+      interface ComponentProps {
+        myProp: string;
+      }
 
-            expect(testComponent.props).to.be.empty;
-        })
+      class Test extends Component<ComponentProps, object> {
+        public static componentName = 'x-test';
 
-        it('returns default props if set', () => {
-            class Test extends Component<{ myProp: string }, {}> {
-                static componentName = 'x-test';
-                get defaultProps() {
-                    return {
-                        myProp: 'value'
-                    }
-                }
-            }
-            const testComponent = Object.create(Test.prototype, {});
+        protected get defaultProps() {
+          return {
+            myProp: 'value',
+          };
+        }
+      }
+      const testComponent = Object.create(Test.prototype, {});
 
-            expect(testComponent.props.myProp).to.eq('value');
-        })
+      expect(testComponent.props.myProp).to.eq('value');
     })
+  })
 })

@@ -1,5 +1,5 @@
 
-export interface BioAttribute {
+export interface Attribute {
   name: string;
   converter: Function;
 }

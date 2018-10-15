@@ -1,79 +1,88 @@
 import HyperHTMLElement from 'hyperhtml-element';
 import HyperHTML from 'hyperhtml';
 
-import { BioAttribute } from './types';
+import { Attribute } from './types';
 import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeNameMapper } from './attribute-name-mapper';
 
-export { BioAttribute };
+export { Attribute };
 
-export default abstract class Component<TProps extends object, TState> extends HyperHTMLElement<TState> {
-
-  private _props: TProps;
-
+export default abstract class Component<TProps, TState> extends HyperHTMLElement<TState> {
   // overwrite to set dependencies
-  static dependencies: Function[] = [];
+  public static dependencies: (typeof Component)[] = [];
 
   // overwrite if you have a minifier/uglifier in your project
-  static componentName: string;
+  public static componentName: string;
 
-  static register(): void {
+  public static register(): void {
+    this.dependencies.forEach(dependency => dependency.register());
+
     const dashedName = getComponentName(this);
     if (!isRegistered(dashedName)) {
       this.define(dashedName);
     }
-    this.dependencies.forEach((dep: any) => dep.register());
   }
 
-  // overwrite if some attributes should be auto-merged to your props
-  static _attributes: (string | BioAttribute)[] = [];
-
-  static get observedAttributes(): string[] {
-    return this._attributes.map(attributeNameMapper);
+  public static get observedAttributes(): string[] {
+    return this.attributes.map(attributeNameMapper);
   };
+
+  // overwrite if some attributes should be auto-merged to your props
+  protected static attributes: (string | Attribute)[] = [];
+
+  private currentProps: TProps;
 
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    if (
+      !(this.constructor as typeof Component).attributes
+      || !(this.constructor as typeof Component).attributes.length
+    ) {
+      this.render();
+    }
   }
 
-  attributeChangedCallback(name: string, _: string, newValue: string): void {
-    const attribute = (this.constructor as any)._attributes
+  public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    const attribute = (this.constructor as any).attributes
       .find((attr: string) => attributeNameMapper(attr) === name);
 
-    if (!attribute) {
-      return
-    };
-    this.props = {
-      ...(this.props as any),
-      [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+    if (attribute) {
+      this.props = {
+        ...(this.props as any),
+        [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+      };
     };
   }
 
   // overwrite if you want default props in your component
-  get defaultProps(): TProps {
+  protected get defaultProps(): TProps {
     return null;
   }
 
-  get props(): TProps {
+  protected get props(): TProps {
     return {
       ...(this.defaultProps as any),
-      ...(this._props as any),
+      ...(this.currentProps as any),
     };
   }
 
-  set props(value: TProps) {
-    this._props = value;
+  protected set props(value: TProps) {
+    this.currentProps = value;
     this.onPropsChanged();
   }
 
-  get wire() {
-    return HyperHTML.wire(this);
+  protected get wire() {
+    return HyperHTML.wire;
   }
 
-  // overwrite if you eg need to merge into your state
-  onPropsChanged() {
+  protected get hyper() {
+    return HyperHTML.hyper;
+  }
+
+  // overwrite if you, for example, need to merge props into your state
+  protected onPropsChanged() {
     this.render();
   }
 }

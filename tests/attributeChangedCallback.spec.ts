@@ -2,26 +2,32 @@ import { expect } from 'chai';
 import Component from '../src';
 
 describe('attributeChangedCallback', () => {
-    it('does not let an unwatched attribute pass through to props', () => {
-        class Test extends Component<{ myAttribute: string }, {}> {
-            static componentName = 'x-test';
-        }
-        const testComponent = Object.create(Test.prototype, {});
+  interface ComponentProps {
+    myAttribute: string;
+  }
 
-        testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
+  it('does not let an unwatched attribute pass through to props', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+    }
 
-        expect(testComponent.props.myAttribute).to.be.undefined;
-    })
+    const testComponent = Object.create(Test.prototype, {});
 
-    it('writes watched attributes to props', () => {
-        class Test extends Component<{ myAttribute: string }, {}> {
-            static componentName = 'x-test';
-            static _attributes = ['myAttribute']
-        }
-        const testComponent = Object.create(Test.prototype, {});
+    testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
 
-        testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
+    expect(testComponent.props.myAttribute).to.be.undefined;
+  });
 
-        expect(testComponent.props.myAttribute).to.eq('newValue');
-    })
+  it('writes watched attributes to props', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+      static attributes = ['myAttribute'];
+    }
+
+    const testComponent = Object.create(Test.prototype, {});
+
+    testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
+
+    expect(testComponent.props.myAttribute).to.eq('newValue');
+  });
 })
