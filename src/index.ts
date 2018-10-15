@@ -56,6 +56,16 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     };
   }
 
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+    return this.dispatchEvent(new CustomEvent(
+      `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
+      {
+        bubbles: true,
+        ...(detail !== undefined ? { detail } : {}),
+      },
+    ));
+  }
+
   // overwrite if you want default props in your component
   protected get defaultProps(): TProps {
     return null;
