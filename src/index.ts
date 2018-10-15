@@ -37,7 +37,8 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     super();
     this.attachShadow({ mode: 'open' });
     if (
-      !(this.constructor as typeof Component).attributes
+      !(this as HTMLElement).getAttributeNames().length
+      || !(this.constructor as typeof Component).attributes
       || !(this.constructor as typeof Component).attributes.length
     ) {
       this.render();
