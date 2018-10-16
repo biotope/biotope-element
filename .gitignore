@@ -3,3 +3,7 @@
 /.docz
 /docs-dist
 *.log
+
+/example/node_modules
+/example/.cache
+/example/dist
