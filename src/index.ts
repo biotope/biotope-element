@@ -1,4 +1,4 @@
-import HyperHTMLElement from 'hyperhtml-element';
+import HyperHTMLElementModule from 'hyperhtml-element';
 import HyperHTML from 'hyperhtml';
 
 import { Attribute } from './types';
@@ -7,6 +7,9 @@ import { isRegistered } from './is-registered';
 import { attributeNameMapper } from './attribute-name-mapper';
 
 export { Attribute };
+
+// HyperHTMLElement fix for the way the module is exported
+const HyperHTMLElement = ((HyperHTMLElementModule as any).default ? (HyperHTMLElementModule as any).default : HyperHTMLElementModule) as typeof HyperHTMLElementModule;
 
 export default abstract class Component<TProps, TState> extends HyperHTMLElement<TState> {
   // overwrite to set dependencies
