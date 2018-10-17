@@ -1,6 +1,8 @@
 import Component from '.';
 import { getComponentName } from './get-component-name';
 
+const ELEMENT_IDS_BEING_USED: string[] = [];
+
 const isComponentRegistered = (name: string) => {
   switch (document.createElement(name).constructor) {
     case HTMLElement: return false;
@@ -9,14 +11,19 @@ const isComponentRegistered = (name: string) => {
   return true;
 };
 
-const generateId = (length: number = 32) => {
+const generateUniqueId = (length: number = 32): string => {
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let text = '';
 
+  let text = '';
   for (let i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text;
+
+  if (ELEMENT_IDS_BEING_USED.indexOf(text) < 0) {
+    ELEMENT_IDS_BEING_USED.push(text);
+    return text;
+  }
+  return generateUniqueId(length);
 }
 
 const isNotChild = (element: HTMLElement, _: number, elements: HTMLElement[]) => !elements
@@ -40,7 +47,7 @@ export const register = (component: typeof Component) => {
     .map(element => ({
       oldElement: element,
       outerHTML: element.outerHTML,
-      id: generateId(),
+      id: generateUniqueId(),
     }));
 
     elements.forEach(({ oldElement, id }) => oldElement.outerHTML = `<div id="${id}"></div>`);
@@ -53,6 +60,7 @@ export const register = (component: typeof Component) => {
 
     elements.forEach(({ outerHTML, id }) => {
       document.getElementById(id).outerHTML = outerHTML;
+      ELEMENT_IDS_BEING_USED.splice(ELEMENT_IDS_BEING_USED.indexOf(id), 1);
     })
   }
 }
