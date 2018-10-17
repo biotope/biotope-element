@@ -1,4 +1,4 @@
-import HyperHTMLElementModule from 'hyperhtml-element';
+import HyperHTMLElement from 'hyperhtml-element/cjs';
 import HyperHTML from 'hyperhtml';
 
 import { Attribute } from './types';
@@ -7,9 +7,6 @@ import { isRegistered } from './is-registered';
 import { attributeNameMapper } from './attribute-name-mapper';
 
 export { Attribute };
-
-// HyperHTMLElement fix for the way the module is exported
-const HyperHTMLElement = ((HyperHTMLElementModule as any).default ? (HyperHTMLElementModule as any).default : HyperHTMLElementModule) as typeof HyperHTMLElementModule;
 
 export default abstract class Component<TProps, TState> extends HyperHTMLElement<TState> {
   // overwrite to set dependencies
@@ -33,36 +30,6 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
 
   // overwrite if some attributes should be auto-merged to your props
   protected static attributes: (string | Attribute)[] = [];
-
-  private currentProps: TProps;
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.render();
-  }
-
-  public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-    const attribute = (this.constructor as any).attributes
-      .find((attr: string) => attributeNameMapper(attr) === name);
-
-    if (attribute) {
-      this.props = {
-        ...(this.props as any),
-        [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
-      };
-    };
-  }
-
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
-    return this.dispatchEvent(new CustomEvent(
-      `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
-      {
-        bubbles: true,
-        ...(detail !== undefined ? { detail } : {}),
-      },
-    ));
-  }
 
   // overwrite if you want default props in your component
   protected get defaultProps(): TProps {
@@ -89,8 +56,42 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     return HyperHTML.hyper;
   }
 
+  private currentProps: TProps;
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  // overwrite if you, for example, need to merge props into your state
+  public created() {
+    this.render();
+  }
+
+  public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    const attribute = (this.constructor as any).attributes
+      .find((attr: string) => attributeNameMapper(attr) === name);
+
+    if (attribute) {
+      this.props = {
+        ...(this.props as any),
+        [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+      };
+    };
+  }
+
   // overwrite if you, for example, need to merge props into your state
   protected onPropsChanged() {
     this.render();
+  }
+
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+    return this.dispatchEvent(new CustomEvent(
+      `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
+      {
+        bubbles: true,
+        ...(detail !== undefined ? { detail } : {}),
+      },
+    ));
   }
 }
