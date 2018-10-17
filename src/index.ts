@@ -39,13 +39,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    if (
-      !(this as HTMLElement).getAttributeNames().length
-      || !(this.constructor as typeof Component).attributes
-      || !(this.constructor as typeof Component).attributes.length
-    ) {
-      this.render();
-    }
+    this.render();
   }
 
   public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
