@@ -41,6 +41,7 @@ export const register = (component: typeof Component) => {
   const isRegistered = isComponentRegistered(dashedName);
   let elements: UnregisteredHTMLElement[] = [];
 
+  // if component is not registered, remove any existing element from the page
   if (!isRegistered) {
     elements = ([].slice.call(document.getElementsByTagName(dashedName)) as HTMLElement[])
     .filter(isNotChild)
@@ -58,8 +59,13 @@ export const register = (component: typeof Component) => {
   if (!isRegistered) {
     component.define(dashedName);
 
+    // re-apply the previously removed elements from the page
     elements.forEach(({ outerHTML, id }) => {
-      document.getElementById(id).outerHTML = outerHTML;
+      const newElement = document.createElement('div');
+      const element = document.getElementById(id);
+
+      newElement.innerHTML = outerHTML;
+      element.parentNode.replaceChild(newElement, element);
       ELEMENT_IDS_BEING_USED.splice(ELEMENT_IDS_BEING_USED.indexOf(id), 1);
     })
   }

@@ -57,7 +57,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     this.attachShadow({ mode: 'open' });
   }
 
-  // overwrite if you, for example, need to merge props into your state
+  // overwrite if you, for example, need to fetch something after the component is created
   public created() {
     this.render();
   }
