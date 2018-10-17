@@ -2,8 +2,7 @@ import HyperHTMLElement from 'hyperhtml-element/cjs';
 import HyperHTML from 'hyperhtml';
 
 import { Attribute } from './types';
-import { getComponentName } from './get-component-name';
-import { isRegistered } from './is-registered';
+import { register } from './register';
 import { attributeNameMapper } from './attribute-name-mapper';
 
 export { Attribute };
@@ -16,12 +15,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   public static componentName: string;
 
   public static register(): void {
-    this.dependencies.forEach(dependency => dependency.register());
-
-    const dashedName = getComponentName(this);
-    if (!isRegistered(dashedName)) {
-      this.define(dashedName);
-    }
+    register(this);
   }
 
   public static get observedAttributes(): string[] {
