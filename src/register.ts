@@ -61,11 +61,11 @@ export const register = (component: typeof Component) => {
 
     // re-apply the previously removed elements from the page
     elements.forEach(({ outerHTML, id }) => {
-      const newElement = document.createElement('div');
       const element = document.getElementById(id);
+      const wrappingElement = document.createElement('div');
+      wrappingElement.innerHTML = outerHTML;
 
-      newElement.innerHTML = outerHTML;
-      element.parentNode.replaceChild(newElement, element);
+      element.parentNode.replaceChild(wrappingElement.children[0], element);
       ELEMENT_IDS_BEING_USED.splice(ELEMENT_IDS_BEING_USED.indexOf(id), 1);
     })
   }
