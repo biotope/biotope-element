@@ -3204,7 +3204,7 @@ docz-utils@^0.12.2:
     unist-util-is "^2.1.2"
     unist-util-visit "^1.4.0"
 
-docz@0.12.5, docz@^0.12.5:
+docz@^0.12.5, docz@~0.12:
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/docz/-/docz-0.12.5.tgz#5b1ada2e2d2b252b0d789c94c258f950323916ec"
   integrity sha512-NmwUP4pC0fiqFpRz0tX99aW5Doyd6dcbKP4hXSro5ne5yRiJLT3In2PR/W2Pom0CA5tSk0jxpOieotAmpmc/Dw==
@@ -5634,7 +5634,7 @@ lz-string@^1.4.4:
 
 magic-string@^0.22.4:
   version "0.22.5"
-  resolved "http://registry.npmjs.org/magic-string/-/magic-string-0.22.5.tgz#8e9cf5afddf44385c1da5bc2a6a0dbd10b03657e"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.22.5.tgz#8e9cf5afddf44385c1da5bc2a6a0dbd10b03657e"
   integrity sha512-oreip9rJZkzvA8Qzk9HFs8fZGF/u7H/gtrE8EN6RjKJ9kh2HlC+yQ2QezifqTZfGyiuAV0dRv5a+y/8gBb1m9w==
   dependencies:
     vlq "^0.2.2"
