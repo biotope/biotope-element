@@ -1,6 +1,6 @@
-import Element from '../../src/index';
+import Component from '../../src/index';
 
-class MyButton extends Element<any, any> {
+class MyButton extends Component<any, any> {
   static componentName = 'my-button';
   static attributes = ['foo'];
 
