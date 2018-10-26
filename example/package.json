@@ -1,0 +1,21 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^1.10.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ]
+}
