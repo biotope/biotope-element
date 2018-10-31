@@ -8,7 +8,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc && cp src/host.mixin.scss lib/",
+    "build": "tsc && cpy src/host.mixin.scss lib/",
     "release": "np",
     "prepublishOnly": "npm run clean && npm install && npm run clean && yarn install",
     "clean": "node_modules/.bin/rimraf node_modules",
@@ -40,6 +40,7 @@
     "@types/sinon-chai": "~3.2",
     "buble": "0.19.4",
     "chai": "~4.2",
+    "cpy-cli": "~2.0",
     "docz": "~0.12",
     "jsdom": "12.2.0",
     "mocha": "~5.2",
