@@ -172,9 +172,11 @@ import Element from '@biotope/element';
 class MyButton extends Element {
     static componentName = 'my-button';
     
-    get defaultProps = () => ({
-        foo: 'bar'
-    })
+    protected get defaultProps(): {
+        return {
+            foo: 'bar'
+        }
+    }
     
     render() {
         return this.html`🎰 ${this.props.foo}`;
