@@ -30,4 +30,43 @@ describe('attributeChangedCallback', () => {
 
     expect(testComponent.props.myAttribute).to.eq('newValue');
   });
+
+  it('transforms dash attributes to camelcase', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+      static attributes = ['my-attribute'];
+    }
+
+    const testComponent = Object.create(Test.prototype, {});
+
+    testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
+
+    expect(testComponent.props).to.have.key('myAttribute');
+  });
+
+  it('transforms single letter dash attributes to camelcase', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+      static attributes = ['m-attribute'];
+    }
+
+    const testComponent = Object.create(Test.prototype, {});
+
+    testComponent.attributeChangedCallback('m-attribute', '', 'newValue');
+
+    expect(testComponent.props).to.have.key('mAttribute');
+  });
+
+  it('sets dash attributes to camelcase', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+      static attributes = ['my-attribute'];
+    }
+
+    const testComponent = Object.create(Test.prototype, {});
+
+    testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
+
+    expect(testComponent.props.myAttribute).to.eq('newValue');
+  });
 })
