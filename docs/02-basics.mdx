@@ -259,9 +259,33 @@ This will result in the following html:
 <my-button>
 ```
 
+### Hyphen Attributes
+If your attributes get more complex, you might want to have multi word names like `a-complex-attribute`.
 
+To access those attributes in the props, you have to use the camelCase version of the string. In our example this will be `aComplexAttribute`
 
+```js
+import Element from '@biotope/element';
 
+class MyButton extends Element {
+    static componentName = 'my-button';
+    
+    static _attributes = ['another-attribute'];
+
+    render() {
+        return this.html`${this.props.anotherAttribute} 🌸`;
+    }
+}
+
+MyButton.register();
+```
+
+This will result in the following html:
+```html
+<my-button another-attribute="Some simple value">
+    Some simple value 🌸
+<my-button>
+```
 
 
 
