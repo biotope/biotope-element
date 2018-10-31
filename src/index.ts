@@ -1,6 +1,7 @@
 import HyperHTMLElement from 'hyperhtml-element/cjs';
 import HyperHTML from 'hyperhtml';
 
+import { camelize } from './camelize';
 import { Attribute } from './types';
 import { register } from './register';
 import { attributeNameMapper } from './attribute-name-mapper';
@@ -69,7 +70,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     if (attribute) {
       this.props = {
         ...(this.props as any),
-        [name]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+        [camelize(name)]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
       };
     };
   }
