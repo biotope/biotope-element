@@ -13,8 +13,6 @@ describe('render', () => {
             public render = renderSpy;
         }
 
-        HelloWorld.register()
-
         const instance = new HelloWorld();
         instance.created();
 
@@ -28,8 +26,6 @@ describe('render', () => {
 
             public render = renderSpy;
         }
-
-        HelloWorld.register()
 
         const instance = new HelloWorld();
         (instance as any).onPropsChanged();
