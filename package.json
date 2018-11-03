@@ -15,7 +15,8 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "netlify": "yarn docz:build && cp netlify.toml ./docs-dist/netlify.toml",
-    "test": "mocha --opts tests/mocha.opts"
+    "test": "mocha --opts tests/mocha.opts",
+    "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
   },
   "repository": {
     "type": "git",
@@ -38,11 +39,11 @@
     "@types/mocha": "~5.2",
     "@types/sinon": "~5.0",
     "@types/sinon-chai": "~3.2",
+    "basichtml": "~0.20",
     "buble": "0.19.4",
     "chai": "~4.2",
     "cpy-cli": "~2.0",
     "docz": "~0.12",
-    "jsdom": "12.2.0",
     "mocha": "~5.2",
     "np": "~3.0",
     "rimraf": "~2.6",
