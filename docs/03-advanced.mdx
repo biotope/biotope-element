@@ -8,10 +8,9 @@ route: '/advanced'
 ## Handeling state
 Every component can have her own internal state. To set the state just call the `setState` function of the component. To use the state just use `this.state`.
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
+class MyButton extends Component {
 
     onclick() {
         // this will set the state on click
@@ -19,7 +18,7 @@ class MyButton extends Element {
             foo: 'bar'
         });
     }
-    
+
     render() {
 
         return this.html`
@@ -27,6 +26,8 @@ class MyButton extends Element {
         `;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -46,23 +47,24 @@ Result:
 ## Dependencies
 Your component may need some other components to work. To allow the components to be registered when you need them, you can define dependencies for every component:
 
-```js
-import Element from '@biotope/element';
+```typescript
+// typescript
+import Component from '@biotope/element';
 
-class XSlide extends Element {
+class XSlide extends Component<any, any> {
     static componentName = 'x-slide';
-    
+
     render() {
         return this.html``;
     }
 }
 
-class XSlider extends Element {
+class XSlider extends Component {
     // Here the slider needs the slides to display correctly
-    static dependencies = [XSlide];
+    static dependencies = [XSlide as typeof Component];
 
     static componentName = 'x-slider';
-    
+
     render() {
         return this.html`
             <x-slide></x-slide>
@@ -83,22 +85,23 @@ XSlider.register();
 You can also nest components inside the html and use the `children` accessor to get them in the root component and manipulate them.
 
 
-```js
-import Element from '@biotope/element';
+```typescript
+// typescript
+import Component from '@biotope/element';
 
-class XSlide extends Element {
+class XSlide extends Component {
     static componentName = 'x-slide';
-    
+
     render() {
         return this.html``;
     }
 }
 
-class XSlider extends Element {
-    static dependencies = [XSlide];
+class XSlider extends Component {
+    static dependencies = [XSlide as typeof Component];
 
     static componentName = 'x-slider';
-    
+
     render() {
         // Here we use this.children to access the three child x-slides
         const slides = this.children.map(el => 'Slide');

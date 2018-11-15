@@ -40,7 +40,6 @@
     "@types/sinon": "~5.0",
     "@types/sinon-chai": "~3.2",
     "basichtml": "~0.20",
-    "buble": "0.19.4",
     "chai": "~4.2",
     "cpy-cli": "~2.0",
     "docz": "~0.12",
