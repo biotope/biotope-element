@@ -11,11 +11,11 @@ route: '/basics'
 
 We trust in the web. That's why we decided to write biotope and the biotope element with mostly vanilla web technologies and polyfill it untill the right time is there.
 On of these fancy new technologies is web components and all the proposals belonging to it (shadow dom, custom elements, scoped styling).
-  
+
 Biotope element is just an extension of the vanilla html element which add some nice features.
-  
+
 So everything you build using the biotope element will be called a component in the following documentation.
-  
+
 A component is a collection of functionality which could be reused.
 
 
@@ -32,14 +32,28 @@ A component is a collection of functionality which could be reused.
 ## Hello world
 First import the element in your component:
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 ```
 
 Then you extend your component with the biotope element:
 ```js
-class MyButton extends Element {
+// javascript
+class MyButton extends Component {
+    render() {
+        return this.html`Hello World 🐤`;
+    }
+}
+
+// needed if you uglify your code, which is most likely
+MyButton.componentName = 'my-button';
+
+```
+
+```typescript
+// typescript
+class MyButton extends Component<any, any> {
+    // needed if you uglify your code, which is most likely
     static componentName = 'my-button';
-    
     render() {
         return this.html`Hello World 🐤`;
     }
@@ -54,21 +68,22 @@ MyButton.register();
 
 So the whole file will look like this:
 ```js
-import Element from '@biotope/element';
+// javascript
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
     render() {
         return this.html`Hello World 🐤`;
     }
 }
 
+MyButton.componentName = 'my-button';
+
 MyButton.register();
 ```
 
 After that you can use it in your html like that:
-```html 
+```html
 <my-button></my-button>
 ```
 
@@ -88,16 +103,17 @@ This will result inthe following html:
 As you can see in the hello world example every component implements a `render` function. In there you can call `this.html` function on a template literal to add it to the components root:
 
 ```js
-import Element from '@biotope/element';
+// javascript
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
     render() {
         // this will add 'Hello World' to the root of the element
         return this.html`Hello World 🐤`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -114,11 +130,10 @@ In the template literal you can also add valid html code as well as the `<slot>`
 ### Styling
 As every component uses shadow dom by default, you have to put the styles inside the shadow root. You can either write inline styles:
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     render() {
         return this.html`
         <style>
@@ -131,31 +146,32 @@ class MyButton extends Element {
     }
 }
 
+MyButton.componentName = 'my-button';
+
 MyButton.register();
 ```
 
 or import your css from an external file with some kind of bundler:
 ```js
-import Element from '@biotope/element';
+// javascript
+import Component from '@biotope/element';
+import style from './styles.css';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
     render() {
         return this.html`
         <style>
-            ${require('./styles.css').toString()}
+            ${style}
         </style>
         Hello World 🐤
         `;
     }
 }
 
+MyButton.componentName = 'my-button';
+
 MyButton.register();
 ```
-
-
-
 
 
 ## Props
@@ -167,21 +183,22 @@ You can use attributes or set the props via javascript:
 ### Default props
 To give your props a default value you have to set the `defaultProps` getter of the component:
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     protected get defaultProps(): {
         return {
             foo: 'bar'
         }
     }
-    
+
     render() {
         return this.html`🎰 ${this.props.foo}`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -221,17 +238,18 @@ To pass in data to a component attributes on the html tag can be used:
 
 To pass these values to the props object, you have to define the corresponding attribute in the component:
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     static attributes = ['foo'];
-    
+
     render() {
         return this.html`🌸`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -239,17 +257,18 @@ MyButton.register();
 This will take care of the attributes value and pass it to the props of the component:
 
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     static attributes = ['foo'];
 
     render() {
         return this.html`${this.props.foo} 🌸`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -267,17 +286,18 @@ If your attributes get more complex, you might want to have multi word names lik
 To access those attributes in the props, you have to use the camelCase version of the string. In our example this will be `aComplexAttribute`
 
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     static attributes = ['another-attribute'];
 
     render() {
         return this.html`${this.props.anotherAttribute} 🌸`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -305,19 +325,20 @@ When you set values in the html tags attributes, these values will always be str
 <my-button fooNum="5"><my-button>
 ```
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     // here we use the converter config
     static attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
-    
+
     render() {
         // foo will now be a number
         return this.html`🚀 ${typeof this.props.fooNum}`;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
@@ -340,11 +361,10 @@ If have the following html and js:
 <my-button>
 ```
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-class MyButton extends Element {
-    static componentName = 'my-button';
-    
+class MyButton extends Component {
+
     render() {
         // the slot will be replaced by the current content
         return this.html`
@@ -353,6 +373,8 @@ class MyButton extends Element {
         `;
     }
 }
+
+MyButton.componentName = 'my-button';
 
 MyButton.register();
 ```
