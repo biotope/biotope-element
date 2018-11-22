@@ -15,7 +15,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "netlify": "yarn docz:build && cp netlify.toml ./docs-dist/netlify.toml",
-    "test": "mocha --opts tests/mocha.opts",
+    "test": "jest",
     "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
   },
   "repository": {
@@ -43,11 +43,13 @@
     "chai": "~4.2",
     "cpy-cli": "~2.0",
     "docz": "~0.12",
+    "jest": "^23.6.0",
     "mocha": "~5.2",
     "np": "~3.0",
     "rimraf": "~2.6",
     "sinon": "~6.3",
     "sinon-chai": "~3.2",
+    "ts-jest": "^23.10.4",
     "ts-node": "~7.0",
     "typescript": "~3.1"
   }
