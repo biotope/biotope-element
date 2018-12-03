@@ -1,8 +1,8 @@
 import Component from '../../../src/index';
 
 enum InputType {
-  Text = "text",
-  Password = "password",
+  Text = 'text',
+  Password = 'password',
 }
 
 interface TextInputProps {
