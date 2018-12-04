@@ -2,8 +2,6 @@ import Component from '../../../src/index';
 import { TextInput } from './child';
 
 class Form extends Component {
-
-
   render() {
     this.html`
       <form>
