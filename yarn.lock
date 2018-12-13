@@ -4573,6 +4573,13 @@ humanize-string@^1.0.2:
   dependencies:
     hyperhtml "^2.13.0"
 
+hyperhtml@2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/hyperhtml/-/hyperhtml-2.13.0.tgz#6eb43fc3dfdd0775374d0b80bb990b05aeba2213"
+  integrity sha512-q2DxtQK9zptoZMP2ogVi22azGY/jF+V+wArFoXi3Ut8109RNhn1JHkq0cnWHqgVFlPqWcFdnpK7JSy1gR029tw==
+  dependencies:
+    lightercollective "^0.1.0"
+
 hyperhtml@^2.13.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/hyperhtml/-/hyperhtml-2.16.0.tgz#5b3df33bed9011cb6c66de130100d06fea8cfb49"
