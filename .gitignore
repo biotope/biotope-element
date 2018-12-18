@@ -7,3 +7,4 @@
 /example/node_modules
 /example/.cache
 /example/dist
+/.DS_Store
