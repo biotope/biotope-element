@@ -10,11 +10,11 @@
     "prepare": "npm run build",
     "build": "tsc && cpy src/host.mixin.scss lib/",
     "release": "np",
-    "prepublishOnly": "npm run clean && npm install && npm run clean && yarn install",
+    "prepublishOnly": "npm run clean && npm install",
     "clean": "node_modules/.bin/rimraf node_modules",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "netlify": "yarn docz:build && cp netlify.toml ./docs-dist/netlify.toml",
+    "netlify": "npm run docz:build && cp netlify.toml ./docs-dist/netlify.toml",
     "test": "mocha --opts tests/mocha.opts",
     "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
   },
