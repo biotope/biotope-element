@@ -1,10 +1,4 @@
----
-name: Together with
-route: '/together'
-order: 96
----
-
-# Together with...
+# Used with...
 
 ## Biotope Resource Loader
 The [biotope-resource-loader](https://github.com/biotope/biotope-resource-loader) makes it easy for you to load the components you built with biotope-element like so:
