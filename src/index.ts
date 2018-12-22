@@ -31,14 +31,14 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     return null;
   }
 
-  protected get props(): TProps {
+  public get props(): TProps {
     return {
       ...(this.defaultProps as any),
       ...(this.currentProps as any),
     };
   }
 
-  protected set props(value: TProps) {
+  public set props(value: TProps) {
     this.currentProps = value;
     this.onPropsChanged();
   }
