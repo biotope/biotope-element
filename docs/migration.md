@@ -1,13 +1,7 @@
----
-name: 4 Migration Path
-route: '/migration-path'
-order: 5
----
-
 # Make your biotope project ready for BioElement:
 
 ## Change your typescript config
-```
+```json
 {
 	"compilerOptions": {
 		"allowJs": true,
@@ -48,7 +42,7 @@ order: 5
 ## Add types for `*.scss` files and whatever custom loader you have for webpack.
 
 Create a new file under `src/types` with the name `sass.d.ts` <-- actually that name doesn't matter.
-```
+```ts
 declare module '*.scss' {
   const content: any;
   export default content;
@@ -68,7 +62,7 @@ Follow the instructions, you may follow the naming pattern `XYourComponentName`
 
 ## Add polyfills for IE11 and Edge
 Copy the following files from `node_modules/@webcomponents` to `src/resources/js/polyfills`
-```
+```js
 'webcomponents-loader.js',
 'bundles/webcomponents-ce.js',
 'bundles/webcomponents-sd-ce-pf.js',
@@ -78,7 +72,7 @@ Copy the following files from `node_modules/@webcomponents` to `src/resources/js
 
 Create a file in polyfills `object-assign.polyfill.js`
 
-```
+```js
 if (typeof Object.assign != 'function') {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, "assign", {
@@ -111,7 +105,7 @@ if (typeof Object.assign != 'function') {
 ```
 
 Add some these lines to your `htmlhead.scripts.hbs`
-```
+```html
 <script nomodule src="resources/js/polyfills/object-assign.polyfill.js"></script>
 <script nomodule src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js"></script>
 <script nomodule src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
@@ -121,7 +115,7 @@ Add some these lines to your `htmlhead.scripts.hbs`
 ```
 
 Modify `projectConfig.js`
-```
+```js
 global: {
   externalResources: {
     '@webcomponents/webcomponentsjs': [

@@ -1,9 +1,3 @@
----
-name: 2 Advanced Guides
-route: '/advanced'
-order: 3
----
-
 # Advanced
 
 ## Handeling state

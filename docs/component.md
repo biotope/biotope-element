@@ -1,16 +1,10 @@
----
-name: 1 Basics
-route: '/basics'
-order: 2
----
-
-# Basics
-
-
+# Component
 
 ## The concept of a component
 
-We trust in the web. That's why we decided to write biotope and the biotope element with mostly vanilla web technologies and polyfill it untill the right time is there.
+We trust in the web.  
+
+That's why we decided to write biotope and the biotope element with mostly vanilla web technologies and polyfill it untill the right time is there.
 On of these fancy new technologies is web components and all the proposals belonging to it (shadow dom, custom elements, scoped styling).
 
 Biotope element is just an extension of the vanilla html element which add some nice features.
@@ -21,86 +15,7 @@ A component is a collection of functionality which could be reused.
 
 
 
-
-
-
-
-
-
-
-
-
-## Hello world
-First import the element in your component:
-```js
-import Component from '@biotope/element';
-```
-
-Then you extend your component with the biotope element:
-```js
-// javascript
-class MyButton extends Component {
-    render() {
-        return this.html`Hello World 🐤`;
-    }
-}
-
-// needed if you uglify your code, which is most likely
-MyButton.componentName = 'my-button';
-
-```
-
-```typescript
-// typescript
-class MyButton extends Component<any, any> {
-    // needed if you uglify your code, which is most likely
-    static componentName = 'my-button';
-    render() {
-        return this.html`Hello World 🐤`;
-    }
-}
-```
-> Notice the `static componentName` part. This has to be set AND there needs to be a dash in there.
-
-After defining the class, you have to call the `register` function on it, to use it in HTML:
-```js
-MyButton.register();
-```
-
-So the whole file will look like this:
-```js
-// javascript
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-    render() {
-        return this.html`Hello World 🐤`;
-    }
-}
-
-MyButton.componentName = 'my-button';
-
-MyButton.register();
-```
-
-After that you can use it in your html like that:
-```html
-<my-button></my-button>
-```
-
-This will result inthe following html:
-```html
-<my-button>
-    Hello world 🐤
-</my-button>
-```
-
-
-
-
-
-
-## Render
+## render()
 As you can see in the hello world example every component implements a `render` function. In there you can call `this.html` function on a template literal to add it to the components root:
 
 ```js
@@ -122,66 +37,13 @@ MyButton.register();
 In the template literal you can also add valid html code as well as the `<slot>` tag where the current content of the component will be placed. Read more about it in the [shadow dom](#shadow-dom) section.
 
 
-
-
-
-
-
-
-### Styling
-As every component uses shadow dom by default, you have to put the styles inside the shadow root. You can either write inline styles:
-```js
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-
-    render() {
-        return this.html`
-        <style>
-            :host {
-                background-color: orange;
-            }
-        </style>
-        Hello World 🐤
-        `;
-    }
-}
-
-MyButton.componentName = 'my-button';
-
-MyButton.register();
-```
-
-or import your css from an external file with some kind of bundler:
-```js
-// javascript
-import Component from '@biotope/element';
-import style from './styles.css';
-
-class MyButton extends Component {
-    render() {
-        return this.html`
-        <style>
-            ${style}
-        </style>
-        Hello World 🐤
-        `;
-    }
-}
-
-MyButton.componentName = 'my-button';
-
-MyButton.register();
-```
-
-
-## Props
+## props
 Every component has its own props. The props can be passed into the component two ways:
 
 You can use attributes or set the props via javascript:
 
 
-### Default props
+### defaultProps
 To give your props a default value you have to set the `defaultProps` getter of the component:
 ```js
 import Component from '@biotope/element';
@@ -215,7 +77,7 @@ This will result in the following html:
 
 
 
-### Setting props
+### setting props
 You can set the props of a component after initialisation by accessing its instance like this:
 ```html
 <my-button id="foo"></my-button>
@@ -231,7 +93,7 @@ Changing the props this way will trigger its `onPropsChanged` function, which wi
 
 
 
-### Using attributes
+## attributes
 To pass in data to a component attributes on the html tag can be used:
 ```html
 <my-button foo="bar"><my-button>
@@ -281,7 +143,7 @@ This will result in the following html:
 <my-button>
 ```
 
-### Hyphen Attributes
+### Hyphen attributes
 If your attributes get more complex, you might want to have multi word names like `a-complex-attribute`.
 
 To access those attributes in the props, you have to use the camelCase version of the string. In our example this will be `aComplexAttribute`
