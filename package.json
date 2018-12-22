@@ -28,8 +28,8 @@
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
     "dasherize": "^2.0.0",
-    "hyperhtml": "2.13.0",
-    "hyperhtml-element": "^2.3.0 <3.0"
+    "hyperhtml": "^2.23.0",
+    "hyperhtml-element": "^3.4.0"
   },
   "devDependencies": {
     "@types/chai": "~4.1",
