@@ -14,7 +14,6 @@ So everything you build using the biotope element will be called a component in 
 A component is a collection of functionality which could be reused.
 
 
-
 ## render()
 As you can see in the hello world example every component implements a `render` function. In there you can call `this.html` function on a template literal to add it to the components root:
 
