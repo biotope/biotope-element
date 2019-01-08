@@ -1,10 +1,8 @@
-import { expect } from 'chai';
-import * as sinon from 'sinon';
 import Component from '../src/index';
 
 describe('dependencies', () => {
   it('registers dependencies on component register', () => {
-    const registerSpy = sinon.spy();
+    const registerSpy = jest.fn();
 
     class RegisterTest extends Component<object, object> {
       public static componentName = 'x-register'
@@ -18,6 +16,6 @@ describe('dependencies', () => {
 
     Test.register();
 
-    expect(registerSpy).to.have.been.calledOnce;
+    expect(registerSpy.mock.calls.length).toBe(1);
   })
 })
