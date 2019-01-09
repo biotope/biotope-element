@@ -1,12 +1,10 @@
-import sinon from 'sinon';
-import { expect } from 'chai';
 import Component from '../src/index';
 
 
 describe('render', () => {
 
     it('is called on created', () => {
-        const renderSpy = sinon.spy();
+        const renderSpy = jest.fn();
         class HelloWorld extends Component<object, object> {
             public static componentName = 'x-world';
 
@@ -16,11 +14,11 @@ describe('render', () => {
         const instance = new HelloWorld();
         instance.created();
 
-        expect(renderSpy).to.have.been.calledOnce;
+        expect(renderSpy.mock.calls.length).toBe(1);
     });
 
     it('is called onPropsChanged by default', () => {
-        const renderSpy = sinon.spy();
+        const renderSpy = jest.fn();
         class HelloWorld extends Component<object, object> {
             public static componentName = 'x-world';
 
@@ -30,7 +28,7 @@ describe('render', () => {
         const instance = new HelloWorld();
         (instance as any).onPropsChanged();
 
-        expect(renderSpy).to.have.been.calledOnce;
+        expect(renderSpy.mock.calls.length).toBe(1);
     });
 })
 

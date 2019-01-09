@@ -1,11 +1,9 @@
-import { expect } from 'chai';
-import * as sinon from 'sinon';
 import Component from '../src/index';
 
 describe('props', () => {
   describe('setter', () => {
     it('calls onPropsChanged callback when props setter is called', () => {
-      const onPropsChangedSpy = sinon.spy();
+      const onPropsChangedSpy = jest.fn();
 
       class Test extends Component<object, object> {
         public static componentName = 'x-test';
@@ -21,7 +19,7 @@ describe('props', () => {
         test: 'someValue',
       };
 
-      expect(onPropsChangedSpy).to.have.been.calledOnce;
+      expect(onPropsChangedSpy.mock.calls.length).toBe(1);
     })
   })
 
@@ -33,7 +31,7 @@ describe('props', () => {
 
       const testComponent = Object.create(Test.prototype, {});
 
-      expect(testComponent.props).to.be.empty;
+      expect(Object.keys(testComponent.props)).toHaveLength(0)
     })
 
     it('returns default props if set', () => {
@@ -52,7 +50,7 @@ describe('props', () => {
       }
       const testComponent = Object.create(Test.prototype, {});
 
-      expect(testComponent.props.myProp).to.eq('value');
+      expect(testComponent.props.myProp).toBe('value');
     })
   })
 })

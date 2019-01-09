@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Component from '../src';
 
 describe('attributeChangedCallback', () => {
@@ -11,11 +10,11 @@ describe('attributeChangedCallback', () => {
       static componentName = 'x-test';
     }
 
-    const testComponent = Object.create(Test.prototype, {});
+    const testComponent = new Test();
 
     testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
 
-    expect(testComponent.props.myAttribute).to.be.undefined;
+    expect(testComponent.props.myAttribute).toBeUndefined();
   });
 
   it('writes watched attributes to props', () => {
@@ -24,11 +23,11 @@ describe('attributeChangedCallback', () => {
       static attributes = ['myAttribute'];
     }
 
-    const testComponent = Object.create(Test.prototype, {});
+    const testComponent = new Test();
 
     testComponent.attributeChangedCallback('myAttribute', '', 'newValue');
 
-    expect(testComponent.props.myAttribute).to.eq('newValue');
+    expect(testComponent.props.myAttribute).toBe('newValue');
   });
 
   it('transforms dash attributes to camelcase', () => {
@@ -37,11 +36,11 @@ describe('attributeChangedCallback', () => {
       static attributes = ['my-attribute'];
     }
 
-    const testComponent = Object.create(Test.prototype, {});
+    const testComponent = new Test();
 
     testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
 
-    expect(testComponent.props).to.have.key('myAttribute');
+    expect(testComponent.props.myAttribute).toBeDefined;
   });
 
   it('transforms single letter dash attributes to camelcase', () => {
@@ -50,11 +49,11 @@ describe('attributeChangedCallback', () => {
       static attributes = ['m-attribute'];
     }
 
-    const testComponent = Object.create(Test.prototype, {});
+    const testComponent = new Test();
 
     testComponent.attributeChangedCallback('m-attribute', '', 'newValue');
 
-    expect(testComponent.props).to.have.key('mAttribute');
+    expect(testComponent.props.myAttribute).toBeDefined;
   });
 
   it('sets dash attributes to camelcase', () => {
@@ -63,10 +62,10 @@ describe('attributeChangedCallback', () => {
       static attributes = ['my-attribute'];
     }
 
-    const testComponent = Object.create(Test.prototype, {});
+    const testComponent = new Test();
 
     testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
 
-    expect(testComponent.props.myAttribute).to.eq('newValue');
+    expect(testComponent.props.myAttribute).toBe('newValue');
   });
 })

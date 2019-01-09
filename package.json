@@ -12,7 +12,7 @@
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
-    "test": "mocha --opts tests/mocha.opts",
+    "test": "jest",
     "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
   },
   "repository": {
@@ -28,24 +28,19 @@
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
     "dasherize": "^2.0.0",
-    "hyperhtml": "2.13.0",
-    "hyperhtml-element": "^2.3.0 <3.0"
+    "hyperhtml": "^2.23.0",
+    "hyperhtml-element": "^3.4.0"
   },
   "devDependencies": {
-    "@types/chai": "~4.1",
-    "@types/mocha": "~5.2",
-    "@types/sinon": "~5.0",
-    "@types/sinon-chai": "~3.2",
-    "basichtml": "~0.20",
-    "chai": "~4.2",
+    "@types/jest": "^23.3.12",
+    "basichtml": "^0.21.0",
     "cpy-cli": "~2.0",
     "docsify-cli": "^4.3.0",
+    "jest": "^23.6.0",
     "mocha": "~5.2",
     "np": "~3.0",
     "prismjs": "^1.15.0",
-    "sinon": "~6.3",
-    "sinon-chai": "~3.2",
-    "ts-node": "~7.0",
-    "typescript": "~3.1"
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.1.6"
   }
 }
