@@ -1,10 +1,12 @@
-/node_modules
-/lib
-/.docz
-/docs-dist
+node_modules
+lib
+.docz
+docs-dist
 *.log
 
-/example/node_modules
-/example/.cache
-/example/dist
-/.DS_Store
+example/node_modules
+example/.cache
+example/dist
+.DS_Store
+.rpt2_cache
+stats.html

@@ -1,5 +1,5 @@
-import HyperHTMLElement from 'hyperhtml-element/cjs';
-import HyperHTML from 'hyperhtml';
+import HyperHTMLElement from 'hyperhtml-element/esm';
+import HyperHTML from 'hyperhtml/esm';
 
 import { camelize } from './camelize';
 import { Attribute } from './types';
