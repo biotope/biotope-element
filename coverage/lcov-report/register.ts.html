@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for register.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> register.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">48.72% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>19/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">27.27% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>18/36</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Component from '.';
+import { getComponentName } from './get-component-name';
+&nbsp;
+const ELEMENT_IDS_BEING_USED: string[] = [];
+&nbsp;
+const isComponentRegistered = (name: string) =&gt; {
+  switch (document.createElement(name).constructor) {
+    case HTMLElement: return false;
+<span class="branch-1 cbranch-no" title="branch not covered" >    case HTMLUnknownElement: <span class="cstat-no" title="statement not covered" >return false;</span></span>
+  }
+<span class="cstat-no" title="statement not covered" >  return true;</span>
+};
+&nbsp;
+const generateUniqueId = <span class="fstat-no" title="function not covered" >(l</span>ength: number = <span class="branch-0 cbranch-no" title="branch not covered" >32)</span>: string =&gt; {
+  const possible = <span class="cstat-no" title="statement not covered" >'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';</span>
+&nbsp;
+  let text = <span class="cstat-no" title="statement not covered" >'';</span>
+<span class="cstat-no" title="statement not covered" >  for (let i = 0; i &lt; length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    text += possible.charAt(Math.floor(Math.random() * possible.length));</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (ELEMENT_IDS_BEING_USED.indexOf(text) &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    ELEMENT_IDS_BEING_USED.push(text);</span>
+<span class="cstat-no" title="statement not covered" >    return text;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return generateUniqueId(length);</span>
+}
+&nbsp;
+const isNotChild = <span class="fstat-no" title="function not covered" >(e</span>lement: HTMLElement, _: number, elements: HTMLElement[]) =&gt; <span class="cstat-no" title="statement not covered" >!elements</span>
+  .filter(<span class="fstat-no" title="function not covered" >node</span> =&gt; <span class="cstat-no" title="statement not covered" >element !== node)</span>
+  .reduce(<span class="fstat-no" title="function not covered" >(r</span>esult, node) =&gt; <span class="cstat-no" title="statement not covered" >result || node.contains(element),</span> false);
+&nbsp;
+interface UnregisteredHTMLElement {
+  oldElement: HTMLElement,
+  outerHTML: string;
+  id: string;
+}
+&nbsp;
+export const register = (component: typeof Component) =&gt; {
+  const dashedName = getComponentName(component);
+  const isRegistered = isComponentRegistered(dashedName);
+  let elements: UnregisteredHTMLElement[] = [];
+&nbsp;
+  // if component is not registered, remove any existing element from the page
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (!isRegistered) {
+    elements = ([].slice.call(document.getElementsByTagName(dashedName)) as HTMLElement[])
+    .filter(isNotChild)
+    .map(<span class="fstat-no" title="function not covered" >element</span> =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+      oldElement: element,
+      outerHTML: element.outerHTML,
+      id: generateUniqueId(),
+    }));
+&nbsp;
+    elements.forEach(<span class="fstat-no" title="function not covered" >({</span> oldElement, id }) =&gt; <span class="cstat-no" title="statement not covered" >oldElement.outerHTML = `&lt;div id="${id}"&gt;&lt;/div&gt;`)</span>;
+  }
+&nbsp;
+  component.dependencies.forEach(dependency =&gt; dependency.register());
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (!isRegistered) {
+    component.define(dashedName);
+&nbsp;
+    // re-apply the previously removed elements from the page
+    elements.forEach(<span class="fstat-no" title="function not covered" >({</span> outerHTML, id }) =&gt; {
+      const element = <span class="cstat-no" title="statement not covered" >document.getElementById(id);</span>
+      const wrappingElement = <span class="cstat-no" title="statement not covered" >document.createElement('div');</span>
+<span class="cstat-no" title="statement not covered" >      wrappingElement.innerHTML = outerHTML;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      element.parentNode.replaceChild(wrappingElement.children[0], element);</span>
+<span class="cstat-no" title="statement not covered" >      ELEMENT_IDS_BEING_USED.splice(ELEMENT_IDS_BEING_USED.indexOf(id), 1);</span>
+    })
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 20:57:11 GMT+0100 (GMT+01:00)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
