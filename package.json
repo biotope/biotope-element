@@ -12,7 +12,8 @@
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
-    "test": "jest && codecov",
+    "test": "jest",
+    "test:report": "npm run test && codecov",
     "test:watch": "jest --watch"
   },
   "repository": {
