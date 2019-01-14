@@ -7,13 +7,12 @@
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
     "build": "rollup -c && cpy src/host.mixin.scss lib/",
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
     "test": "jest",
-    "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
