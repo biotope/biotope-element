@@ -8,7 +8,7 @@
   "types": "lib/esm/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "rollup -c",
+    "build": "rollup -c && cpy src/host.mixin.scss lib/",
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
