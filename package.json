@@ -7,7 +7,6 @@
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
     "build": "rollup -c",
     "release": "np",
     "docs": "docsify serve docs",
