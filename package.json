@@ -7,13 +7,13 @@
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
     "build": "rollup -c",
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
     "test": "jest",
-    "test:watch": "mocha --opts tests/mocha.opts --watch-extensions ts --watch"
+    "test:report": "npm run test && codecov",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.12",
     "basichtml": "^0.21.0",
+    "codecov": "^3.1.0",
     "cpy-cli": "~2.0",
     "docsify-cli": "^4.3.0",
     "jest": "^23.6.0",

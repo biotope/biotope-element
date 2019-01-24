@@ -1,5 +1,8 @@
 # Biotope Element
 
+[![Build Status](https://travis-ci.org/biotope/biotope-element.svg?branch=master)](https://travis-ci.org/biotope/biotope-element)
+[![codecov](https://codecov.io/gh/biotope/biotope-element/branch/master/graph/badge.svg)](https://codecov.io/gh/biotope/biotope-element)
+
 ## Installation
 You can install the biotope element in your project using npm 
 ```bash
