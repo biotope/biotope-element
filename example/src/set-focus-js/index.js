@@ -15,13 +15,11 @@ class XC extends Component {
   }
 
   changeProps() {
-    console.log(this)
     this.setAttribute('text', Date.now().toString());
   }
 
   setFocus() {
     const inputElement = this.shadowRoot.querySelector('input');
-    console.log(inputElement);
     inputElement.focus();
   }
 
