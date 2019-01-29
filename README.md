@@ -16,7 +16,7 @@ yarn add @biotope/element --save
 After that to use it, import it in your project:
 
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 ```
 
 ## Usage
@@ -24,9 +24,9 @@ import Element from '@biotope/element';
 To use the biotope element, you have to extend it with your custom class:
 
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-export class MyButton extends Element {
+export class MyButton extends Component {
   public static componentName = 'my-button';
   
   public render() {
@@ -38,9 +38,9 @@ export class MyButton extends Element {
 After defining your class which you can do using existing methods (link) you have to call `register` on the class itself to use it in the html:
 index.js
 ```js
-import Element from '@biotope/element';
+import Component from '@biotope/element';
 
-export class MyButton extends Element {
+export class MyButton extends Component {
   public static componentName = 'my-button';
   
   public render() {
