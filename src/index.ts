@@ -80,7 +80,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     this.render();
   }
 
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false) {
     return this.dispatchEvent(new CustomEvent(
       `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
       {
