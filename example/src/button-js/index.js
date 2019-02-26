@@ -1,12 +1,18 @@
 import Component from '../../../src/index';
 
 class MyButton extends Component {
+  constructor() {
+    super();
+    this.onButtonClick = this.onButtonClick.bind(this);
+  }
+
   render() {
-    this.html `
+    this.html`
     <style>
       :host {
         --base-font-size: 24px;
       }
+    
       :host button {
         font-size: var(--base-font-size);
         background: transparent;
@@ -18,24 +24,27 @@ class MyButton extends Component {
         outline: none;
         position: relative;
       }
+    
       :host button:focus {
         border-style: dotted;
       }
+    
       :host button:active {
         top: 1px;
         left: 1px;
       }
+    
       :host button:hover {
         border-style: solid;
       }
     </style>
-    <button onclick="${this.onButtonClick.bind(this)}">Normal Button</button>
+    <button onclick="${this.onButtonClick}">Normal Button</button>
     `
   }
 
   onButtonClick(event) {
-    console.log('Input change event on: ', event.target);
-    this.dispatchEvent(new CustomEvent('change'));
+    console.log('Button click event on: ', event.target);
+    this.emit('click', {}, false);
   }
 }
 
