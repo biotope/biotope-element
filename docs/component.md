@@ -181,8 +181,9 @@ This will result in the following html:
 
 
 ### Transforming attributes
-When you set values in the html tags attributes, these values will always be strings. If you pass other data types through the attributes, you also have to take care of their transformation. You can do this by setting a attribute converter in the attributes array instead of a simple string:
+When you set values in the html tags attributes, these values will always be strings. If you pass other data types through the attributes, you also have to take care of their transformation. You can do this by setting a attribute converter in the attributes array instead of a simple string.
 
+#### Numbers
 ```html
 <my-button fooNum="5"><my-button>
 ```
@@ -208,6 +209,40 @@ This will result in the following html:
 ```html
 <my-button fooNum="5">
     🚀 number
+<my-button>
+```
+
+#### Booleans
+Passing in booleans is handled similarly, but instead of adding an string attribute you either add the attribute or not. So your initial element might look like this:
+```html
+<my-button foo-bool><my-button>
+```
+In this case foo-bool equals true, when not passing in the attribute at all it equals false.
+If you script looks like this...
+
+```js
+import Component from '@biotope/element';
+
+class MyButton extends Component {
+
+    static attributes = [{name: 'foo-bool', converter: () => true}];
+
+    render() {
+        const {fooBool} = this.props;
+        // fooBool will now be a boolean
+        return this.html`💼 ${fooBool ? 'hello': 'goodbye'}`;
+    }
+}
+
+MyButton.componentName = 'my-button';
+
+MyButton.register();
+```
+...it will result in the following HTML:
+
+```html
+<my-button foo-bool>
+    💼 hello
 <my-button>
 ```
 
