@@ -53,9 +53,11 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
 
   private currentProps: TProps;
 
-  constructor() {
+  constructor(useShadow: boolean = true) {
     super();
-    this.attachShadow({ mode: 'open' });
+    if (useShadow) {
+      this.attachShadow({ mode: 'open' });
+    }
   }
 
   // overwrite if you, for example, need to fetch something after the component is created
@@ -80,7 +82,10 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     this.render();
   }
 
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false) {
+    if (!name) {
+      throw Error('No event name defined. Please provide a name');
+    }
     return this.dispatchEvent(new CustomEvent(
       `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
       {
