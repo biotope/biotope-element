@@ -53,9 +53,11 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
 
   private currentProps: TProps;
 
-  constructor() {
+  constructor(useShadow: boolean = true) {
     super();
-    this.attachShadow({ mode: 'open' });
+    if (useShadow) {
+      this.attachShadow({ mode: 'open' });
+    }
   }
 
   // overwrite if you, for example, need to fetch something after the component is created
