@@ -82,7 +82,7 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
     this.render();
   }
 
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false) {
     if (!name) {
       throw Error('No event name defined. Please provide a name');
     }
