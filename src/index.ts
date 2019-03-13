@@ -81,6 +81,9 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   }
 
   protected emit<T>(name: string, detail?: T, addPrefix: boolean = true) {
+    if (!name) {
+      throw Error('No event name defined. Please provide a name');
+    }
     return this.dispatchEvent(new CustomEvent(
       `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
       {
