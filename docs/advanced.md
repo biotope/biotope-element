@@ -1,7 +1,7 @@
 # Advanced
 
-## Handeling state
-Every component can have her own internal state. To set the state just call the `setState` function of the component. To use the state just use `this.state`.
+## Handling state
+Every component can have its own internal state. To set the state just call the `setState` function of the component. To use the state just use `this.state`.
 ```js
 import Component from '@biotope/element';
 

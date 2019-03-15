@@ -3,5 +3,6 @@
   - [Component](component.md)
   - [Styling](styling.md)
 - [__Advanced__](advanced.md)
+ - [Events](events.md)
 - [__Used with__](used-with.md)
 - [__Migration__](migration.md)

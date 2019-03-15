@@ -104,14 +104,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['foo'];
-
     render() {
         return this.html`🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 
 MyButton.register();
 ```
@@ -123,14 +122,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['foo'];
-
     render() {
         return this.html`${this.props.foo} 🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 
 MyButton.register();
 ```
@@ -152,14 +150,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['another-attribute'];
-
     render() {
         return this.html`${this.props.anotherAttribute} 🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes =  ['another-attribute'];
 
 MyButton.register();
 ```
@@ -181,8 +178,9 @@ This will result in the following html:
 
 
 ### Transforming attributes
-When you set values in the html tags attributes, these values will always be strings. If you pass other data types through the attributes, you also have to take care of their transformation. You can do this by setting a attribute converter in the attributes array instead of a simple string:
+When you set values in the html tags attributes, these values will always be strings. If you pass other data types through the attributes, you also have to take care of their transformation. You can do this by setting a attribute converter in the attributes array instead of a simple string.
 
+#### Numbers
 ```html
 <my-button fooNum="5"><my-button>
 ```
@@ -191,9 +189,6 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    // here we use the converter config
-    static attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
-
     render() {
         // foo will now be a number
         return this.html`🚀 ${typeof this.props.fooNum}`;
@@ -201,6 +196,8 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
+// here we use the converter config
+MyButton.attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
 
 MyButton.register();
 ```
@@ -208,6 +205,39 @@ This will result in the following html:
 ```html
 <my-button fooNum="5">
     🚀 number
+<my-button>
+```
+
+#### Booleans
+Passing in booleans is handled similarly, but instead of adding an string attribute you either add the attribute or not. So your initial element might look like this:
+```html
+<my-button primary><my-button>
+```
+In this case foo-bool equals true, when not passing in the attribute at all it equals false.
+If your script looks like this...
+
+```js
+import Component from '@biotope/element';
+
+class MyButton extends Component {
+
+    render() {
+        const {primary} = this.props;
+        // primary will now be a boolean
+        return this.html`💼 ${primary ? 'hello': 'goodbye'}`;
+    }
+}
+
+MyButton.componentName = 'my-button';
+MyButton.attributes = [{name: 'primary', converter: () => true}];
+
+MyButton.register();
+```
+...it will result in the following HTML:
+
+```html
+<my-button primary>
+    💼 hello
 <my-button>
 ```
 
