@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BioElement</title>
+    <script src="./index.ts"></script>
+  </head>
+
+  <body>
+    <h1>Slotted content will be orange:</h1>
+    <x-full-name>
+      <span slot="first">Jack</span>
+      <span slot="last">Johnson</span>
+    </x-full-name>
+    <br>
+    <x-full-name>
+      <span slot="first">Jack</span>
+    </x-full-name>
+    <br>
+    <x-full-name>
+      <span slot="last">Johnson</span>
+    </x-full-name>
+
+  </body>
+
+</html>
