@@ -68,4 +68,22 @@ describe('attributeChangedCallback', () => {
 
     expect(testComponent.props.myAttribute).toBe('newValue');
   });
+
+  it('applies converter to attributes', () => {
+    class Test extends Component<ComponentProps, object> {
+      static componentName = 'x-test';
+      static attributes = [
+        {
+          name: 'my-attribute',
+          converter: (input: any) => 'output'
+        }
+      ];
+    }
+
+    const testComponent = new Test();
+
+    testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
+
+    expect(testComponent.props.myAttribute).toBe('output');
+  });
 })
