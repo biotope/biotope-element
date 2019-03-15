@@ -215,33 +215,32 @@ This will result in the following html:
 #### Booleans
 Passing in booleans is handled similarly, but instead of adding an string attribute you either add the attribute or not. So your initial element might look like this:
 ```html
-<my-button foo-bool><my-button>
+<my-button primary><my-button>
 ```
 In this case foo-bool equals true, when not passing in the attribute at all it equals false.
-If you script looks like this...
+If your script looks like this...
 
 ```js
 import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = [{name: 'foo-bool', converter: () => true}];
-
     render() {
-        const {fooBool} = this.props;
-        // fooBool will now be a boolean
-        return this.html`💼 ${fooBool ? 'hello': 'goodbye'}`;
+        const {primary} = this.props;
+        // primary will now be a boolean
+        return this.html`💼 ${primary ? 'hello': 'goodbye'}`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = [{name: 'primary', converter: () => true}];
 
 MyButton.register();
 ```
 ...it will result in the following HTML:
 
 ```html
-<my-button foo-bool>
+<my-button primary>
     💼 hello
 <my-button>
 ```
