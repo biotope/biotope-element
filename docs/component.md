@@ -104,14 +104,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['foo'];
-
     render() {
         return this.html`🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 
 MyButton.register();
 ```
@@ -123,14 +122,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['foo'];
-
     render() {
         return this.html`${this.props.foo} 🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 
 MyButton.register();
 ```
@@ -152,14 +150,13 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    static attributes = ['another-attribute'];
-
     render() {
         return this.html`${this.props.anotherAttribute} 🌸`;
     }
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes =  ['another-attribute'];
 
 MyButton.register();
 ```
@@ -191,9 +188,6 @@ import Component from '@biotope/element';
 
 class MyButton extends Component {
 
-    // here we use the converter config
-    static attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
-
     render() {
         // foo will now be a number
         return this.html`🚀 ${typeof this.props.fooNum}`;
@@ -201,6 +195,8 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
+// here we use the converter config
+MyButton.attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
 
 MyButton.register();
 ```
