@@ -15,18 +15,24 @@ const MY_BUTTON_EVENTS = {
 
 export default MY_BUTTON_EVENTS;
 ```
-> Important ⚠️: Camelcase will be ignored in event names.
 
-## Dispatch
+!> __Important ⚠️: Camelcase will not work with callbacks on elements.__
+
+## Emit
 To prevent event cluttering on the window element you should only dispatch events on the component itself or on its children. Anything outside is not under your control and should be handled with care.
 
-To dispatch an event you can just call `dispatch` on the component:
+To dispatch an event you can just call `emit` on the component:
 
 ```js
 import Component from '@biotope/element';
-import MY_BUTTON_EVENTS from '@biotope/element';
+import MY_BUTTON_EVENTS from './events';
 
 class MyButton extends Component {
+    constructor() {
+        super();
+        // we have to bind the callback to accesss this inside the function
+        this.onclick = this.onclick.bind(this)
+    }
     render() {
         return this.html`
             <button onclick=${this.onclick}>
@@ -36,7 +42,7 @@ class MyButton extends Component {
     }
 
     onclick(event) {
-        this.dispatch(new CustomEvent(MY_BUTTON_EVENTS.PRESSED))
+        this.emit(MY_BUTTON_EVENTS.PRESSED)
     }
 }
 
@@ -46,10 +52,11 @@ MyButton.register();
 ```
 
 ## Listen
-Now to listen to these custom events, you can just pass a function to a attribute with the same name as your event. The function you pass should bind `this` so we can access the component inside:
+Now to listen to these custom events, you can just pass a function to an attribute with the same name as your event. The function you pass should bind `this` so we can access the component inside:
 
 ```js
 import Component from '@biotope/element';
+import MY_BUTTON_EVENTS from '../MyButton/events';
 
 class ImageStage extends Component {
     render() {
