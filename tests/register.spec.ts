@@ -16,9 +16,11 @@ describe('#register', () => {
     expect(() => register(undefined)).toThrowError(new Error('No component to register defined!'));
   });
 
-  it('throws error if component already registered', () => {
+  it('warns if component already registered', () => {
     register(TestComp);
-    expect(() => register(TestComp)).toThrowError(new Error('Component already registered!'));
+    window.console.warn = jest.fn();
+    register(TestComp);
+    expect(window.console.warn).toHaveBeenCalledWith('Attempt to re-registering component "test-comp-tag".');
   });
 
   it('registers component with no name', () => {

@@ -15,7 +15,8 @@ export const register = (component: typeof Component) => {
   }
   const dashedName = getComponentName(component);
   if (isComponentRegistered(dashedName)) {
-    throw new Error('Component already registered!')
+    console.warn(`Attempt to re-registering component "${dashedName}".`);
+    return;
   }
   component.dependencies.forEach(register);
   component.define(dashedName);
