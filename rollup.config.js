@@ -17,7 +17,10 @@ export default [
 			progress(),
 			resolve(),
 			commonjs(),
-			typescript({ tsconfig: './tsconfig.json' }),
+			typescript({
+				tsconfig: './tsconfig.json',
+				clean: true
+			}),
 			visualizer()
 		]
 	},
@@ -32,7 +35,10 @@ export default [
 			progress(),
 			resolve(),
 			commonjs(),
-			typescript({ tsconfig: './tsconfig.json' })
+			typescript({
+				tsconfig: './tsconfig.json',
+				clean: true
+			})
 		]
 	}
 ];
