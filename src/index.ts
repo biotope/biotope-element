@@ -1,5 +1,4 @@
 import HyperHTMLElement from 'hyperhtml-element';
-import { wire, hyper } from 'hyperhtml';
 
 import { camelize } from './camelize';
 import { Attribute } from './types';
@@ -44,11 +43,11 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   }
 
   protected get wire() {
-    return wire;
+    return Component.wire;
   }
 
   protected get hyper() {
-    return hyper;
+    return Component.hyper;
   }
 
   private currentProps: TProps;

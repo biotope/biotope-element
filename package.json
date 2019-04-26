@@ -29,8 +29,7 @@
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
     "dasherize": "^2.0.0",
-    "hyperhtml": "^2.23.0",
-    "hyperhtml-element": "^3.4.0"
+    "hyperhtml-element": "^3.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -46,9 +45,8 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-progress": "^1.0.0",
-    "rollup-plugin-terser": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.18.1",
-    "rollup-plugin-visualizer": "^0.9.2",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "rollup-plugin-visualizer": "^1.1.0",
     "ts-jest": "^24.0.0",
     "typescript": "^3.1.6"
   }
