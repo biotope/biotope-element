@@ -2,6 +2,7 @@
   - [Quick Start](quick-start.md)
   - [Component](component.md)
   - [Styling](styling.md)
+- [Lifecycle Hooks](lifecycle-hooks.md)
 - [__Advanced__](advanced.md)
  - [Events](events.md)
 - [__Used with__](used-with.md)
