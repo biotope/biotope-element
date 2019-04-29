@@ -3,6 +3,7 @@
   - [Component](component.md)
   - [Styling](styling.md)
 - [__Advanced__](advanced.md)
- - [Events](events.md)
+- [__Events__](events.md)
+- [__Data Passing__](guide-data-channels.md)
 - [__Used with__](used-with.md)
 - [__Migration__](migration.md)
