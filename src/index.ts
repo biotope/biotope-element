@@ -14,6 +14,9 @@ export default abstract class Component<TProps, TState> extends HyperHTMLElement
   // overwrite if you have a minifier/uglifier in your project
   public static componentName: string;
 
+  // sets the HTMLElement, that should be extended
+  public static extends : string = null;
+
   public static register(): void {
     register(this);
   }

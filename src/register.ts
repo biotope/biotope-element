@@ -18,6 +18,12 @@ export const register = (component: typeof Component) => {
     console.warn(`Attempt to re-registering component "${dashedName}".`);
     return;
   }
+
+  let additionalConfiguration: Object = {};
+  if(component.extends) {
+    additionalConfiguration = { extends: component.extends };
+  }
+
   component.dependencies.forEach(register);
-  component.define(dashedName);
+  component.define(dashedName, additionalConfiguration);
 }
