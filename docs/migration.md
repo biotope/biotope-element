@@ -3,39 +3,39 @@
 ## Change your typescript config
 ```json
 {
-	"compilerOptions": {
-		"allowJs": true,
-		"jsx": "React",
-		"module": "es2015",
-		"moduleResolution": "Node",
-		"noImplicitAny": false,
-		"sourceMap": true,
-		"suppressImplicitAnyIndexErrors": true,
-		"allowSyntheticDefaultImports": true,
-		"target": "ES5",
-		"lib": [
-			"es2017",
-			"dom"
-		]
-	},
-	"awesomeTypescriptLoaderOptions": {
-		"useCache": true,
-		"reportFiles": [
-			"src/**/*.{ts,tsx}"
-		]
-	},
-	"typeRoots": [
-		"node_modules/@types",
-		"src/types"
-	],
-	"exclude": [
-		"node_modules",
-		"patterns",
-		"test",
-		"dist",
-		".tmp",
-		"**/*.spec.ts"
-	]
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "React",
+    "module": "es2015",
+    "moduleResolution": "Node",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES5",
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useCache": true,
+    "reportFiles": [
+      "src/**/*.{ts,tsx}"
+    ]
+  },
+  "typeRoots": [
+    "node_modules/@types",
+    "src/types"
+  ],
+  "exclude": [
+    "node_modules",
+    "patterns",
+    "test",
+    "dist",
+    ".tmp",
+    "**/*.spec.ts"
+  ]
 }
 ```
 
@@ -123,16 +123,16 @@ global: {
     ]
   }
   uglify: {
-		ignoreList: [
-			'src/resources/js/polyfills/object-assign.polyfill.js',
-			'resources/js/vendor/custom-elements-es5-adapter.js',
-			'resources/js/polyfills/webcomponents-loader.js',
-			'resources/js/polyfills/bundles/webcomponents-ce.js',
-			'resources/js/polyfills/bundles/webcomponents-sd-ce-pf.js',
-			'resources/js/polyfills/bundles/webcomponents-sd-ce.js',
-			'resources/js/polyfills/bundles/webcomponents-sd.js'
-		]
-	}
+    ignoreList: [
+      'src/resources/js/polyfills/object-assign.polyfill.js',
+      'resources/js/vendor/custom-elements-es5-adapter.js',
+      'resources/js/polyfills/webcomponents-loader.js',
+      'resources/js/polyfills/bundles/webcomponents-ce.js',
+      'resources/js/polyfills/bundles/webcomponents-sd-ce-pf.js',
+      'resources/js/polyfills/bundles/webcomponents-sd-ce.js',
+      'resources/js/polyfills/bundles/webcomponents-sd.js'
+    ]
+  }
 }
 ```
 
