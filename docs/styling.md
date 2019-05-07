@@ -29,14 +29,15 @@ import Component from '@biotope/element';
 import style from './styles.css';
 
 class MyButton extends Component {
-    render() {
-        return this.html`
-        <style>
-            ${style}
-        </style>
-        Hello World 🐤
-        `;
-    }
+  render() {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = style;
+
+    return this.html`
+      ${styleElement}
+      Hello World 🐤
+    `;
+  }
 }
 
 MyButton.componentName = 'my-button';
