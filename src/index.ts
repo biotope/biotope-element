@@ -7,7 +7,10 @@ import { attributeNameMapper } from './attribute-name-mapper';
 
 export { Attribute };
 
-export default abstract class Component<TProps, TState> extends HyperHTMLElement<TState> {
+// eslint-disable-next-line import/no-default-export
+export default
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TState> {
   // overwrite to set dependencies
   public static dependencies: (typeof Component)[] = [];
 
