@@ -30,11 +30,8 @@ import style from './styles.css';
 
 class MyButton extends Component {
   render() {
-    const styleElement = document.createElement('style');
-    styleElement.innerHTML = style;
-
     return this.html`
-      ${styleElement}
+      ${this.createStyle(style)}
       Hello World 🐤
     `;
   }

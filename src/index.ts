@@ -4,6 +4,7 @@ import { camelize } from './camelize';
 import { Attribute } from './types';
 import { register } from './register';
 import { attributeNameMapper } from './attribute-name-mapper';
+import { createStyle } from './style';
 
 export { Attribute };
 
@@ -99,4 +100,6 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
       },
     ));
   }
+
+  protected createStyle = createStyle;
 }
