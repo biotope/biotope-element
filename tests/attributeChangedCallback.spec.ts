@@ -42,7 +42,7 @@ describe('attributeChangedCallback', (): void => {
 
     testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
 
-    expect(testComponent.props.myAttribute).toBeDefined;
+    expect(testComponent.props.myAttribute).toBeDefined();
   });
 
   it('transforms single letter dash attributes to camelcase', (): void => {
@@ -54,9 +54,9 @@ describe('attributeChangedCallback', (): void => {
 
     const testComponent = new Test();
 
-    testComponent.attributeChangedCallback('m-attribute', '', 'newValue');
+    testComponent.attributeChangedCallback('my-attribute', '', 'newValue');
 
-    expect(testComponent.props.myAttribute).toBeDefined;
+    expect(testComponent.props.myAttribute).toBeDefined();
   });
 
   it('sets dash attributes to camelcase', (): void => {
