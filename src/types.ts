@@ -1,5 +1,6 @@
 
 export interface Attribute {
   name: string;
-  converter: Function;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  converter: (prop?: string) => any;
 }

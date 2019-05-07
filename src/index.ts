@@ -17,26 +17,21 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
   // overwrite if you have a minifier/uglifier in your project
   public static componentName: string;
 
+  // overwrite if some attributes should be auto-merged to your props
+  protected static attributes: (string | Attribute)[] = [];
+
+  public static get observedAttributes(): string[] {
+    return this.attributes.map(attributeNameMapper);
+  }
+
   public static register(): void {
     register(this);
   }
 
-  public static get observedAttributes(): string[] {
-    return this.attributes.map(attributeNameMapper);
-  };
-
-  // overwrite if some attributes should be auto-merged to your props
-  protected static attributes: (string | Attribute)[] = [];
-
-  // overwrite if you want default props in your component
-  protected get defaultProps(): TProps {
-    return null;
-  }
-
   public get props(): TProps {
     return {
-      ...(this.defaultProps as any),
-      ...(this.currentProps as any),
+      ...(this.defaultProps as TProps),
+      ...(this.currentProps as TProps),
     };
   }
 
@@ -45,17 +40,25 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
     this.onPropsChanged();
   }
 
-  protected get wire() {
+  // overwrite if you want default props in your component
+  // eslint-disable-next-line class-methods-use-this
+  protected get defaultProps(): TProps {
+    return null;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  protected get wire(): typeof Component.wire {
     return Component.wire;
   }
 
-  protected get hyper() {
+  // eslint-disable-next-line class-methods-use-this
+  protected get hyper(): typeof Component.hyper {
     return Component.hyper;
   }
 
   private currentProps: TProps;
 
-  constructor(useShadow: boolean = true) {
+  public constructor(useShadow: boolean = true) {
     super();
     if (useShadow) {
       this.attachShadow({ mode: 'open' });
@@ -63,28 +66,28 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
   }
 
   // overwrite if you, for example, need to fetch something after the component is created
-  public created() {
+  public created(): void {
     this.render();
   }
 
   public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-    const attribute = (this.constructor as any).attributes
-      .find((attr: string) => attributeNameMapper(attr) === name);
+    const attribute = (this.constructor as typeof Component).attributes
+      .find((attr: string): boolean => attributeNameMapper(attr) === name);
 
     if (attribute) {
       this.props = {
-        ...(this.props as any),
+        ...(this.props as TProps),
         [camelize(name)]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
       };
-    };
+    }
   }
 
   // overwrite if you, for example, need to merge props into your state
-  protected onPropsChanged() {
+  protected onPropsChanged(): void {
     this.render();
   }
 
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false) {
+  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false): boolean {
     if (!name) {
       throw Error('No event name defined. Please provide a name');
     }
