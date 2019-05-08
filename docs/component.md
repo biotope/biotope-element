@@ -22,10 +22,10 @@ As you can see in the hello world example every component implements a `render` 
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-    render() {
-        // this will add 'Hello World' to the root of the element
-        return this.html`Hello World 🐤`;
-    }
+  render() {
+    // this will add 'Hello World' to the root of the element
+    return this.html`Hello World 🐤`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -48,16 +48,15 @@ To give your props a default value you have to set the `defaultProps` getter of 
 import Component from '@biotope/element';
 
 class MyButton extends Component {
+  protected get defaultProps() {
+    return {
+      foo: 'bar'
+    };
+  }
 
-    protected get defaultProps(): {
-        return {
-            foo: 'bar'
-        }
-    }
-
-    render() {
-        return this.html`🎰 ${this.props.foo}`;
-    }
+  render() {
+    return this.html`🎰 ${this.props.foo}`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -83,7 +82,7 @@ You can set the props of a component after initialisation by accessing its insta
 ```
 ```js
 document.getElementById('foo').props = {
-    foo: 'bar'
+  foo: 'bar'
 }
 ```
 Changing the props this way will trigger its `onPropsChanged` function, which will automatically call the render method.
@@ -103,10 +102,9 @@ To pass these values to the props object, you have to define the corresponding a
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        return this.html`🌸`;
-    }
+  render() {
+    return this.html`🌸`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -121,10 +119,9 @@ This will take care of the attributes value and pass it to the props of the comp
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        return this.html`${this.props.foo} 🌸`;
-    }
+  render() {
+    return this.html`${this.props.foo} 🌸`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -136,7 +133,7 @@ MyButton.register();
 This will result in the following html:
 ```html
 <my-button foo="bar">
-    bar 🌸
+  bar 🌸
 <my-button>
 ```
 
@@ -149,10 +146,9 @@ To access those attributes in the props, you have to use the camelCase version o
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        return this.html`${this.props.anotherAttribute} 🌸`;
-    }
+  render() {
+    return this.html`${this.props.anotherAttribute} 🌸`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -164,7 +160,7 @@ MyButton.register();
 This will result in the following html:
 ```html
 <my-button another-attribute="Some simple value">
-    Some simple value 🌸
+  Some simple value 🌸
 <my-button>
 ```
 
@@ -188,11 +184,10 @@ When you set values in the html tags attributes, these values will always be str
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        // foo will now be a number
-        return this.html`🚀 ${typeof this.props.fooNum}`;
-    }
+  render() {
+    // foo will now be a number
+    return this.html`🚀 ${typeof this.props.fooNum}`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -204,7 +199,7 @@ MyButton.register();
 This will result in the following html:
 ```html
 <my-button fooNum="5">
-    🚀 number
+  🚀 number
 <my-button>
 ```
 
@@ -220,12 +215,11 @@ If your script looks like this...
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        const {primary} = this.props;
-        // primary will now be a boolean
-        return this.html`💼 ${primary ? 'hello': 'goodbye'}`;
-    }
+  render() {
+    const { primary } = this.props;
+    // primary will now be a boolean
+    return this.html`💼 ${primary ? 'hello': 'goodbye'}`;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -237,7 +231,7 @@ MyButton.register();
 
 ```html
 <my-button primary>
-    💼 hello
+  💼 hello
 <my-button>
 ```
 
@@ -249,21 +243,20 @@ If have the following html and js:
 
 ```html
 <my-button>
-    I am a little 🦋
+  I am a little 🦋
 <my-button>
 ```
 ```js
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-
-    render() {
-        // the slot will be replaced by the current content
-        return this.html`
-            <slot/>
-            <span>I am a little 🐛</span>
-        `;
-    }
+  render() {
+    // the slot will be replaced by the current content
+    return this.html`
+      <slot/>
+      <span>I am a little 🐛</span>
+    `;
+  }
 }
 
 MyButton.componentName = 'my-button';
@@ -274,7 +267,7 @@ MyButton.register();
 It would result in this html:
 ```html
 <my-button>
-    I am a little 🦋
-    <span>I am a little 🐛</span>
+  I am a little 🦋
+  <span>I am a little 🐛</span>
 <my-button>
 ```

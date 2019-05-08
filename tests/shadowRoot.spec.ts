@@ -1,8 +1,8 @@
 import Component from '../src';
 
-describe('#shadowRoot', () => {
-  it('adds shadowRoot by default', () => {
-    class HelloWorld extends Component<object, object> {
+describe('#shadowRoot', (): void => {
+  it('adds shadowRoot by default', (): void => {
+    class HelloWorld extends Component {
       public static componentName = 'x-world';
     }
 
@@ -11,11 +11,11 @@ describe('#shadowRoot', () => {
     expect(element.shadowRoot).toBeDefined();
   });
 
-  it('can disable shadow root', () => {
-    class HelloWorld extends Component<object, object> {
+  it('can disable shadow root', (): void => {
+    class HelloWorld extends Component {
       public static componentName = 'x-world';
 
-      constructor() {
+      public constructor() {
         super(false);
       }
     }
