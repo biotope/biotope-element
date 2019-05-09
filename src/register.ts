@@ -29,4 +29,4 @@ export const register = (component: typeof Component): void => {
   component.dependencies.forEach(register);
 
   component.define(dashedName, additionalConfiguration);
-}
+};
