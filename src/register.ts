@@ -19,10 +19,9 @@ export const register = (component: typeof Component) => {
     return;
   }
 
-  let additionalConfiguration: Object = {};
-  if(component.extends) {
-    additionalConfiguration = { extends: component.extends };
-  }
+  let additionalConfiguration: ElementDefinitionOptions = { 
+    extends: component.basedOn
+  };
 
   component.dependencies.forEach(register);
   component.define(dashedName, additionalConfiguration);
