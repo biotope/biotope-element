@@ -30,7 +30,7 @@ export class MyButton extends Component {
   public static componentName = 'my-button';
   
   public render() {
-    return this.html`Hello World`;
+    return this.html`Hello World 🐤`;
   }
 }
 ```

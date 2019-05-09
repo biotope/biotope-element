@@ -19,9 +19,9 @@ import Component from '@biotope/element';
 Then you extend your component with the biotope element:
 ```js
 class HelloWorldComponent extends Component {
-    render() {
-        return this.html`Hello World 🐤`;
-    }
+  render() {
+    return this.html`Hello World 🐤`;
+  }
 }
 
 // needed if you uglify your code, which is most likely
@@ -29,12 +29,13 @@ HelloWorldComponent.componentName = 'hello-world';
 ```
 
 ```typescript
-class HelloWorldComponent extends Component<any, any> {
-    // needed if you uglify your code, which is most likely
-    static componentName = 'hello-world';
-    render() {
-        return this.html`Hello World 🐤`;
-    }
+class HelloWorldComponent extends Component {
+  // needed if you uglify your code, which is most likely
+  static componentName = 'hello-world';
+
+  render() {
+    return this.html`Hello World 🐤`;
+  }
 }
 ```
 > Notice the `static componentName` part. This has to be set AND there needs to ba a dash in there.
@@ -49,9 +50,9 @@ So the whole file will look like this:
 import Component from '@biotope/element';
 
 class HelloWorldComponent extends Component {
-    render() {
-        return this.html`Hello World 🐤`;
-    }
+  render() {
+    return this.html`Hello World 🐤`;
+  }
 }
 
 HelloWorldComponent.componentName = 'hello-world';
@@ -67,6 +68,6 @@ After that you can use it in your html like that:
 This will result in the following html:
 ```html
 <my-button>
-    Hello world 🐤
+  Hello world 🐤
 </my-button>
 ```

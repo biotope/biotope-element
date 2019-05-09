@@ -8,6 +8,8 @@ import visualizer from 'rollup-plugin-visualizer';
 export default [
 	{
 		input: 'src/index.ts',
+		context: 'null',
+		moduleContext: 'null',
 		output: {
 			name: 'index.cjs',
 			file: 'lib/cjs/index.js',
@@ -26,6 +28,8 @@ export default [
 	},
 	{
 		input: 'src/index.ts',
+		context: 'null',
+		moduleContext: 'null',
 		output: {
 			name: 'index.esm',
 			file: 'lib/esm/index.js',

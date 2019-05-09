@@ -1,34 +1,32 @@
 import Component from '../src/index';
 
+describe('render', (): void => {
+  it('is called on created', (): void => {
+    const renderSpy = jest.fn();
+    class HelloWorld extends Component {
+      public static componentName = 'x-world';
 
-describe('render', () => {
+      public render = renderSpy;
+    }
 
-    it('is called on created', () => {
-        const renderSpy = jest.fn();
-        class HelloWorld extends Component<object, object> {
-            public static componentName = 'x-world';
+    const instance = new HelloWorld();
+    instance.created();
 
-            public render = renderSpy;
-        }
+    expect(renderSpy.mock.calls.length).toBe(1);
+  });
 
-        const instance = new HelloWorld();
-        instance.created();
+  it('is called onPropsChanged by default', (): void => {
+    const renderSpy = jest.fn();
+    class HelloWorld extends Component {
+      public static componentName = 'x-world';
 
-        expect(renderSpy.mock.calls.length).toBe(1);
-    });
+      public render = renderSpy;
+    }
 
-    it('is called onPropsChanged by default', () => {
-        const renderSpy = jest.fn();
-        class HelloWorld extends Component<object, object> {
-            public static componentName = 'x-world';
+    const instance = new HelloWorld();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (instance as any).onPropsChanged();
 
-            public render = renderSpy;
-        }
-
-        const instance = new HelloWorld();
-        (instance as any).onPropsChanged();
-
-        expect(renderSpy.mock.calls.length).toBe(1);
-    });
-})
-
+    expect(renderSpy.mock.calls.length).toBe(1);
+  });
+});
