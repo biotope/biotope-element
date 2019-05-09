@@ -1,7 +1,7 @@
 {
   "name": "@biotope/element",
   "title": "Biotope Element",
-  "version": "3.0.2",
+  "version": "3.1.0-0",
   "description": "Biotope Element",
   "main": "lib/esm/index.js",
   "module": "lib/esm/index.js",
