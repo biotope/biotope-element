@@ -1,11 +1,17 @@
-import basicHTML from 'basichtml';
-import basicHTMLElements from 'basichtml-elements';
 import Component from '../src';
+
+
 
 describe('#basedOn builtin HTMLElements', (): void => {
   // register an extended set on HTMLElements
   beforeEach((): void => {
+    
+    // eslint-disable-next-line global-require
+    const basicHTML = require('basichtml');
+    // eslint-disable-next-line global-require
+    const basicHTMLElements = require('basichtml-elements');
     const customElements = new basicHTML.CustomElementRegistry();
+
 
     basicHTMLElements.defineOnRegistry(customElements);
 
