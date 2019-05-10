@@ -1,11 +1,8 @@
 import Component from '../src';
 
-
-
 describe('#basedOn builtin HTMLElements', (): void => {
   // register an extended set on HTMLElements
   beforeEach((): void => {
-    
     // eslint-disable-next-line global-require
     const basicHTML = require('basichtml');
     // eslint-disable-next-line global-require
