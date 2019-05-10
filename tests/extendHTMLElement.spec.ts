@@ -1,15 +1,12 @@
+import basicHTML from 'basichtml';
+import basicHTMLElements from 'basichtml-elements';
 import Component from '../src';
 
-describe('#Extending HTMLElements', (): void => {
+describe('#basedOn builtin HTMLElements', (): void => {
   // register an extended set on HTMLElements
   beforeEach((): void => {
-    // eslint-disable-next-line global-require
-    const basicHTML = require('basichtml');
-    // eslint-disable-next-line global-require
-    const basicHTMLElements = require('basichtml-elements');
     const customElements = new basicHTML.CustomElementRegistry();
 
-    // define things
     basicHTMLElements.defineOnRegistry(customElements);
 
     basicHTML.init({
@@ -18,8 +15,8 @@ describe('#Extending HTMLElements', (): void => {
     });
   });
 
-  it('extends non builtin element and check against HTMLElement', (): void => {
-    class TestComponent extends Component<object, object> {
+  it('extends HTMLElement by default', (): void => {
+    class TestComponent extends Component {
       public static componentName = 'test-component';
     }
 
@@ -30,7 +27,7 @@ describe('#Extending HTMLElements', (): void => {
   });
 
   it('extends a button element and check against HTMLElement', (): void => {
-    class TestButton extends Component<object, object> {
+    class TestButton extends Component {
       public static componentName = 'test-button';
 
       public static basedOn = 'button';
@@ -43,7 +40,7 @@ describe('#Extending HTMLElements', (): void => {
   });
 
   it('extends a button element and check against default button', (): void => {
-    class TestButton extends Component<object, object> {
+    class TestButton extends Component {
       public static componentName = 'test-button';
 
       public static basedOn = 'button';
@@ -55,16 +52,16 @@ describe('#Extending HTMLElements', (): void => {
     expect(element).toBeInstanceOf(customElements.get('button'));
   });
 
-  it('extends a button element and check against input field', (): void => {
-    class TestButton extends Component<object, object> {
-      public static componentName = 'test-button';
+  it('extends an input element and check against the builtin input field', (): void => {
+    class TestInput extends Component {
+      public static componentName = 'test-input';
 
-      public static basedOn = 'button';
+      public static basedOn = 'input';
     }
 
-    TestButton.register();
+    TestInput.register();
 
-    const element = new (customElements.get('test-button'))();
-    expect(element).not.toBeInstanceOf(customElements.get('input'));
+    const element = new (customElements.get('test-input'))();
+    expect(element).toBeInstanceOf(customElements.get('input'));
   });
 });
