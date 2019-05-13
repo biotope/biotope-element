@@ -19,6 +19,14 @@ export const register = (component: typeof Component): void => {
     console.warn(`Attempt to re-register component "${dashedName}". Skipping…`);
     return;
   }
+
+  const additionalConfiguration: ElementDefinitionOptions = {};
+
+  if (component.basedOn) {
+    additionalConfiguration.extends = component.basedOn;
+  }
+
   component.dependencies.forEach(register);
-  component.define(dashedName);
+
+  component.define(dashedName, additionalConfiguration);
 };

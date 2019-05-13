@@ -18,6 +18,9 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
   // overwrite if you have a minifier/uglifier in your project
   public static componentName: string;
 
+  // sets the HTMLElement, that should be extended
+  public static basedOn: string = null;
+
   // overwrite if some attributes should be auto-merged to your props
   protected static attributes: (string | Attribute)[] = [];
 
