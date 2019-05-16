@@ -7,6 +7,7 @@
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
+    "start": "npm run docs",
     "prepublishOnly": "npm run build",
     "build": "rollup -c",
     "release": "np",
