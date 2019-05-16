@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/biotope/biotope-element/branch/master/graph/badge.svg)](https://codecov.io/gh/biotope/biotope-element)
 
 ## Installation
-You can install the biotope element in your project using npm 
+You can install the biotope element in your project using npm
 ```bash
 npm install @biotope/element --save
 ```
@@ -28,7 +28,7 @@ import Component from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
-  
+
   public render() {
     return this.html`Hello World 🐤`;
   }
@@ -42,7 +42,7 @@ import Component from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
-  
+
   public render() {
     return this.html`Hello World 🐤`;
   }
@@ -54,7 +54,7 @@ MyButton.register();
 After that you can use it in your html like that:
 index.html
 ```html
-<script src="index.js"></script>  
+<script src="index.js"></script>
 <my-button></my-button>
 ```
 
@@ -74,3 +74,9 @@ To use biotope element there, please take care of loading an appropriate polyfil
 ### Webcomponents
 Webcomponents are not supported by all browsers. Even the newest browsers have not integrated the spec yet.
 To still be able to use biotope element in your project in all major browsers, please include the [webcomponent polyfills](https://github.com/webcomponents/webcomponentsjs) in your project.
+
+
+## Documentation
+The documentation can you find [here](https://element.biotope.sh).
+
+In order to contribute to the documentation you can start a local server with `npm start` and then start editing the files in `docs`.
