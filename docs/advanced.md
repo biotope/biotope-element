@@ -5,17 +5,26 @@ Every component can have its own internal state. To set the state just call the 
 ```js
 import Component from '@biotope/element';
 
+
 class MyButton extends Component {
+  get defaultState() {
+    return {
+      powermode: 'off'
+    }
+  }
+  connectedCallback() {
+    this.addEventListener('click', this.onclick);
+  }
   onclick() {
     // this will set the state on click
     this.setState({
-      foo: 'bar'
+      powermode: "on"
     });
   }
 
   render() {
     return this.html`
-      ${this.state.foo}
+      Powermode ${this.state.powermode}
     `;
   }
 }
