@@ -77,6 +77,6 @@ To still be able to use biotope element in your project in all major browsers, p
 
 
 ## Documentation
-The documentation can you find [here](https://element.biotope.sh).
+You can find the documentation [here](https://element.biotope.sh).
 
 In order to contribute to the documentation you can start a local server with `npm start` and then start editing the files in `docs`.
