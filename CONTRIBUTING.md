@@ -2,6 +2,10 @@
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
+## Building the Project
+- `npm i`
+- `npm start`
+
 ## Using the issue tracker
 The issue tracker is the preferred channel for bug reports, features requests and submitting pull requests.
 
