@@ -35,7 +35,7 @@
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
     "dasherize": "^2.0.0",
-    "hyperhtml-element": "^3.8.0"
+    "hyperhtml-element": "^3.9.0"
   },
   "devDependencies": {
     "@babel/core": "~7.4",
