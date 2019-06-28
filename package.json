@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-progress": "^1.0.0",
     "rollup-plugin-typescript2": "^0.21.2",
-    "rollup-plugin-visualizer": "^1.1.0",
+    "rollup-plugin-visualizer": "^2.4.3",
     "ts-jest": "~24.0",
     "typescript": "~3.5.1"
   }
