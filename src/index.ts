@@ -1,35 +1,44 @@
 import HyperHTMLElement from 'hyperhtml-element';
+import { camel } from 'change-case';
 
-import { camelize } from './camelize';
-import { Attribute } from './types';
-import { register } from './register';
-import { attributeNameMapper } from './attribute-name-mapper';
+import { getComponentName } from './get-component-name';
+import { isRegistered } from './is-registered';
+import { attributeName, attributeValue } from './attribute-mapper';
 import { createStyle } from './style';
+import { Attribute } from './types';
 
 export { Attribute };
 
-// eslint-disable-next-line import/no-default-export
-export default
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TState> {
-  // overwrite to set dependencies
-  public static dependencies: (typeof Component)[] = [];
-
-  // overwrite if you have a minifier/uglifier in your project
+abstract class Component<TProps = object, TState = object> extends HyperHTMLElement<TState> {
   public static componentName: string;
 
-  // sets the HTMLElement, that should be extended
   public static basedOn: string = null;
 
-  // overwrite if some attributes should be auto-merged to your props
-  protected static attributes: (string | Attribute)[] = [];
+  public static dependencies: (typeof Component)[] = [];
+
+  public static attributes: (string | Attribute)[] = [];
 
   public static get observedAttributes(): string[] {
-    return this.attributes.map(attributeNameMapper);
+    return this.attributes.map(attributeName);
   }
 
-  public static register(): void {
-    register(this);
+  public static register(silent: boolean = true): boolean {
+    const dashedName = getComponentName(this);
+    if (isRegistered(dashedName)) {
+      if (!silent) {
+        // eslint-disable-next-line no-console
+        console.warn(`Attempt to re-register component "${dashedName}". Skipping…`);
+      }
+      return false;
+    }
+
+    this.dependencies.forEach((component): boolean => component.register(silent));
+
+    this.define(dashedName, {
+      ...(this.basedOn ? { extends: this.basedOn } : {}),
+    });
+
+    return true;
   }
 
   public get props(): TProps {
@@ -69,19 +78,18 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
     }
   }
 
-  // overwrite if you, for example, need to fetch something after the component is created
   public created(): void {
     this.render();
   }
 
   public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     const attribute = (this.constructor as typeof Component).attributes
-      .find((attr: string): boolean => attributeNameMapper(attr) === name);
+      .find((attr: string): boolean => attributeName(attr) === name);
 
     if (attribute) {
       this.props = {
         ...(this.props as TProps),
-        [camelize(name)]: typeof attribute === 'string' ? newValue : attribute.converter(newValue),
+        [camel(name)]: attributeValue(attribute, newValue),
       };
     }
   }
@@ -93,7 +101,7 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
 
   protected emit<T>(name: string, detail?: T, addPrefix: boolean = false): boolean {
     if (!name) {
-      throw Error('No event name defined. Please provide a name');
+      throw Error('No event name defined. Please provide a name.');
     }
     return this.dispatchEvent(new CustomEvent(
       `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
@@ -106,3 +114,6 @@ abstract class Component<TProps = any, TState = any> extends HyperHTMLElement<TS
 
   protected createStyle = createStyle;
 }
+
+// eslint-disable-next-line import/no-default-export
+export default Component;
