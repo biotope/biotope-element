@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { WiredTemplateFunction } from 'hyperhtml';
 import HyperHTMLElement from 'hyperhtml-element';
 import { camel } from 'change-case';
 
@@ -69,13 +71,8 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
   }
 
   // eslint-disable-next-line class-methods-use-this
-  protected get wire(): typeof Component.wire {
-    return Component.wire;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected get hyper(): typeof Component.hyper {
-    return Component.hyper;
+  protected get partial(): WiredTemplateFunction {
+    return Component.wire();
   }
 
   private currentProps: TProps;
