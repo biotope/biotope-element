@@ -5,16 +5,13 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
     "outDir": "lib",
     "typeRoots": [
-      "node_modules/@types",
-      "typings"
+      "types",
+      "node_modules/@types"
     ]
   },
   "include": [
-    "src/*.ts",
-    "tests/*.ts"
+    "src/*.ts"
   ]
 }

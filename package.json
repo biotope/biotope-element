@@ -34,29 +34,29 @@
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
-    "dasherize": "^2.0.0",
-    "hyperhtml-element": "^3.9.0"
+    "change-case": "^3.1.0",
+    "hyperhtml-element": "^3.10.0"
   },
   "devDependencies": {
-    "@babel/core": "~7.5.5",
+    "@babel/core": "~7.5",
     "@biotope/quality-gate": "1.0.0-beta.11",
     "@types/jest": "~24.0",
-    "basichtml": "^0.24.0",
-    "basichtml-elements": "^0.1.0",
-    "codecov": "^3.5.0",
+    "basichtml": "~1.1",
+    "basichtml-elements": "~0.1",
+    "codecov": "~3.5",
     "cpy-cli": "~2.0",
-    "docsify-cli": "^4.3.0",
-    "eslint-plugin-jest": "~22.14.1",
+    "docsify-cli": "~4.3",
+    "eslint-plugin-jest": "~22.14",
     "jest": "~24.8",
-    "np": "~5.0.3",
-    "prismjs": "^1.17.1",
-    "rollup": "^1.17.0",
-    "rollup-plugin-commonjs": "^10.0.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-progress": "^1.0.0",
-    "rollup-plugin-typescript2": "^0.22.0",
-    "rollup-plugin-visualizer": "^2.4.3",
+    "np": "~5.0",
+    "prismjs": "~1.17",
+    "rollup": "~1.19",
+    "rollup-plugin-commonjs": "~10.0",
+    "rollup-plugin-node-resolve": "~5.2",
+    "rollup-plugin-progress": "~1.1",
+    "rollup-plugin-typescript2": "~0.22",
+    "rollup-plugin-visualizer": "~2.5",
     "ts-jest": "~24.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5"
   }
 }
