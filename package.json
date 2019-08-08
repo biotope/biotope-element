@@ -17,10 +17,10 @@
     "test:report": "npm run test && codecov",
     "test:watch": "jest --watch",
     "lint": "npm run lint:code && npm run lint:tests",
-    "lint:code": "biotope-quality-gate lint -p src",
-    "lint:code:fix": "biotope-quality-gate lint -p src -f",
-    "lint:tests": "biotope-quality-gate lint -p tests -e -c quality-gate-jest.js",
-    "lint:tests:fix": "biotope-quality-gate lint -p tests -e -c quality-gate-jest.js -f"
+    "lint:code": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples",
+    "lint:code:fix": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples -f",
+    "lint:tests": "biotope-quality-gate -p tests -t",
+    "lint:tests:fix": "biotope-quality-gate -p tests -t -f"
   },
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.5.5",
-    "@biotope/quality-gate": "^1.0.0-beta.5",
+    "@biotope/quality-gate": "1.0.0-beta.11",
     "@types/jest": "~24.0",
     "basichtml": "^0.24.0",
     "basichtml-elements": "^0.1.0",
