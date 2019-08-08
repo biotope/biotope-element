@@ -24,17 +24,26 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
 
   public static register(silent: boolean = true): boolean {
     const dashedName = getComponentName(this);
-    if (isRegistered(dashedName)) {
+
+    if (!this.componentName) {
       if (!silent) {
         // eslint-disable-next-line no-console
-        console.warn(`Attempt to re-register component "${dashedName}". Skipping…`);
+        console.warn(`Static property "componentName" missing. Setting it to "${dashedName}"…`);
+      }
+      this.componentName = dashedName;
+    }
+
+    if (isRegistered(this.componentName)) {
+      if (!silent) {
+        // eslint-disable-next-line no-console
+        console.warn(`Attempt to re-register component "${this.componentName}". Skipping…`);
       }
       return false;
     }
 
     this.dependencies.forEach((component): boolean => component.register(silent));
 
-    this.define(dashedName, {
+    this.define(this.componentName, {
       ...(this.basedOn ? { extends: this.basedOn } : {}),
     });
 
