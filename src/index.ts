@@ -79,6 +79,14 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
 
   public constructor(useShadow: boolean = true) {
     super();
+
+    const originalRender = this.render;
+    this.render = (): HTMLElement => {
+      const element = originalRender.bind(this)();
+      this.rendered();
+      return element;
+    };
+
     if (useShadow) {
       this.attachShadow({ mode: 'open' });
     }
@@ -103,6 +111,14 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
   // overwrite if you, for example, need to merge props into your state
   protected onPropsChanged(): void {
     this.render();
+  }
+
+  public render(): HTMLElement {
+    return this.html``;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public rendered(): void {
   }
 
   protected emit<T>(name: string, detail?: T, addPrefix: boolean = false): boolean {
