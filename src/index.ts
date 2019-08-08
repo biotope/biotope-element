@@ -64,7 +64,6 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
     this.render();
   }
 
-  // overwrite if you want default props in your component
   // eslint-disable-next-line class-methods-use-this
   protected get defaultProps(): TProps {
     return null;
