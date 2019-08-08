@@ -61,7 +61,7 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
 
   public set props(value: TProps) {
     this.currentProps = value;
-    this.onPropsChanged();
+    this.render();
   }
 
   // overwrite if you want default props in your component
@@ -106,11 +106,6 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
         [camel(name)]: attributeValue(attribute, newValue),
       };
     }
-  }
-
-  // overwrite if you, for example, need to merge props into your state
-  protected onPropsChanged(): void {
-    this.render();
   }
 
   public render(): HTMLElement {
