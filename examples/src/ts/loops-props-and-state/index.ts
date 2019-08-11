@@ -8,7 +8,7 @@ const kebabToCamel = (str: string): string => str.replace(
 export interface ExampleTableProps {
   showCounter: boolean;
   simpleText?: string;
-  complexObject?: string[];
+  complexAttribute?: string[];
 }
 
 interface ExampleTableState {
