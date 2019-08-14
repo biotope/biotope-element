@@ -4,19 +4,19 @@ import { ExampleSender } from './child';
 export class ExampleReceiver extends Component {
   constructor() {
     super();
-    this.onInputChange = this.onInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   render() {
     return this.html`
       <div>
-        <example-sender onexamplesender.change=${this.onInputChange} />
+        <example-sender onexamplesender.change=${this.handleInputChange} />
       </div>
     `;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  onInputChange({ target, detail }) {
+  handleInputChange({ target, detail }) {
     // eslint-disable-next-line no-console
     console.log('Input change event on: ', target);
     // eslint-disable-next-line no-console

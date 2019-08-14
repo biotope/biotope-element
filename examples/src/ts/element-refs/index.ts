@@ -11,18 +11,18 @@ export class ExampleRefs extends Component {
 
   public constructor() {
     super();
-    this.focusFirstInput = this.focusFirstInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <input type="text" />
       <input type="text" />
-      <button onclick=${this.focusFirstInput}>Focus first input!</button>
+      <button onclick=${this.handleFocus}>Focus first input!</button>
     `;
   }
 
-  private focusFirstInput(): void {
+  private handleFocus(): void {
     if (this.inputRef) {
       this.inputRef.focus();
     }

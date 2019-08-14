@@ -11,17 +11,17 @@ export class ExampleSender extends Component {
 
   public constructor() {
     super();
-    this.onChange = this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <label>Label</label>
-      <input onkeyup=${this.onChange} type="text" />
+      <input onkeyup=${this.handleChange} type="text" />
     `;
   }
 
-  public onChange(): void {
+  private handleChange(): void {
     // eslint-disable-next-line no-console
     console.log('Emitting change on the input…');
     this.emit(ExampleSenderEvents.change, this.shadowRoot.querySelector('input').value);

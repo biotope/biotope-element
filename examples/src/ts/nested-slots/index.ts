@@ -8,7 +8,7 @@ export class ExampleParent extends Component {
     ExampleChild as typeof Component,
   ];
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <example-child>
         <slot />

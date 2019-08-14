@@ -7,18 +7,18 @@ export class ExampleRefs extends Component {
 
   constructor() {
     super();
-    this.focusFirstInput = this.focusFirstInput.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
   render() {
     return this.html`
       <input type="text" />
       <input type="text" />
-      <button onclick=${this.focusFirstInput}>Focus first input!</button>
+      <button onclick=${this.handleFocus}>Focus first input!</button>
     `;
   }
 
-  focusFirstInput() {
+  handleFocus() {
     if (this.inputRef) {
       this.inputRef.focus();
     }
