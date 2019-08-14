@@ -32,7 +32,8 @@ export class MyButton extends Element {
 }
 ```
 
-After defining your class which you can do using existing methods (link) you have to call `register` on the class itself to use it in the html:
+After defining your class which you can do using existing methods (link) you have to call `register`
+on the class itself to use it in the html:
 index.js
 ```js
 import Element from '@biotope/element';

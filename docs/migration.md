@@ -140,8 +140,10 @@ global: {
 ## Write your component
 
 1. `npx @biotope/cli generate`
-2. inside your the generated index.ts add new line `DemoComponent.register();` thats necessary to *autoregister* the component
-3. Use the component with resource loader `<demo-component data-resources="[{paths: ['components/DemoComponent/index.js']}]"></demo-component>`
+2. inside your the generated index.ts add new line `DemoComponent.register();` thats necessary to
+*autoregister* the component
+3. Use the component with resource loader
+`<demo-component data-resources="[{paths: ['components/demo-component/index.js']}]"></demo-component>`
 
 
 

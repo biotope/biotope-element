@@ -84,7 +84,8 @@ XSlider.register();
 
 
 ## Nesting components
-You can also nest components inside the html and use the `children` accessor to get them in the root component and manipulate them.
+You can also nest components inside the html and use the `children` accessor to get them in the root
+component and manipulate them.
 
 
 ```typescript

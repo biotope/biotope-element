@@ -12,10 +12,15 @@ Although you can pass json strings as HTML attributes, it seems kind of ugly in 
 
 ```html
 <!-- Very nice! -->
-<custom-element attribute-1="a string" attribute-2="true"></custom-element>
+<custom-element
+  attribute-1="a string"
+  attribute-2="true"
+></custom-element>
 
 <!-- Meh -->
-<custom-element attribute-3='[{"key1": "value1","key2": "value2","key3": "value3"}]'></custom-element>
+<custom-element
+  attribute-3='[{"key1": "value1","key2": "value2","key3": "value3"}]'
+></custom-element>
 ```
 
 ## Javascript props setting
@@ -40,10 +45,13 @@ document.querySelector('custom-element').props = {
 ```
 
 ## Slotting content
-In case you want to pass HTML markup to the component, we recommend slotting it and handle it externally:
+In case you want to pass HTML markup to the component, we recommend slotting it and handle it
+externally:
 ```html
 <!-- Clean! -->
 <custom-element>
-  <div slot="header">I am header content <span class="icon-arrow"></span></div>
+  <div slot="header">
+    I am header content <span class="icon-arrow"></span>
+  </div>
 </custom-element>
 ```

@@ -4,18 +4,22 @@
 
 We trust in the web.  
 
-That's why we decided to write biotope and the biotope element with mostly vanilla web technologies and polyfill it untill the right time is there.
-On of these fancy new technologies is web components and all the proposals belonging to it (shadow dom, custom elements, scoped styling).
+That's why we decided to write biotope and the biotope element with mostly vanilla web technologies
+and polyfill it untill the right time is there.
+On of these fancy new technologies is web components and all the proposals belonging to it (shadow
+dom, custom elements, scoped styling).
 
 Biotope element is just an extension of the vanilla html element which add some nice features.
 
-So everything you build using the biotope element will be called a component in the following documentation.
+So everything you build using the biotope element will be called a component in the following
+documentation.
 
 A component is a collection of functionality which could be reused.
 
 
 ## render()
-As you can see in the hello world example every component implements a `render` function. In there you can call `this.html` function on a template literal to add it to the components root:
+As you can see in the hello world example every component implements a `render` function. In there
+you can call `this.html` function on a template literal to add it to the components root:
 
 ```js
 // javascript
@@ -33,7 +37,9 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-In the template literal you can also add valid html code as well as the `<slot>` tag where the current content of the component will be placed. Read more about it in the [shadow dom](#shadow-dom) section.
+In the template literal you can also add valid html code as well as the `<slot>` tag where the
+current content of the component will be placed. Read more about it in the [shadow dom](#shadow-dom)
+section.
 
 
 ## props
@@ -85,7 +91,7 @@ document.getElementById('foo').props = {
   foo: 'bar'
 }
 ```
-Changing the props this way will trigger its `onPropsChanged` function, which will automatically call the render method.
+Changing the props this way will trigger the render method.
 
 
 
@@ -97,7 +103,8 @@ To pass in data to a component attributes on the html tag can be used:
 <my-button foo="bar"><my-button>
 ```
 
-To pass these values to the props object, you have to define the corresponding attribute in the component:
+To pass these values to the props object, you have to define the corresponding attribute in the
+component:
 ```js
 import Component from '@biotope/element';
 
@@ -138,9 +145,11 @@ This will result in the following html:
 ```
 
 ### Hyphen attributes
-If your attributes get more complex, you might want to have multi word names like `a-complex-attribute`.
+If your attributes get more complex, you might want to have multi word names like
+`a-complex-attribute`.
 
-To access those attributes in the props, you have to use the camelCase version of the string. In our example this will be `aComplexAttribute`
+To access those attributes in the props, you have to use the camelCase version of the string. In our
+example this will be `aComplexAttribute`
 
 ```js
 import Component from '@biotope/element';
@@ -174,7 +183,9 @@ This will result in the following html:
 
 
 ### Transforming attributes
-When you set values in the html tags attributes, these values will always be strings. If you pass other data types through the attributes, you also have to take care of their transformation. You can do this by setting a attribute converter in the attributes array instead of a simple string.
+When you set values in the html tags attributes, these values will always be strings. If you pass
+other data types through the attributes, you also have to take care of their transformation. You can
+do this by setting a attribute converter in the attributes array instead of a simple string.
 
 #### Numbers
 ```html
@@ -191,8 +202,11 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-// here we use the converter config
-MyButton.attributes = [{name: 'fooNum', converter: (value) => parseInt(value, 10)}];
+// here we use the converter function
+MyButton.attributes = [{
+  name: 'fooNum',
+  converter: (value) => parseInt(value, 10),
+}];
 
 MyButton.register();
 ```
@@ -204,7 +218,8 @@ This will result in the following html:
 ```
 
 #### Booleans
-Passing in booleans is handled similarly, but instead of adding an string attribute you either add the attribute or not. So your initial element might look like this:
+Passing in booleans is handled similarly, but instead of adding an string attribute you either add
+the attribute or not. So your initial element might look like this:
 ```html
 <my-button primary><my-button>
 ```
@@ -223,7 +238,10 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-MyButton.attributes = [{name: 'primary', converter: () => true}];
+MyButton.attributes = [{
+  name: 'primary',
+  converter: () => true,
+}];
 
 MyButton.register();
 ```
@@ -235,12 +253,12 @@ MyButton.register();
 <my-button>
 ```
 
-> Note: You can get a list of the observed attributes by using the components `this.observedAttributes` property
+> Note: You can get a list of the observed attributes by using the components
+`this.observedAttributes` property
 
 ## Shadow dom
-Every component extending the biotope element is using shadow dom. This will help you to not mess up our existing component structure.
-If have the following html and js:
-
+Every component extending the biotope element is using shadow dom. This will help you to not mess up
+our existing component structure. If have the following html and js:
 ```html
 <my-button>
   I am a little 🦋
@@ -253,7 +271,7 @@ class MyButton extends Component {
   render() {
     // the slot will be replaced by the current content
     return this.html`
-      <slot/>
+      <slot />
       <span>I am a little 🐛</span>
     `;
   }
