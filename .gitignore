@@ -4,10 +4,10 @@ lib
 docs-dist
 *.log
 
-example/node_modules
-example/.cache
-example/dist
+examples/node_modules
+examples/.cache
+examples/dist
 .DS_Store
 .rpt2_cache
-./stats.html
+stats.html
 coverage

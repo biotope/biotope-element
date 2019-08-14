@@ -1,7 +1,8 @@
 # Styling
 
 ## Adding styles
-As every component uses shadow dom by default, you have to put the styles inside the shadow root. You can either write inline styles:
+As every component uses shadow dom by default, you have to put the styles inside the shadow root.
+You can either write inline styles:
 ```js
 import Component from '@biotope/element';
 
