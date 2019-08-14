@@ -49,11 +49,13 @@ describe('#created', (): void => {
     element.attributeChangedCallback('mock-name', 'old-value', 'new-value');
     element.attributeChangedCallback('mock-name-2', 'old-value-2', 'new-value-2');
     element.connectedCallback();
+    element.attributeChangedCallback('mock-name-3', 'old-value-3', 'new-value-3');
 
-    expect(functionCalls).toHaveLength(4);
+    expect(functionCalls).toHaveLength(5);
     expect(functionCalls[0]).toBe('created');
     expect(functionCalls[1]).toBe('connectedCallback');
     expect(functionCalls[2]).toBe('attributeChangedCallback');
     expect(functionCalls[3]).toBe('attributeChangedCallback');
+    expect(functionCalls[4]).toBe('attributeChangedCallback');
   });
 });

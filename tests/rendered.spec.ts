@@ -50,10 +50,11 @@ describe('#rendered', (): void => {
       }
       element = new TestElement();
       element.connectedCallback();
+      element.render();
     });
 
     it('triggers the rendered method', (done): NodeJS.Timeout => setTimeout((): void => {
-      expect(mockRendered.mock.calls).toHaveLength(1);
+      expect(mockRendered.mock.calls).toHaveLength(2);
       done();
     }, 50));
   });

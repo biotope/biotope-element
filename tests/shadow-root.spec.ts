@@ -10,17 +10,26 @@ describe('#shadowRoot', (): void => {
     expect(element.shadowRoot).toBeTruthy();
   });
 
-  it('can disable shadow root', (): void => {
-    class TestElement extends Component {
-      public static componentName = 'test-element';
+  describe('can disable shadow root', (): void => {
+    let element;
 
-      public constructor() {
-        super(false);
+    beforeEach((): void => {
+      class TestElement extends Component {
+        public static componentName = 'test-element-2';
+
+        public constructor() {
+          super(false);
+        }
       }
-    }
+      element = new TestElement();
+    });
 
-    const element = new TestElement();
+    it('has shadowRoot disabled', (): void => {
+      expect(element.shadowRoot).toBeUndefined();
+    });
 
-    expect(element.shadowRoot).toBeUndefined();
+    it('has shadowRoot disabled', (): void => {
+      expect((): void => element.render()).not.toThrowError();
+    });
   });
 });

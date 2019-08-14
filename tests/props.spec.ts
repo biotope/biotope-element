@@ -86,5 +86,10 @@ describe('#props', (): void => {
       }
       element = new TestElement();
     });
+
+    it('props is an empty object', (): void => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((element as any).props).toEqual({});
+    });
   });
 });
