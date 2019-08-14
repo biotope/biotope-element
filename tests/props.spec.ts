@@ -1,58 +1,98 @@
 import Component from '../src/index';
 
-describe('props', (): void => {
-  describe('setter', (): void => {
-    it('calls onPropsChanged callback when props setter is called', (): void => {
-      const onPropsChangedSpy = jest.fn();
+describe('#props', (): void => {
+  let element: Component;
 
-      class Test extends Component {
-        public static componentName = 'x-test';
+  beforeEach((): void => {
+    interface TestElementProps {
+      mockAttributeOne: string;
+      mockAttributeTwo: string;
+    }
+    class TestElement extends Component<TestElementProps> {
+      public static componentName = 'test-element';
 
-        // eslint-disable-next-line class-methods-use-this
-        protected onPropsChanged(): void {
-          onPropsChangedSpy();
-        }
+      public static attributes = [
+        'mock-attribute-one',
+        {
+          name: 'mock-attribute-two',
+          converter(prop?: string): string {
+            return `modded-${prop}`;
+          },
+        },
+      ];
+
+      // eslint-disable-next-line class-methods-use-this
+      public get defaultProps(): TestElementProps {
+        return {
+          mockAttributeOne: '',
+          mockAttributeTwo: '',
+        };
       }
+    }
+    element = new TestElement();
+  });
 
-      const testComponent = Object.create(Test.prototype, {});
-
-      testComponent.props = {
-        test: 'someValue',
-      };
-
-      expect(onPropsChangedSpy.mock.calls.length).toBe(1);
+  it('initially contains the default props', (): void => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((element as any).props).toEqual({
+      mockAttributeOne: '',
+      mockAttributeTwo: '',
     });
   });
 
-  describe('getter', (): void => {
-    it('returns empty object for no set props', (): void => {
-      class Test extends Component {
-        public static componentName = 'x-test';
-      }
-
-      const testComponent = Object.create(Test.prototype, {});
-
-      expect(Object.keys(testComponent.props)).toHaveLength(0);
+  describe('attributeChangedCallback is called with the wrong attribute', (): void => {
+    beforeEach((): void => {
+      element.render = jest.fn();
+      element.attributeChangedCallback('fake-attribute', '', 'fake-new-value');
     });
 
-    it('returns default props if set', (): void => {
-      interface ComponentProps {
-        myProp: string;
+    it('no new props are set', (): void => {
+      expect((element.render as jest.Mock).mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('attributeChangedCallback is called for all props', (): void => {
+    beforeEach((): void => {
+      element.render = jest.fn();
+      element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
+      element.attributeChangedCallback('mock-attribute-two', '', 'mock-new-value-two');
+    });
+
+    it('contains the new props', (): void => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((element as any).props).toEqual({
+        mockAttributeOne: 'mock-new-value-one',
+        mockAttributeTwo: 'modded-mock-new-value-two',
+      });
+    });
+
+    it('calls render 2 times', (): void => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((element.render as jest.Mock).mock.calls).toHaveLength(2);
+    });
+  });
+
+  describe('no default props given', (): void => {
+    beforeEach((): void => {
+      class TestElement extends Component {
+        public static componentName = 'test-element';
+
+        public static attributes = [
+          'mock-attribute-one',
+          {
+            name: 'mock-attribute-two',
+            converter(prop?: string): string {
+              return `modded-${prop}`;
+            },
+          },
+        ];
       }
+      element = new TestElement();
+    });
 
-      class Test extends Component<ComponentProps> {
-        public static componentName = 'x-test';
-
-        // eslint-disable-next-line class-methods-use-this
-        protected get defaultProps(): ComponentProps {
-          return {
-            myProp: 'value',
-          };
-        }
-      }
-      const testComponent = Object.create(Test.prototype, {});
-
-      expect(testComponent.props.myProp).toBe('value');
+    it('returns null as the defaultProps', (): void => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((element as any).defaultProps).toBeNull();
     });
   });
 });

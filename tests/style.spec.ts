@@ -1,42 +1,24 @@
-import Component from '../src';
 import { createStyle } from '../src/style';
 
-const mockStyle = 'color: red;';
-
-describe('#style', (): void => {
-  it('returns a style element', (): void => {
-    const element = createStyle('');
-
-    expect(element.tagName).toBe('style');
+describe('#createStyle', (): void => {
+  beforeEach((): void => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    document.createElement = jest.fn((): any => ({ innerHTML: undefined }));
   });
 
-  it('contains the given style', (): void => {
-    const element = createStyle(mockStyle);
-
-    expect(element.innerHTML).toBe(mockStyle);
+  describe('is given a string', (): void => {
+    it('sets innerHTML to it', (): void => {
+      const result = createStyle('mock-style');
+      expect(result.innerHTML).toBe('mock-style');
+    });
   });
 
-  it('can receive an object', (): void => {
-    const element = createStyle({ toString: (): string => mockStyle });
-
-    expect(element.innerHTML).toBe(mockStyle);
-  });
-
-  it('can be used inside the component', (): void => {
-    let element: HTMLStyleElement;
-
-    class HelloWorld extends Component {
-      public static componentName = 'x-world';
-
-      public render(): void {
-        element = this.createStyle(mockStyle);
-      }
-    }
-
-    const component = new HelloWorld();
-    component.render();
-
-    expect(element.tagName).toBe('style');
-    expect(element.innerHTML).toBe(mockStyle);
+  describe('is not given a string', (): void => {
+    it('sets innerHTML to the result of ".toString()"', (): void => {
+      const styles = {};
+      styles.toString = (): string => 'mock-style';
+      const result = createStyle(styles);
+      expect(result.innerHTML).toBe('mock-style');
+    });
   });
 });
