@@ -44,7 +44,7 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-!> __Important ⚠️:__ Style-Scoping only works in browsers that support shadow dom. Browsers like IE11/Edge until V18 inherit styles as used everywhere else. So use unique class names and techniques like [BEM](http://getbem.com)to keep everything sane.
+!> __Important ⚠️:__ Style-Scoping only works in browsers that support Shadow DOM. Browsers like IE11/Edge until V18 inherit styles as used everywhere else. So use unique class names and techniques like [BEM](http://getbem.com)to keep everything sane.
 
 !> __Important ⚠️:__ If you come across that issue, that your styles are displayed as text. Most likely you use a class-name that is the same as your component name. Together with the polyfill, the style tag itself get styled which causes the issue in IE11/Edge V18 and below.
 
