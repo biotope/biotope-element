@@ -1,9 +1,13 @@
 import Component from '../src/index';
 
 describe('#observedAttributes', (): void => {
-  let element: Component;
+  let element;
+  let originalCustomElementsDefine;
 
   beforeEach((): void => {
+    originalCustomElementsDefine = customElements.define;
+    customElements.define = jest.fn();
+
     class TestElement extends Component {
       public static componentName = 'test-element';
 
@@ -17,7 +21,12 @@ describe('#observedAttributes', (): void => {
         },
       ];
     }
+    TestElement.register();
     element = new TestElement();
+  });
+
+  afterEach((): void => {
+    customElements.define = originalCustomElementsDefine;
   });
 
   it('contains the 2 attributes', (): void => {

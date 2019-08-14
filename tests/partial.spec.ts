@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml';
 import Component from '../src/index';
 
 describe('#partial', (): void => {
@@ -6,11 +7,8 @@ describe('#partial', (): void => {
       public static componentName = 'test-element';
     }
     const element = new TestElement();
-    const wireResult = jest.fn();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (Component as any).wire = jest.fn((): jest.Mock => wireResult);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((element as any).partial).toBe(wireResult);
+    expect((element as any).partial).toBe(html);
   });
 });

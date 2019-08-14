@@ -1,4 +1,4 @@
-import { createStyle } from '../src/style';
+import { createStyle } from '../src/create-style';
 
 describe('#createStyle', (): void => {
   beforeEach((): void => {

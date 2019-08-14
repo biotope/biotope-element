@@ -1,7 +1,7 @@
 import { attributeName, attributeValue } from './attribute-mapper';
 import { ComponentInstance } from './types';
 
-const kebabToCamel = (string: string): string => string.replace(/-([a-z])/g, (item): string => item[1].toUpperCase());
+const kebabToCamel = (string: string): string => string.replace(/-([a-z])/g, (_, item): string => item.toUpperCase());
 
 export const attributeChangedCallback = (
   // FIXME - false positive on linting

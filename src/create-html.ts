@@ -1,25 +1,25 @@
 import { render, html } from 'lighterhtml';
 
-import { Renderer } from './types';
+import { Renderer, ComponentInstance } from './types';
 
 // eslint-disable-next-line func-names
-export const createHtml = (): Renderer<ShadowRoot | HTMLElement> => function (
+export const createHtml = (context: ComponentInstance): Renderer<ShadowRoot | HTMLElement> => (
   template: TemplateStringsArray, ...args
-): ShadowRoot | HTMLElement {
-  args.forEach((_, index): void => {
-    if (args[index] && Array.isArray(args[index])) {
-      // eslint-disable-next-line no-param-reassign
-      args[index] = this.partial`${args[0]}`;
-    }
-  });
+): ShadowRoot | HTMLElement => {
+  const element = render.bind(
+    context,
+    context.shadowRoot || context,
+    (): void => html(template, ...args.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (_, index): any => (args[index] && Array.isArray(args[index])
+        ? context.partial`${args[index]}`
+        : args[index]),
+    )),
+  )();
 
-  const renderCallback = (): void => html(template, ...args);
-  return render.bind(this, this.shadowRoot || this, renderCallback)();
+  setTimeout((): void => context.rendered());
+  return element;
 };
 
 // eslint-disable-next-line func-names
-export const createPartial = (): Renderer<HTMLElement> => function (
-  ...args
-): HTMLElement {
-  return html(...args);
-};
+export const createPartial = (): Renderer<HTMLElement> => html;

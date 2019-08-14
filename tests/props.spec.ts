@@ -21,12 +21,9 @@ describe('#props', (): void => {
         },
       ];
 
-      // eslint-disable-next-line class-methods-use-this
-      public get defaultProps(): TestElementProps {
-        return {
-          mockAttributeOne: '',
-          mockAttributeTwo: '',
-        };
+      protected defaultProps: TestElementProps = {
+        mockAttributeOne: '',
+        mockAttributeTwo: '',
       }
     }
     element = new TestElement();
@@ -88,11 +85,6 @@ describe('#props', (): void => {
         ];
       }
       element = new TestElement();
-    });
-
-    it('returns null as the defaultProps', (): void => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((element as any).defaultProps).toBeNull();
     });
   });
 });
