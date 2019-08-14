@@ -4,17 +4,7 @@ export const attributeName = (attribute: string | Attribute): string => (
   typeof attribute === 'string' ? attribute : attribute.name
 );
 
-const arrayReducer = <T>(accumulator: T[], key: string, _: number, original: object): T[] => ([
-  ...accumulator,
-  original[key],
-]);
-
-const objectReducer = (accumulator: object, key: string, _: number, original: object): object => ({
-  ...accumulator,
-  [key]: original[key],
-});
-
-const jsonParse = (value: string, type: 'array' | 'object'): object => {
+const parseAndForceType = (value: string, type: 'array' | 'object'): object => {
   let parsedValue: object;
   try {
     parsedValue = JSON.parse(value);
@@ -22,13 +12,19 @@ const jsonParse = (value: string, type: 'array' | 'object'): object => {
     parsedValue = undefined;
   }
 
-  const reducerFunction = type === 'array' ? arrayReducer : objectReducer;
-  const reducerStarter = type === 'array' ? [] : {};
+  if (type === 'array') {
+    return typeof parsedValue !== 'object' ? null : Object.keys(parsedValue)
+      .reduce(<T>(accumulator: T[], key: string): T[] => ([
+        ...accumulator,
+        parsedValue[key],
+      ]), []);
+  }
 
-  parsedValue = typeof parsedValue !== 'object' ? null : Object.keys(parsedValue)
-    .reduce(reducerFunction, reducerStarter);
-
-  return parsedValue;
+  return typeof parsedValue !== 'object' ? null : Object.keys(parsedValue)
+    .reduce((accumulator: object, key: string): object => ({
+      ...accumulator,
+      [key]: parsedValue[key],
+    }), {});
 };
 
 export const attributeValue = (
@@ -46,16 +42,21 @@ export const attributeValue = (
   let convertedValue: string | boolean | object | number;
   switch ((attribute as TypedAttribute).type) {
     case 'array':
-      convertedValue = jsonParse(value, 'array');
+      convertedValue = parseAndForceType(value, 'array');
       break;
     case 'object':
-      convertedValue = jsonParse(value, 'object');
+      convertedValue = parseAndForceType(value, 'object');
       break;
     case 'boolean':
       convertedValue = (!!value && value !== 'false') || value === '';
       break;
     case 'number':
       convertedValue = +value;
+      // eslint-disable-next-line no-self-compare
+      if (convertedValue !== convertedValue) {
+        const float = parseFloat(value);
+        convertedValue = float || float === 0 ? float : convertedValue;
+      }
       break;
     default:
       convertedValue = value;
