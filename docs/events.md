@@ -1,18 +1,16 @@
 # Events
-Events are for communication of your 
-components to the outside world.
-There is nothing different from normal 
-javascript events here. We just have some 
-guidelines which may help you using 
-biotope-element with events.
+Events are for communication of your components to the outside world.
+There is nothing different from normal javascript events here.
+We just have some guidelines which may help you using biotope-element with events.
 
 ## Definition
 To prevent typos in your events, we encourage you to define you events as constants and always
 reference it instead of just using a string:
-```js
+
+```javascript
 const MY_BUTTON_EVENTS = {
-  PRESSED: 'pressed'
-}
+  PRESSED: 'pressed',
+};
 
 export default MY_BUTTON_EVENTS;
 ```
@@ -26,7 +24,7 @@ care.
 
 To dispatch an event you can just call `emit` on the component:
 
-```js
+```javascript
 import Component from '@biotope/element';
 import MY_BUTTON_EVENTS from './events';
 
@@ -34,7 +32,7 @@ class MyButton extends Component {
   constructor() {
     super();
     // we have to bind the callback to accesss this inside the function
-    this.onclick = this.onclick.bind(this)
+    this.onclick = this.onclick.bind(this);
   }
 
   render() {
@@ -46,12 +44,11 @@ class MyButton extends Component {
   }
 
   onclick(event) {
-    this.emit(MY_BUTTON_EVENTS.PRESSED)
+    this.emit(MY_BUTTON_EVENTS.PRESSED);
   }
 }
 
 MyButton.componentName = 'my-button';
-
 MyButton.register();
 ```
 
@@ -59,7 +56,7 @@ MyButton.register();
 Now to listen to these custom events, you can just pass a function to an attribute with the same
 name as your event. The function you pass should bind `this` so we can access the component inside:
 
-```js
+```javascript
 import Component from '@biotope/element';
 import MY_BUTTON_EVENTS from '../MyButton/events';
 
@@ -77,7 +74,6 @@ class ImageStage extends Component {
 }
 
 ImageStage.componentName = 'image-stage';
-
 ImageStage.register();
 ```
 

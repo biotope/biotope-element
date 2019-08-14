@@ -74,17 +74,20 @@ ExampleTable.attributes = [
   'simple-text',
   {
     name: 'complex-attribute',
+    type: 'array',
+  },
+  {
+    name: 'converted-attribute',
     converter(prop) {
-      try {
-        return JSON.parse(prop || '');
-      } catch (_) {
-        return [];
+      if (prop === 'one') {
+        return 1;
       }
+      return prop === 'two' ? 2 : 0;
     },
   },
   {
     name: 'show-counter',
-    converter: prop => !!prop || typeof prop === 'string',
+    type: 'boolean',
   },
 ];
 ExampleTable.register();

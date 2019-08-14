@@ -3,7 +3,8 @@
 ## Adding styles
 As every component uses shadow dom by default, you have to put the styles inside the shadow root.
 You can either write inline styles:
-```js
+
+```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
@@ -20,12 +21,12 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-
 MyButton.register();
 ```
 
 or import your css from an external file with some kind of bundler:
-```js
+
+```javascript
 import Component from '@biotope/element';
 import style from './styles.css';
 
@@ -39,7 +40,6 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-
 MyButton.register();
 ```
 

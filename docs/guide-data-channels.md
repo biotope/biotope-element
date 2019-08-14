@@ -31,7 +31,7 @@ convenient to set this data by javascript.
 <custom-element attribute-1="a string" attribute-2="true"></custom-element>
 ```
 
-```js
+```javascript
 // Such nice!
 document.querySelector('custom-element').props = {
   'attribute-3': [
@@ -47,6 +47,7 @@ document.querySelector('custom-element').props = {
 ## Slotting content
 In case you want to pass HTML markup to the component, we recommend slotting it and handle it
 externally:
+
 ```html
 <!-- Clean! -->
 <custom-element>
