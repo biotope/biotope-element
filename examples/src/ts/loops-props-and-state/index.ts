@@ -9,6 +9,7 @@ export interface ExampleTableProps {
   showCounter: boolean;
   simpleText?: string;
   complexAttribute?: string[];
+  convertedAttribute?: number;
 }
 
 interface ExampleTableState {
@@ -22,17 +23,20 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     'simple-text',
     {
       name: 'complex-attribute',
-      converter(prop?: string): string[] {
-        try {
-          return JSON.parse(prop || '');
-        } catch (_) {
-          return [];
+      type: 'array',
+    },
+    {
+      name: 'converted-attribute',
+      converter(prop?: string): number {
+        if (prop === 'one') {
+          return 1;
         }
+        return prop === 'two' ? 2 : 0;
       },
     },
     {
       name: 'show-counter',
-      converter: (prop?: string): boolean => !!prop || typeof prop === 'string',
+      type: 'boolean',
     },
   ];
 
