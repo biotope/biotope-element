@@ -25,6 +25,7 @@ describe('#partial', (): void => {
     class TestElement extends Component {
       public static componentName = 'test-element-2';
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       public render(): any {
         return this.partial;
       }
@@ -33,7 +34,6 @@ describe('#partial', (): void => {
     element.connectedCallback();
     element.render();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((createPartial as jest.Mock).mock.calls).toHaveLength(1);
   });
 });

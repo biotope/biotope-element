@@ -24,13 +24,12 @@ describe('#created', (): void => {
       }
 
       // eslint-disable-next-line class-methods-use-this
-      public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+      public attributeChangedCallback(): void {
         functionCalls.push('attributeChangedCallback');
       }
     }
     TestElement.register();
     element = new TestElement();
-    // console.log(element.attributeChangedCallback.toString());
   });
 
   afterEach((): void => {

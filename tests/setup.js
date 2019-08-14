@@ -1,4 +1,4 @@
 
 require('basichtml').init({
-    window: global
+  window: global,
 });

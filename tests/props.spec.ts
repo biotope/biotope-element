@@ -64,7 +64,6 @@ describe('#props', (): void => {
     });
 
     it('calls render 2 times', (): void => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((element.render as jest.Mock).mock.calls).toHaveLength(2);
     });
   });
