@@ -2,7 +2,6 @@ import { render, html } from 'lighterhtml';
 
 import { Renderer, ComponentInstance } from './types';
 
-// eslint-disable-next-line func-names
 export const createHtml = (context: ComponentInstance): Renderer<ShadowRoot | HTMLElement> => (
   template: TemplateStringsArray, ...args
 ): ShadowRoot | HTMLElement => {
@@ -10,6 +9,7 @@ export const createHtml = (context: ComponentInstance): Renderer<ShadowRoot | HT
     context,
     context.shadowRoot || context,
     (): void => html(template, ...args.map(
+      /* istanbul ignore next */
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_, index): any => (args[index] && Array.isArray(args[index])
         ? context.partial`${args[index]}`
@@ -21,5 +21,4 @@ export const createHtml = (context: ComponentInstance): Renderer<ShadowRoot | HT
   return element;
 };
 
-// eslint-disable-next-line func-names
 export const createPartial = (): Renderer<HTMLElement> => html;

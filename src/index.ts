@@ -47,7 +47,6 @@ export default abstract class Component<TProps = object, TState = object> extend
     /* eslint-enable no-underscore-dangle */
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected get partial(): Renderer<HTMLElement> {
     /* eslint-disable no-underscore-dangle */
     if (!this.__partial) {
