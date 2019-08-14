@@ -1,24 +1,23 @@
 import { render, html } from 'lighterhtml';
 
-import { Renderer, ComponentInstance } from './types';
+import { Renderer } from './types';
 
-export const createHtml = (context: ComponentInstance): Renderer<ShadowRoot | HTMLElement> => (
+// eslint-disable-next-line func-names
+export const createHtml = (): Renderer<ShadowRoot | HTMLElement> => function (
   template: TemplateStringsArray, ...args
-): ShadowRoot | HTMLElement => {
-  const element = render.bind(
-    context,
-    context.shadowRoot || context,
-    (): void => html(template, ...args.map(
-      /* istanbul ignore next */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (_, index): any => (args[index] && Array.isArray(args[index])
-        ? context.partial`${args[index]}`
-        : args[index]),
-    )),
-  )();
+): ShadowRoot | HTMLElement {
+  const parsedArgs = args.map((_, index): void => (args[index] && Array.isArray(args[index])
+    ? this.partial`${args[index]}`
+    : args[index]
+  ));
 
-  setTimeout((): void => context.rendered());
-  return element;
+  const update = (): void => {
+    const element = html(template, ...parsedArgs);
+    setTimeout((): void => this.rendered());
+    return element;
+  };
+
+  return render.bind(this, this.shadowRoot || this, update)();
 };
 
 export const createPartial = (): Renderer<HTMLElement> => html;

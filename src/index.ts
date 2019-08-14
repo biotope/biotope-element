@@ -40,8 +40,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   protected get html(): Renderer<ShadowRoot | HTMLElement> {
     /* eslint-disable no-underscore-dangle */
     if (!this.__html) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.__html = createHtml(this as any);
+      this.__html = createHtml();
     }
     return this.__html;
     /* eslint-enable no-underscore-dangle */
