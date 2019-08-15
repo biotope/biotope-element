@@ -52,6 +52,45 @@ Result:
 </my-button>
 ```
 
+In typescript, it would look like this:
+
+```javascript
+// typescript
+import Component from '@biotope/element';
+
+interface MyButtonProps {
+  powermode: 'on' | 'off';
+}
+
+class MyButton extends Component<MyButtonProps> {
+  public static componentName = 'my-button';
+
+  protected defaultState: MyButtonProps = {
+    powermode: 'off',
+  }
+
+  public connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this.onclick);
+  }
+
+  public onclick(): void {
+    // this will set the state on click
+    this.setState({
+      powermode: 'on',
+    });
+  }
+
+  public render(): void {
+    return this.html`
+      Powermode ${this.state.powermode}!
+    `;
+  }
+}
+
+MyButton.register();
+```
+
 ## Dependencies
 Your component may need some other components to work. To allow the components to be registered when
 you need them, you can define dependencies for every component:
@@ -76,7 +115,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render() {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <x-slide></x-slide>
     `;
@@ -98,7 +137,7 @@ import Component from '@biotope/element';
 class XSlide extends Component {
   public static componentName = 'x-slide';
 
-  public render() {
+  public render(): ShadowRoot | HTMLElement {
     return this.html``;
   }
 }
@@ -110,7 +149,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render() {
+  public render(): ShadowRoot | HTMLElement {
     // Here we use this.children to access the three child x-slides
     return this.html`
       ${this.children.map(child => 'Slide')}

@@ -94,6 +94,7 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 MyButton.register();
 ```
 
@@ -105,6 +106,35 @@ This will result in the following html:
 
 ```html
 <my-button>🎰 bar</my-button>
+```
+
+In typescript, it would look like this:
+
+```javascript
+// typescript
+import Component from '@biotope/element';
+
+interface MyButtonProps {
+  foo: string;
+}
+
+class MyButton extends Component<MyButtonProps> {
+  public static componentName = 'my-button';
+
+  public static attributes = ['foo'];
+
+  protected defaultProps: MyButtonProps = {
+    foo: 'bar',
+  };
+
+  public render(): ShadowRoot | HTMlElement {
+    return this.html`
+      🎰 ${this.props.foo}
+    `;
+  }
+}
+
+MyButton.register();
 ```
 
 ### Hyphen attributes

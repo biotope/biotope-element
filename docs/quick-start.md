@@ -41,7 +41,7 @@ class HelloWorldComponent extends Component {
   // needed if you transpile to es5 and uglify your code at the same time
   public static componentName = 'hello-world';
 
-  public render() {
+  public render(): ShadowRoot | HTMlElement {
     return this.html`
       Hello World 🐤
     `;

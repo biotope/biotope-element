@@ -5,17 +5,20 @@
 
 ## Installation
 You can install the biotope element in your project using npm
+
 ```bash
 npm install @biotope/element --save
 ```
+
 or yarn
+
 ```bash
-yarn add @biotope/element --save
+yarn add @biotope/element
 ```
-<br/>
+
 After that to use it, import it in your project:
 
-```js
+```javascript
 import Component from '@biotope/element';
 ```
 
@@ -23,42 +26,64 @@ import Component from '@biotope/element';
 
 To use the biotope element, you have to extend it with your custom class:
 
-```js
+```javascript
 import Component from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
-
-  public render() {
-    return this.html`Hello World 🐤`;
+  
+  public render(): ShadowRoot | HTMLElement {
+    return this.html`
+      Hello World
+    `;
   }
 }
 ```
 
-After defining your class which you can do using existing methods (link) you have to call `register` on the class itself to use it in the html:
-index.js
-```js
+After defining your class which you can do using existing methods (link) you have to call `register`
+on the class itself to use it in a javascript/typescript file:
+
+```javascript
+import Component from '@biotope/element';
+
+export class MyButton extends Component {
+  render() {
+    return this.html`
+      Hello World 🐤
+    `;
+  }
+}
+
+MyButton.componentName = 'my-button';
+MyButton.register();
+
+/////////////////////////////////////////////
+
+// typescript
 import Component from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
 
-  public render() {
-    return this.html`Hello World 🐤`;
+  public render(): ShadowRoot | HTMLElement {
+    return this.html`
+      Hello World 🐤
+    `;
   }
 }
 
 MyButton.register();
 ```
 
-After that you can use it in your html like that:
-index.html
+After that you can use it in your html like so:
+
 ```html
-<script src="index.js"></script>
+<script src="my-button.js"></script>
 <my-button></my-button>
 ```
 
-This will result inthe following html:
+This will result in the following html:
+
 ```html
 <my-button>
   Hello world 🐤
@@ -72,8 +97,12 @@ Biotope element leverages the `Array.prototype.find` function. Which is not supp
 To use biotope element there, please take care of loading an appropriate polyfill
 
 ### Webcomponents
-Webcomponents are not supported by all browsers. Even the newest browsers have not integrated the spec yet.
-To still be able to use biotope element in your project in all major browsers, please include the [webcomponent polyfills](https://github.com/webcomponents/webcomponentsjs) in your project.
+Webcomponents are not supported by all browsers. Even the newest browsers have not integrated the
+spec yet. To still be able to use biotope element in your project in all major browsers, please
+include the
+[webcomponent polyfills](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs)
+in your project. Here is the
+[NPM package](https://www.npmjs.com/package/@webcomponents/webcomponentsjs).
 
 
 ## Documentation
