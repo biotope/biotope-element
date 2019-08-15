@@ -74,7 +74,11 @@ This will result in the following html:
 ```
 
 ### defaultProps
-To give your props a default value you can set the `defaultProps` property of the component:
+To give your props a default value you can set the `defaultProps` property of the component.
+
+If you're using typescript (or @babel/plugin-proposal-class-properties for example), you can also
+declare `defaultProps` as a property of your class - you can see an example of this commented below.
+
 ```javascript
 import Component from '@biotope/element';
 

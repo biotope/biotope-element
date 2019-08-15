@@ -42,17 +42,27 @@ The result would be:
 
 ## Handling state
 Every component can have its own internal state. To set the state just call the `setState` function
-of the component. You can define `defaultState` as your initial state or you can set `this.state`
-in the constructor.
-Note that only `setState` will trigger a new render.
+of the component with either the part of the state you with to update or a function (note: the
+passed function will receive the current state as a parameter and must return the new one).
+You can define `defaultState` as your initial state in the constructor. Note that `setState` will
+trigger a new render.
+
+If you're using typescript (or @babel/plugin-proposal-class-properties for example), you can also
+declare `defaultState` as a property of your class - you can see an example of this commented below.
 
 ```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
+  // NOTE: for typescript, @babel/plugin-proposal-class-properties or something similar
+  // defaultState = {
+  //   powermode: 'off',
+  // }
+
   constructor() {
     super();
 
+    // for simple non-fancy js users
     this.defaultState = {
       powermode: 'off',
     };
