@@ -21,12 +21,9 @@ describe('#props', (): void => {
         },
       ];
 
-      // eslint-disable-next-line class-methods-use-this
-      public get defaultProps(): TestElementProps {
-        return {
-          mockAttributeOne: '',
-          mockAttributeTwo: '',
-        };
+      protected defaultProps: TestElementProps = {
+        mockAttributeOne: '',
+        mockAttributeTwo: '',
       }
     }
     element = new TestElement();
@@ -67,7 +64,6 @@ describe('#props', (): void => {
     });
 
     it('calls render 2 times', (): void => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((element.render as jest.Mock).mock.calls).toHaveLength(2);
     });
   });
@@ -90,9 +86,9 @@ describe('#props', (): void => {
       element = new TestElement();
     });
 
-    it('returns null as the defaultProps', (): void => {
+    it('props is an empty object', (): void => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((element as any).defaultProps).toBeNull();
+      expect((element as any).props).toEqual({});
     });
   });
 });

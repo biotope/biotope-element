@@ -1,16 +1,39 @@
 import Component from '../src/index';
+import { createPartial } from '../src/create-html';
+
+jest.mock('../src/create-html', (): object => ({
+  createHtml: jest.fn((): string => 'html'),
+  createPartial: jest.fn((): string => 'partial'),
+}));
 
 describe('#partial', (): void => {
-  it('calls the wire function', (): void => {
+  beforeEach((): void => {
+    (createPartial as jest.Mock).mockClear();
+  });
+
+  it('calls the partial function', (): void => {
     class TestElement extends Component {
       public static componentName = 'test-element';
     }
     const element = new TestElement();
-    const wireResult = jest.fn();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (Component as any).wire = jest.fn((): jest.Mock => wireResult);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((element as any).partial).toBe(wireResult);
+    expect((element as any).partial).toBe('partial');
+  });
+
+  it('does not redefine partial', (): void => {
+    class TestElement extends Component {
+      public static componentName = 'test-element-2';
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      public render(): any {
+        return this.partial;
+      }
+    }
+    const element = new TestElement();
+    element.connectedCallback();
+    element.render();
+
+    expect((createPartial as jest.Mock).mock.calls).toHaveLength(1);
   });
 });

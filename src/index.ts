@@ -1,17 +1,14 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { WiredTemplateFunction } from 'hyperhtml';
-import HyperHTMLElement from 'hyperhtml-element';
-import { camel } from 'change-case';
-
-import { getComponentName } from './get-component-name';
-import { isRegistered } from './is-registered';
-import { attributeName, attributeValue } from './attribute-mapper';
-import { createStyle } from './style';
-import { Attribute } from './types';
+import { register } from './register';
+import { createHtml, createPartial } from './create-html';
+import { attributeChangedCallback } from './attribute-changed-callback';
+import { emit } from './emit';
+import { createStyle } from './create-style';
+import { Attribute, Renderer } from './types';
 
 export { Attribute };
 
-abstract class Component<TProps = object, TState = object> extends HyperHTMLElement<TState> {
+// eslint-disable-next-line import/no-default-export
+export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
   public static componentName: string;
 
   public static basedOn: string = null;
@@ -20,116 +17,109 @@ abstract class Component<TProps = object, TState = object> extends HyperHTMLElem
 
   public static attributes: (string | Attribute)[] = [];
 
-  public static get observedAttributes(): string[] {
-    return this.attributes.map(attributeName);
-  }
-
-  public static register(silent: boolean = true): boolean {
-    const dashedName = getComponentName(this);
-
-    if (!this.componentName) {
-      if (!silent) {
-        // eslint-disable-next-line no-console
-        console.warn(`Static property "componentName" missing. Setting it to "${dashedName}"…`);
-      }
-      this.componentName = dashedName;
-    }
-
-    if (isRegistered(this.componentName)) {
-      if (!silent) {
-        // eslint-disable-next-line no-console
-        console.warn(`Attempt to re-register component "${this.componentName}". Skipping…`);
-      }
-      return false;
-    }
-
-    this.dependencies.forEach((component): boolean => component.register(silent));
-
-    this.define(this.componentName, {
-      ...(this.basedOn ? { extends: this.basedOn } : {}),
-    });
-
-    return true;
-  }
+  private static observedAttributes: string[];
 
   public get props(): TProps {
-    return {
-      ...(this.defaultProps as TProps),
-      ...(this.currentProps as TProps),
-    };
+    /* eslint-disable no-underscore-dangle */
+    if (!this.__currentProps) {
+      this.__currentProps = (this.defaultProps || {}) as TProps;
+    }
+    return this.__currentProps;
+    /* eslint-enable no-underscore-dangle */
   }
 
-  public set props(value: TProps) {
-    this.currentProps = value;
-    this.render();
+  protected get state(): TState {
+    /* eslint-disable no-underscore-dangle */
+    if (!this.__currentState) {
+      this.__currentState = (this.defaultState || {}) as TState;
+    }
+    return this.__currentState;
+    /* eslint-enable no-underscore-dangle */
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected get defaultProps(): TProps {
-    return null;
+  protected get html(): Renderer<ShadowRoot | HTMLElement> {
+    /* eslint-disable no-underscore-dangle */
+    if (!this.__html) {
+      this.__html = createHtml();
+    }
+    return this.__html;
+    /* eslint-enable no-underscore-dangle */
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected get partial(): WiredTemplateFunction {
-    return Component.wire();
+  protected get partial(): Renderer<HTMLElement> {
+    /* eslint-disable no-underscore-dangle */
+    if (!this.__partial) {
+      this.__partial = createPartial();
+    }
+    return this.__partial;
+    /* eslint-enable no-underscore-dangle */
   }
 
-  private currentProps: TProps;
+  protected readonly defaultProps: TProps;
+
+  protected readonly defaultState: TState;
+
+  private __currentProps: TProps;
+
+  private __currentState: TState;
+
+  private __html: Renderer<ShadowRoot | HTMLElement>;
+
+  private __partial: Renderer<HTMLElement>;
+
+  private __initCallStack: (() => void)[];
+
+  private __initAttributesCallStack: (() => void)[];
+
+  public static register(silent: boolean = true): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return register(this as any, silent);
+  }
 
   public constructor(useShadow: boolean = true) {
     super();
-
-    const originalRender = this.render;
-    this.render = (): HTMLElement => {
-      const element = originalRender.bind(this)();
-      this.rendered();
-      return element;
-    };
+    // eslint-disable-next-line no-underscore-dangle
+    this.__initCallStack = [(): void => this.created()];
+    // eslint-disable-next-line no-underscore-dangle
+    this.__initAttributesCallStack = [];
 
     if (useShadow) {
       this.attachShadow({ mode: 'open' });
     }
   }
 
-  public created(): void {
+  // eslint-disable-next-line class-methods-use-this
+  public created(): void {}
+
+  public connectedCallback(): void {
     this.render();
   }
 
   public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-    const attribute = (this.constructor as typeof Component).attributes
-      .find((attr: string): boolean => attributeName(attr) === name);
-
-    if (attribute) {
-      this.props = {
-        ...(this.props as TProps),
-        [camel(name)]: attributeValue(attribute, newValue),
-      };
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return attributeChangedCallback(this as any, name, oldValue, newValue);
   }
 
-  public render(): HTMLElement {
+  public render(): ReturnType<typeof Component.prototype.html> {
     return this.html``;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public rendered(): void {
-  }
+  public rendered(): void {}
 
-  protected emit<T>(name: string, detail?: T, addPrefix: boolean = false): boolean {
-    if (!name) {
-      throw Error('No event name defined. Please provide a name.');
-    }
-    return this.dispatchEvent(new CustomEvent(
-      `${addPrefix ? `${(this.constructor as typeof Component).componentName}-` : ''}${name}`,
-      {
-        bubbles: true,
-        ...(detail !== undefined ? { detail } : {}),
-      },
-    ));
+  protected emit<TEvent>(name: string, detail?: TEvent, addPrefix: boolean = false): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return emit(this as any, name, detail, addPrefix);
   }
 
   protected createStyle = createStyle;
-}
 
-// eslint-disable-next-line import/no-default-export
-export default Component;
+  protected setState(state: Partial<TState> | ((state: TState) => Partial<TState>)): void {
+    // eslint-disable-next-line no-underscore-dangle
+    this.__currentState = {
+      ...this.state,
+      ...(typeof state === 'function' ? state.call(this, this.state) : state),
+    };
+    this.render();
+  }
+}

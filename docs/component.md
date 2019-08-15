@@ -1,7 +1,6 @@
 # Component
 
 ## The concept of a component
-
 We trust in the web.
 
 That's why we decided to write biotope and the biotope element with mostly vanilla web technologies
@@ -36,23 +35,57 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-In the template literal you can also add valid html code as well as the `<slot>` tag where the
+In the template literal you can also add valid html code as well as the `<slot />` tag where the
 current content of the component will be placed. Read more about it in the [shadow dom](#shadow-dom)
 section.
 
-## props
-Every component has its own props. The props can be passed into the component two ways:
+## attributes / props
+Every component has its own props. The props are the result of picking and parsing of all the
+attributes of the component.
 
-You can use attributes or set the props via javascript:
+You can pass new props or change the old ones using the attributes you already know from native js
+and html - i.e. by using `setAttribute` and `removeAttribute`. If your component is watching the
+attribute(s) you added/modified, it will parse it/them and trigger a re-render of the component.
 
-### defaultProps
-To give your props a default value you have to set the `defaultProps` getter of the component:
 ```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-  protected get defaultProps() {
-    return {
+  render() {
+    return this.html`
+      🎰 ${this.props.foo}
+    `;
+  }
+}
+
+MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
+MyButton.register();
+```
+
+```html
+<my-button foo="bar"></my-button>
+```
+
+This will result in the following html:
+
+```html
+<my-button>🎰 bar</my-button>
+```
+
+### defaultProps
+To give your props a default value you can set the `defaultProps` property of the component.
+
+If you're using typescript (or @babel/plugin-proposal-class-properties for example), you can also
+declare `defaultProps` as a property of your class - you can see an example of this commented below.
+
+```javascript
+import Component from '@biotope/element';
+
+class MyButton extends Component {
+  constructor() {
+    super();
+    this.defaultProps = {
       foo: 'bar',
     };
   }
@@ -65,6 +98,7 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
+MyButton.attributes = ['foo'];
 MyButton.register();
 ```
 
@@ -78,69 +112,33 @@ This will result in the following html:
 <my-button>🎰 bar</my-button>
 ```
 
-### setting props
-You can set the props of a component after initialisation by accessing its instance like this:
-```html
-<my-button id="foo"></my-button>
-```
+In typescript, it would look like this:
 
 ```javascript
-document.getElementById('foo').props = {
-  foo: 'bar'
-}
-```
-
-Changing the props this way will trigger the render method.
-
-## Attributes
-To pass in data to a component attributes on the html tag can be used:
-
-```html
-<my-button foo="bar"><my-button>
-```
-
-To pass these values to the props object, you have to define the corresponding attribute in the
-component:
-
-```javascript
+// typescript
 import Component from '@biotope/element';
 
-class MyButton extends Component {
-  render() {
-    return this.html`🌸`;
-  }
+interface MyButtonProps {
+  foo: string;
 }
 
-MyButton.componentName = 'my-button';
-MyButton.attributes = ['foo'];
+class MyButton extends Component<MyButtonProps> {
+  public static componentName = 'my-button';
 
-MyButton.register();
-```
+  public static attributes = ['foo'];
 
-This will take care of the attributes value and pass it to the props of the component:
+  protected defaultProps: MyButtonProps = {
+    foo: 'bar',
+  };
 
-```javascript
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  render() {
+  public render(): ShadowRoot | HTMlElement {
     return this.html`
-      ${this.props.foo} 🌸
+      🎰 ${this.props.foo}
     `;
   }
 }
 
-MyButton.componentName = 'my-button';
-MyButton.attributes = ['foo'];
 MyButton.register();
-```
-
-This will result in the following html:
-
-```html
-<my-button foo="bar">
-  bar 🌸
-<my-button>
 ```
 
 ### Hyphen attributes
@@ -148,7 +146,7 @@ If your attributes get more complex, you might want to have multi word names lik
 `a-complex-attribute`.
 
 To access those attributes in the props, you have to use the camelCase version of the string. In our
-example this will be `aComplexAttribute`
+example this will be `aComplexAttribute`.
 
 ```javascript
 import Component from '@biotope/element';
@@ -212,9 +210,11 @@ MyButton.attributes = [{
 // OR use your custom converter function
 MyButton.attributes = [{
   name: 'fooNum',
-  converter: (value) => parseInt(value, 10),
+  converter: (value) => {
+    console.log('A new prop just popped up…… get it?');
+    return parseInt(value, 10);
+  },
 }];
-
 MyButton.register();
 
 ```
@@ -265,7 +265,7 @@ MyButton.register();
 <my-button>
 ```
 
-## Shadow dom
+## Shadow DOM
 Every component extending the biotope element is using shadow dom. This will help you to not mess up
 our existing component structure. If you have the following html and js:
 

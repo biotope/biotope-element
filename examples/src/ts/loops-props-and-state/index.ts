@@ -40,27 +40,21 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     },
   ];
 
-  // eslint-disable-next-line class-methods-use-this
-  public get defaultProps(): ExampleTableProps {
-    return {
-      showCounter: false,
-    };
-  }
+  protected defaultProps: ExampleTableProps = {
+    showCounter: false,
+  };
 
-  // eslint-disable-next-line class-methods-use-this
-  public get defaultState(): ExampleTableState {
-    return {
-      counter: 0,
-    };
-  }
+  protected defaultState: ExampleTableState = {
+    counter: 0,
+  };
 
   public constructor() {
     super();
     this.getRow = this.getRow.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     const { showCounter } = this.props;
     const { counter } = this.state;
 
@@ -78,7 +72,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
         </tbody>
       </table>
       ${showCounter ? this.partial`
-        <button onclick=${this.onClick}>Increment Counter</button>
+        <button onclick=${this.handleClick}>Increment Counter</button>
         <span>${counter}</span>
       ` : null}
     `;
@@ -96,7 +90,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     `;
   }
 
-  private onClick(): void {
+  private handleClick(): void {
     this.setState({
       counter: this.state.counter + 1,
     });

@@ -10,19 +10,19 @@ export class ExampleReceiver extends Component {
 
   public constructor() {
     super();
-    this.onInputChange = this.onInputChange.bind(this);
+    this.hanldleInputChange = this.hanldleInputChange.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <div>
-        <example-sender onexamplesender.change=${this.onInputChange} />
+        <example-sender onexamplesender.change=${this.hanldleInputChange} />
       </div>
     `;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public onInputChange({ target, detail }: ExampleSenderChangeType): void {
+  private hanldleInputChange({ target, detail }: ExampleSenderChangeType): void {
     // eslint-disable-next-line no-console
     console.log('Input change event on: ', target);
     // eslint-disable-next-line no-console

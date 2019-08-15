@@ -1,8 +1,6 @@
-import { kebab } from 'change-case';
+import { ComponentType } from './types';
 
-interface NamedComponent extends Function {
-  componentName?: string;
-}
+const camelToKebab = (string: string): string => string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-export const getComponentName = (context: NamedComponent): string => context.componentName
-  || kebab(context.name || context.toString().match(/^function\s*([^\s(]+)/)[1]);
+export const getComponentName = (context: ComponentType): string => context.componentName
+  || camelToKebab(context.name || context.toString().match(/^function\s*([^\s(]+)/)[1]);

@@ -13,7 +13,7 @@ export class ExampleChild extends Component<ExampleChildProps> {
     'another-text',
   ];
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <p>parent prop: ${this.props.text}</p>
       <p>my prop: ${this.props.anotherText}</p>

@@ -2,7 +2,7 @@
   - [Quick Start](quick-start.md)
   - [Component](component.md)
   - [Styling](styling.md)
-- [Lifecycle Hooks](lifecycle-hooks.md)
+- [__Lifecycle Hooks__](lifecycle-hooks.md)
 - [__Advanced__](advanced.md)
 - [__Events__](events.md)
 - [__Data Passing__](guide-data-channels.md)

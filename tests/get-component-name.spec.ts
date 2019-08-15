@@ -1,4 +1,5 @@
 import { getComponentName } from '../src/get-component-name';
+import { ComponentType } from '../src/types';
 
 describe('#getComponentName', (): void => {
   let component: Function;
@@ -11,7 +12,7 @@ describe('#getComponentName', (): void => {
 
   describe('componentName exists', (): void => {
     it('returns the attribute name', (): void => {
-      const result = getComponentName(component);
+      const result = getComponentName(component as ComponentType);
       expect(result).toBe('mock-component-name');
     });
   });
@@ -23,7 +24,7 @@ describe('#getComponentName', (): void => {
     });
 
     it('returns the kebab function name', (): void => {
-      const result = getComponentName(component);
+      const result = getComponentName(component as ComponentType);
       expect(result).toBe('mock-name');
     });
   });

@@ -3,7 +3,7 @@ import Component from '@biotope/element';
 export class ExampleSlots extends Component {
   public static componentName = 'example-slots';
 
-  public render(): HTMLElement {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       <style>
         ::slotted(*) {

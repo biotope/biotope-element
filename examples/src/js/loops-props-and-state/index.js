@@ -6,24 +6,18 @@ const kebabToCamel = str => str.replace(
 );
 
 export class ExampleTable extends Component {
-  // eslint-disable-next-line class-methods-use-this
-  get defaultProps() {
-    return {
-      showCounter: false,
-    };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  get defaultState() {
-    return {
-      counter: 0,
-    };
-  }
-
   constructor() {
     super();
     this.getRow = this.getRow.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.defaultProps = {
+      showCounter: false,
+    };
+
+    this.defaultState = {
+      counter: 0,
+    };
   }
 
   render() {
@@ -44,7 +38,7 @@ export class ExampleTable extends Component {
         </tbody>
       </table>
       ${showCounter ? this.partial`
-        <button onclick=${this.onClick}>Increment Counter</button>
+        <button onclick=${this.handleClick}>Increment Counter</button>
         <span>${counter}</span>
       ` : null}
     `;
@@ -62,7 +56,7 @@ export class ExampleTable extends Component {
     `;
   }
 
-  onClick() {
+  handleClick() {
     this.setState({
       counter: this.state.counter + 1,
     });

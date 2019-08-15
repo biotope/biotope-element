@@ -13,7 +13,7 @@ or yarn
 yarn add @biotope/element
 ```
 
-## Create  your first component
+## Create your first component
 First import the element in your component:
 
 ```javascript
@@ -41,7 +41,7 @@ class HelloWorldComponent extends Component {
   // needed if you transpile to es5 and uglify your code at the same time
   public static componentName = 'hello-world';
 
-  public render() {
+  public render(): ShadowRoot | HTMlElement {
     return this.html`
       Hello World 🐤
     `;
