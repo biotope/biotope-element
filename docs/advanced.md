@@ -68,8 +68,7 @@ class MyButton extends Component {
     };
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  created() {
     this.addEventListener('click', this.onclick);
   }
 
@@ -119,8 +118,7 @@ class MyButton extends Component<object, MyButtonState> {
     powermode: 'off',
   }
 
-  public connectedCallback(): void {
-    super.connectedCallback();
+  public created(): void {
     this.addEventListener('click', this.onclick);
   }
 
