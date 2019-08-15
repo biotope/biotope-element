@@ -24,6 +24,10 @@ MyButton.register();
 or use inline styles:
 
 ```js
+As every component uses shadow dom by default, you have to put the styles inside the shadow root.
+You can either write inline styles:
+
+```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
@@ -40,7 +44,6 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-
 MyButton.register();
 ```
 
@@ -52,6 +55,9 @@ MyButton.register();
 If your styles are dynamic and depending on some values in the javascript context, just use inline styles in your template string. It is recommended to use this as little as possible.
 
 ```js
+or import your css from an external file with some kind of bundler:
+
+```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
@@ -69,7 +75,6 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-
 MyButton.register();
 ```
 
