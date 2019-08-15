@@ -1,5 +1,45 @@
 # Advanced
 
+## Partials and Loops
+It is enerally a good idea to split your render function into multiple pieces otherwise it may end
+up too messy. You can do this with both `this.html` and `this.partial` functions. The first one
+take care of outputing your html to the DOM and the second one is used for the oh-so-sweet render
+splitting. Here is an example of partials being built on a loop.
+
+```javascript
+import Component from '@biotope/element';
+
+class MyText extends Component {
+  render() {
+    const myArrayFromANumber = (new Array(4)).fill(0);
+
+    return this.html`
+      <div># Here are ${randomNumber} divs on a loop</div>
+      ${myArrayFromANumber.map((_, index) => this.partial`
+        <div>Hey! I'm div number ${index + 1}</div>
+      `)}
+      <div># All done!</div>
+    `;
+  }
+}
+
+MyText.componentName = 'my-text';
+MyText.register();
+```
+
+The result would be:
+
+```html
+<my-text>
+  <div># Here are 4 divs on a loop</div>
+  <div>Hey! I'm div number 1</div>
+  <div>Hey! I'm div number 2</div>
+  <div>Hey! I'm div number 3</div>
+  <div>Hey! I'm div number 4</div>
+  <div># All done!</div>
+</my-text>
+```
+
 ## Handling state
 Every component can have its own internal state. To set the state just call the `setState` function
 of the component. You can define `defaultState` as your initial state or you can set `this.state`
@@ -58,14 +98,14 @@ In typescript, it would look like this:
 // typescript
 import Component from '@biotope/element';
 
-interface MyButtonProps {
+interface MyButtonState {
   powermode: 'on' | 'off';
 }
 
-class MyButton extends Component<MyButtonProps> {
+class MyButton extends Component<object, MyButtonState> {
   public static componentName = 'my-button';
 
-  protected defaultState: MyButtonProps = {
+  protected defaultState: MyButtonState = {
     powermode: 'off',
   }
 
@@ -81,7 +121,7 @@ class MyButton extends Component<MyButtonProps> {
     });
   }
 
-  public render(): void {
+  public render(): ShadowRoot | HTMLElement {
     return this.html`
       Powermode ${this.state.powermode}!
     `;
