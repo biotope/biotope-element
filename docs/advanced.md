@@ -2,19 +2,24 @@
 
 ## Handling state
 Every component can have its own internal state. To set the state just call the `setState` function
-of the component. To use the state just use `this.state`.
+of the component. You can define `defaultState` as your initial state or you can set `this.state`
+in the constructor.
+Note that only `setState` will trigger a new render.
 
 ```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
-  get defaultState() {
-    return {
-      powermode: 'off'
-    }
+  constructor() {
+    super();
+
+    this.defaultState = {
+      powermode: 'off',
+    };
   }
 
   connectedCallback() {
+    super.connectedCallback();
     this.addEventListener('click', this.onclick);
   }
 

@@ -17,6 +17,11 @@ its `created` lifecycle callback.
 For documentation, please see the hyperhtml-Element docs.
 
 ## rendered
-This method will be called when the DOM has been updated by the `render` method.
-Note that this function does not contain any debouncing functionality embedded, so it may be called
-several times during initialization (while updating every prop).
+This method will be called when the DOM has been updated. If for example the render method is called
+but you do not call `this.html` to print anything to the DOM, this function will not be called.
+
+Note that when creating a new component, you may have several calls to `attributeChangedCallback`
+due to having inserted more than one HTML attribute before the component is connected to the DOM.
+This will not cause `rendered` to be triggered more than once. On startup, `rendered` is prepared to
+wait for all the attributes to have finished parsing and set on the component `props`. Once the
+component is up-and-running though, any attribute/prop change will trigger the `rendered` method.

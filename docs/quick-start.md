@@ -13,7 +13,7 @@ or yarn
 yarn add @biotope/element
 ```
 
-## Create  your first component
+## Create your first component
 First import the element in your component:
 
 ```javascript

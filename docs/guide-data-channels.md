@@ -1,7 +1,6 @@
 # Data channels
-There are several ways to pass data to a component.
+There are 2 ways to pass data to a component.
 - HTML attributes
-- javascript props setting
 - slotting content
 
 There are no rules when to use what, but here are some best practices:
@@ -23,26 +22,20 @@ Although you can pass json strings as HTML attributes, it seems kind of ugly in 
 ></custom-element>
 ```
 
-## Javascript props setting
-As javascript is made to handle the more complex data types like `arrays` and `objects`, it is more 
-convenient to set this data by javascript.
-
-```html
-<custom-element attribute-1="a string" attribute-2="true"></custom-element>
-```
+If you need to pass new data on the fly and you're not using anything fancy like React or Vue, you
+can always get/set the attributes of any component through the native JS way - using `getAttribute`,
+`setAttribute` and `removeAttribute`.
+Example:
 
 ```javascript
-// Such nice!
-document.querySelector('custom-element').props = {
-  'attribute-3': [
-    {
-      key1: "value1",
-      key2: "value2",
-      key3: "value3"
-    }
-  ]
-}
+const element = document.getElementBy...(...);
+element.setAttribute('attribute-1', 'another string');
 ```
+
+You can read more about it, over at the MDN pages:
+- https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute
+- https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute
+- https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute
 
 ## Slotting content
 In case you want to pass HTML markup to the component, we recommend slotting it and handle it
