@@ -24,10 +24,6 @@ MyButton.register();
 or use inline styles:
 
 ```js
-As every component uses shadow dom by default, you have to put the styles inside the shadow root.
-You can either write inline styles:
-
-```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
@@ -52,7 +48,7 @@ MyButton.register();
 !> __Important ⚠️:__ If you come across that issue, that your styles are displayed as text. Most likely you use a class-name that is the same as your component name. Together with the polyfill, the style tag itself get styled which causes the issue in IE11/Edge V18 and below.
 
 ## Dynamic styles
-If your styles are dynamic and depending on some values in the javascript context, just use inline styles in your template string. It is recommended to use this as little as possible.
+If your styles are dynamic and depending on some values in the javascript context, just use inline styles in your template string. ⚠️ Recommended is to use javascript values as little as possible and keep CSS static. Use Precompiler like SASS or CSS Variables instead.
 
 ```js
 or import your css from an external file with some kind of bundler:
