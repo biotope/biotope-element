@@ -21,10 +21,14 @@ Note: When extending customElement callbacks, be sure to call the super function
 ```
 
 ## created
-As biotope element extends
-[Hyperhtml Element](https://github.com/WebReflection/hyperHTML-Element#the-class) it also inherits
-its `created` lifecycle callback.
-For documentation, please see the hyperhtml-Element docs.
+According to the web-compoennts spec, `attributeChangedCallback` is called with any attribute
+that's initially put in the component (once per attribute), then `connectedCallback` is called when
+the component is attached to the DOM.
+
+Biotope element on the other hand guarantees that `created` is called before any of those two
+methods and that `connectedCallback` is called before any `attributeChangedCallback`. All three
+methods are only called when the component is connected to the DOM. This means any setup you do on
+the `created` method can take into account the position of the element on the page.
 
 Note: No need to call `super.created()` here - it's empty.
 
