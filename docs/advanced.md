@@ -1,7 +1,7 @@
 # Advanced
 
 ## Partials and Loops
-It is enerally a good idea to split your render function into multiple pieces otherwise it may end
+It is generally a good idea to split your render function into multiple pieces otherwise it may end
 up too messy. You can do this with both `this.html` and `this.partial` functions. The first one
 take care of outputing your html to the DOM and the second one is used for the oh-so-sweet render
 splitting. Here is an example of partials being built on a loop.
