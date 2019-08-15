@@ -51,9 +51,6 @@ MyButton.register();
 If your styles are dynamic and depending on some values in the javascript context, just use inline styles in your template string. ⚠️ Recommended is to use javascript values as little as possible and keep CSS static. Use Precompiler like SASS or CSS Variables instead.
 
 ```js
-or import your css from an external file with some kind of bundler:
-
-```javascript
 import Component from '@biotope/element';
 
 class MyButton extends Component {
