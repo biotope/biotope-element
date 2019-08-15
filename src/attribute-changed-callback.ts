@@ -9,7 +9,7 @@ export const attributeChangedCallback = (
   context: ComponentInstance, name: string, oldValue: string, newValue: string,
 ): void => {
   const attribute = context.constructor.attributes
-    .find((attr): boolean => attributeName(attr) === name);
+    .filter((attr): boolean => attributeName(attr) === name)[0];
 
   if (attribute) {
     // eslint-disable-next-line no-underscore-dangle,no-param-reassign

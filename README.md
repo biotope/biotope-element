@@ -91,10 +91,6 @@ This will result in the following html:
 ```
 
 ## Polyfills
-### Array.prototype.find
-As we want to keep biotope element slim. We are not shipping polyfills for legacy browsers.
-Biotope element leverages the `Array.prototype.find` function. Which is not supported by older browsers.
-To use biotope element there, please take care of loading an appropriate polyfill
 
 ### Webcomponents
 Webcomponents are not supported by all browsers. Even the newest browsers have not integrated the
