@@ -9,7 +9,11 @@ export const createRender = (
 ): RenderFuntion => render
   .bind(context, context.shadowRoot || context, (): void => {
     const element = originalRender();
-    setTimeout(postFunction);
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (!context.__initAttributesCallStack.length) {
+      setTimeout(postFunction);
+    }
     return element;
   });
 
