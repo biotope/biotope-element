@@ -36,6 +36,23 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     ? context.attributes.map(attributeName)
     : [];
 
+  context.observedAttributes.forEach((attribute): void => {
+    if (!(attribute in context.prototype)) {
+      Object.defineProperty(context.prototype, kebabToCamel(attribute), {
+        get(): string {
+          return this.getAttribute(attribute);
+        },
+        set(value?: string): void {
+          if (!value && value !== '') {
+            this.removeAttribute(attribute);
+          } else {
+            this.setAttribute(attribute, value);
+          }
+        },
+      });
+    }
+  });
+
   const originalConnectedCallback = context.prototype.connectedCallback;
 
   context.prototype.connectedCallback = function (): void {
