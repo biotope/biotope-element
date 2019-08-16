@@ -10,7 +10,7 @@ describe('#rendered', (): void => {
     class TestElement extends Component {
       public static componentName = 'test-element';
 
-      public render(): ShadowRoot | HTMLElement {
+      public render(): HTMLElement {
         functionCalls.push('render');
         return this.html``;
       }
