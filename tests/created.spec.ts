@@ -21,11 +21,13 @@ describe('#created', (): void => {
       // eslint-disable-next-line class-methods-use-this
       public connectedCallback(): void {
         functionCalls.push('connectedCallback');
+        this.render();
       }
 
       // eslint-disable-next-line class-methods-use-this
       public attributeChangedCallback(): void {
         functionCalls.push('attributeChangedCallback');
+        this.render();
       }
     }
     TestElement.register();

@@ -2,7 +2,7 @@ import Component from '../src/index';
 import { createPartial } from '../src/create-html';
 
 jest.mock('../src/create-html', (): object => ({
-  createHtml: jest.fn((): string => 'html'),
+  createRender: jest.fn((context, func): typeof func => func.bind(context)),
   createPartial: jest.fn((): string => 'partial'),
 }));
 
@@ -18,22 +18,6 @@ describe('#partial', (): void => {
     const element = new TestElement();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((element as any).partial).toBe('partial');
-  });
-
-  it('does not redefine partial', (): void => {
-    class TestElement extends Component {
-      public static componentName = 'test-element-2';
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      public render(): any {
-        return this.partial;
-      }
-    }
-    const element = new TestElement();
-    element.connectedCallback();
-    element.render();
-
-    expect((createPartial as jest.Mock).mock.calls).toHaveLength(1);
+    expect((element as any).html).toBe('partial');
   });
 });
