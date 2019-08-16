@@ -54,7 +54,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     this.handleClick = this.handleClick.bind(this);
   }
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     const { showCounter } = this.props;
     const { counter } = this.state;
 
@@ -71,7 +71,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
           ${ExampleTable.attributes.map(this.getRow)}
         </tbody>
       </table>
-      ${showCounter ? this.partial`
+      ${showCounter ? this.html`
         <button onclick=${this.handleClick}>Increment Counter</button>
         <span>${counter}</span>
       ` : null}
@@ -81,7 +81,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
   private getRow(attribute: string | Attribute): HTMLElement {
     const name = typeof attribute === 'string' ? attribute : attribute.name;
 
-    return this.partial`
+    return this.html`
       <tr>
         <td>${name}</td>
         <td>${typeof this.props[kebabToCamel(name)]}</td>

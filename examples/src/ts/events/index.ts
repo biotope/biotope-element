@@ -13,7 +13,7 @@ export class ExampleReceiver extends Component {
     this.hanldleInputChange = this.hanldleInputChange.bind(this);
   }
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <div>
         <example-sender onexamplesender.change=${this.hanldleInputChange} />

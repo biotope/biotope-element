@@ -3,7 +3,7 @@ import Component from '@biotope/element';
 export class ExampleChild extends Component {
   public static componentName = 'example-child';
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <style>
         :host {

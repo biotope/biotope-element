@@ -14,7 +14,7 @@ export class ExampleParent extends Component<ExampleParentProps> {
     ExampleChild as typeof Component,
   ];
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <div>
         <example-child

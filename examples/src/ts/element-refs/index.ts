@@ -14,7 +14,7 @@ export class ExampleRefs extends Component {
     this.handleFocus = this.handleFocus.bind(this);
   }
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <input type="text" />
       <input type="text" />
