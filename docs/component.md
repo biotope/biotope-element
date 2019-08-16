@@ -131,7 +131,7 @@ class MyButton extends Component<MyButtonProps> {
     foo: 'bar',
   };
 
-  public render(): ShadowRoot | HTMlElement {
+  public render(): HTMLElement {
     return this.html`
       🎰 ${this.props.foo}
     `;

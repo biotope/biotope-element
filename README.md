@@ -32,7 +32,7 @@ import Component from '@biotope/element';
 export class MyButton extends Component {
   public static componentName = 'my-button';
   
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       Hello World
     `;
@@ -65,7 +65,7 @@ import Component from '@biotope/element';
 export class MyButton extends Component {
   public static componentName = 'my-button';
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       Hello World 🐤
     `;
