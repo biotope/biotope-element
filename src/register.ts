@@ -66,6 +66,10 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
 
   context.prototype.attributeChangedCallback = function (...args): void {
+    if (args[1] === args[2]) {
+      return;
+    }
+
     const callFunction = (): void => originalAttributeChangedCallback
       .bind((this as ComponentInstance))(...args);
 
