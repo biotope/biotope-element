@@ -80,6 +80,7 @@ export default abstract class Component<TProps = object, TState = object> extend
     this.render = createRender(this as any, this.render.bind(this), (): void => this.rendered());
   }
 
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   public created(): void {}
 
@@ -96,6 +97,7 @@ export default abstract class Component<TProps = object, TState = object> extend
     return this.html``;
   }
 
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   public rendered(): void {}
 
