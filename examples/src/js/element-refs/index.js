@@ -1,9 +1,7 @@
-import Component from '@biotope/element';
+import Component, { createRef } from '@biotope/element';
 
 export class ExampleRefs extends Component {
-  get inputRef() {
-    return this.shadowRoot.querySelector('input');
-  }
+  firstInput = createRef();
 
   constructor() {
     super();
@@ -12,15 +10,14 @@ export class ExampleRefs extends Component {
 
   render() {
     return this.html`
-      <input type="text" />
-      <input type="text" />
-      <button onclick=${this.handleFocus}>Focus first input!</button>
+      <input type="text" ref=${this.firstInput} />
+      <button onclick=${this.handleFocus}>Focus input</button>
     `;
   }
 
   handleFocus() {
-    if (this.inputRef) {
-      this.inputRef.focus();
+    if (this.firstInput.current) {
+      this.firstInput.current.focus();
     }
   }
 }
