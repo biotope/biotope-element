@@ -1,4 +1,4 @@
-import { ComponentInstance } from './types';
+import { ComponentInstance } from './internal-types';
 
 export const emit = <T>(
   // FIXME - false positive on linting for rule "arrow-parens"

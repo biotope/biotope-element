@@ -2,7 +2,7 @@ import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-mapper';
 import { kebabToCamel } from './case-converters';
-import { ComponentInstance, ComponentType } from './types';
+import { ComponentInstance, ComponentType } from './internal-types';
 
 const resolveCallStack = (context: ComponentInstance, property: '__initCallStack' | '__initAttributesCallStack'): void => {
   while (context[property].length) {
