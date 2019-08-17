@@ -73,7 +73,7 @@ XInput.componentName = 'x-input';
 XInput.register();
 ```
 
-References are imediately available after a render, which means that in terms of references, the
+References are immediately available after a render, which means that in terms of references, the
 `rendered` function is the ideal place to do/check whatever you want.
 
 ## Handling state
