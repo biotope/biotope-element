@@ -1,0 +1,10 @@
+# Base rule
+last 2 years and >= 0.1%
+
+# Additional browsers
+Firefox ESR
+ie 11
+
+# Exceptions
+not dead
+not kaios >= 0

@@ -37,7 +37,7 @@ export class ExampleTable extends Component {
           ${ExampleTable.attributes.map(this.getRow)}
         </tbody>
       </table>
-      ${showCounter ? this.partial`
+      ${showCounter ? this.html`
         <button onclick=${this.handleClick}>Increment Counter</button>
         <span>${counter}</span>
       ` : null}
@@ -47,7 +47,7 @@ export class ExampleTable extends Component {
   getRow(attribute) {
     const name = typeof attribute === 'string' ? attribute : attribute.name;
 
-    return this.partial`
+    return this.html`
       <tr>
         <td>${name}</td>
         <td>${typeof this.props[kebabToCamel(name)]}</td>

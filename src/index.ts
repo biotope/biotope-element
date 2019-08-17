@@ -1,5 +1,5 @@
 import { register } from './register';
-import { createHtml, createPartial } from './create-html';
+import { createRender, createPartial } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
@@ -37,21 +37,12 @@ export default abstract class Component<TProps = object, TState = object> extend
     /* eslint-enable no-underscore-dangle */
   }
 
-  protected get html(): Renderer<ShadowRoot | HTMLElement> {
+  protected get html(): Renderer<HTMLElement> {
     /* eslint-disable no-underscore-dangle */
     if (!this.__html) {
-      this.__html = createHtml();
+      this.__html = createPartial();
     }
     return this.__html;
-    /* eslint-enable no-underscore-dangle */
-  }
-
-  protected get partial(): Renderer<HTMLElement> {
-    /* eslint-disable no-underscore-dangle */
-    if (!this.__partial) {
-      this.__partial = createPartial();
-    }
-    return this.__partial;
     /* eslint-enable no-underscore-dangle */
   }
 
@@ -63,9 +54,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __currentState: TState;
 
-  private __html: Renderer<ShadowRoot | HTMLElement>;
-
-  private __partial: Renderer<HTMLElement>;
+  private __html: Renderer<HTMLElement>;
 
   private __initCallStack: (() => void)[];
 
@@ -86,8 +75,12 @@ export default abstract class Component<TProps = object, TState = object> extend
     if (useShadow) {
       this.attachShadow({ mode: 'open' });
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.render = createRender(this as any, this.render.bind(this), (): void => this.rendered());
   }
 
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   public created(): void {}
 
@@ -100,10 +93,11 @@ export default abstract class Component<TProps = object, TState = object> extend
     return attributeChangedCallback(this as any, name, oldValue, newValue);
   }
 
-  public render(): ReturnType<typeof Component.prototype.html> {
+  public render(): HTMLElement {
     return this.html``;
   }
 
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   public rendered(): void {}
 

@@ -14,7 +14,7 @@ export class ExampleSender extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <label>Label</label>
       <input onkeyup=${this.handleChange} type="text" />

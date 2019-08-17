@@ -3,7 +3,7 @@ import Component from '@biotope/element';
 export class ExampleSlots extends Component {
   public static componentName = 'example-slots';
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <p>I'm the TOP text of the component.</p>
       <slot />

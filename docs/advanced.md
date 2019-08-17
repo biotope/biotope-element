@@ -2,21 +2,21 @@
 
 ## Partials and Loops
 It is generally a good idea to split your render function into multiple pieces otherwise it may end
-up too messy. You can do this with both `this.html` and `this.partial` functions. The first one
-take care of outputing your html to the DOM and the second one is used for the oh-so-sweet render
-splitting. Here is an example of partials being built on a loop.
+up too messy. You can do this by using `this.html` as many times as you want. Only when the result
+of that function gets returned in `render`, does the DOM get updated. Here is an example of partials
+being built on a loop.
 
 ```javascript
 import Component from '@biotope/element';
 
 class MyText extends Component {
   render() {
-    const myArrayFromANumber = (new Array(4)).fill(0);
+    const myArray = [1, 2, 3, 4];
 
     return this.html`
       <div># Here are ${randomNumber} divs on a loop</div>
-      ${myArrayFromANumber.map((_, index) => this.partial`
-        <div>Hey! I'm div number ${index + 1}</div>
+      ${myArray.map(number => this.html`
+        <div>Hey! I'm div number ${number}</div>
       `)}
       <div># All done!</div>
     `;
@@ -129,7 +129,7 @@ class MyButton extends Component<object, MyButtonState> {
     });
   }
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       Powermode ${this.state.powermode}!
     `;
@@ -163,7 +163,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html`
       <x-slide></x-slide>
     `;
@@ -185,7 +185,7 @@ import Component from '@biotope/element';
 class XSlide extends Component {
   public static componentName = 'x-slide';
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     return this.html``;
   }
 }
@@ -197,7 +197,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render(): ShadowRoot | HTMLElement {
+  public render(): HTMLElement {
     // Here we use this.children to access the three child x-slides
     return this.html`
       ${this.children.map(child => 'Slide')}

@@ -18,6 +18,8 @@ export type HTMLElementContent = string | { toString: () => string };
 
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args) => TRender;
 
+export type RenderFuntion = () => HTMLElement;
+
 export interface ComponentType extends Function {
   componentName: string;
   basedOn: string;
@@ -34,7 +36,7 @@ export interface ComponentPrototype extends Function {
   created: () => void;
   connectedCallback: () => void;
   attributeChangedCallback: (name: string, oldValue: string, newValue: string) => void;
-  render: () => void;
+  render: RenderFuntion;
   rendered: () => void;
   emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;
   createStyle: () => HTMLStyleElement;

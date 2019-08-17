@@ -1,6 +1,7 @@
 import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-mapper';
+import { kebabToCamel } from './case-converters';
 import { ComponentInstance, ComponentType } from './types';
 
 const resolveCallStack = (context: ComponentInstance, property: '__initCallStack' | '__initAttributesCallStack'): void => {
@@ -35,6 +36,21 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     ? context.attributes.map(attributeName)
     : [];
 
+  context.observedAttributes.forEach((attribute): void => {
+    Object.defineProperty(context.prototype, kebabToCamel(attribute), {
+      get(): string {
+        return this.getAttribute(attribute);
+      },
+      set(value?: string): void {
+        if (!value && value !== '') {
+          this.removeAttribute(attribute);
+        } else {
+          this.setAttribute(attribute, value);
+        }
+      },
+    });
+  });
+
   const originalConnectedCallback = context.prototype.connectedCallback;
 
   context.prototype.connectedCallback = function (): void {
@@ -48,6 +64,10 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
 
   context.prototype.attributeChangedCallback = function (...args): void {
+    if (args[1] === args[2]) {
+      return;
+    }
+
     const callFunction = (): void => originalAttributeChangedCallback
       .bind((this as ComponentInstance))(...args);
 

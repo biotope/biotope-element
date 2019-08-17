@@ -3,9 +3,8 @@ import { createPartial } from '../src/create-html';
 
 jest.mock('../src/create-html', (): object => {
   const constantPartial = jest.fn();
-
   return {
-    createHtml: require.requireActual('../src/create-html').createHtml,
+    createRender: jest.fn((context, func): typeof func => func.bind(context)),
     createPartial: (): jest.Mock => constantPartial,
   };
 });
@@ -17,9 +16,9 @@ describe('loops', (): void => {
     class TestElement extends Component {
       public static componentName = 'test-element';
 
-      public render(): ShadowRoot | HTMLElement {
+      public render(): HTMLElement {
         return this.html`
-          ${(new Array(calls)).fill(0).map((): HTMLElement => this.partial`Hello World!`)}
+          ${(new Array(calls)).fill(0).map((): HTMLElement => this.html`Hello World!`)}
         `;
       }
     }
