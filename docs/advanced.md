@@ -40,6 +40,42 @@ The result would be:
 </my-text>
 ```
 
+## References
+Biotope element provides a very easy reference API, courtesy of `lighterhtml`'s API. References are
+basically objects that you can access to get/set whatever you want on the DOM. If you're familiar
+with other libraries with refs, like React, you'll quickly pick this up. Example:
+
+```javascript
+import Component, { createRef } from '@biotope/element';
+
+class XInput extends Component {
+  constructor() {
+    super();
+    this.inputRef = createRef();
+  }
+
+  render() {
+    return this.html`
+      <input type="text" id=${Math.random()} ref=${this.inputRef} />
+    `;
+  }
+
+  rendered() {
+    // this "if" is not needed in this scenario - it's just a best practice :)
+    if (this.inputRef.current) {
+      // This will output whatever number the "Math.random" function returned
+      console.log(this.inputRef.current.getAttribute('id'));
+    }
+  }
+}
+
+XInput.componentName = 'x-input';
+XInput.register();
+```
+
+References are imediately available after a render, which means that in terms of references, the
+`rendered` function is the ideal place to do/check whatever you want.
+
 ## Handling state
 Every component can have its own internal state. To set the state just call the `setState` function
 of the component with either the part of the state you with to update or a function (note: the
