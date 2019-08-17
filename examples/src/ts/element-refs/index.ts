@@ -5,7 +5,7 @@ export class ExampleRefs extends Component {
 
   public static attributes = ['text'];
 
-  private firstInput: RefObject<HTMLInputElement> = createRef();
+  private inputRef: RefObject<HTMLInputElement> = createRef();
 
   public constructor() {
     super();
@@ -14,14 +14,14 @@ export class ExampleRefs extends Component {
 
   public render(): HTMLElement {
     return this.html`
-      <input type="text" ref=${this.firstInput} />
+      <input type="text" ref=${this.inputRef} />
       <button onclick=${this.handleFocus}>Focus input</button>
     `;
   }
 
   private handleFocus(): void {
-    if (this.firstInput.current) {
-      this.firstInput.current.focus();
+    if (this.inputRef.current) {
+      this.inputRef.current.focus();
     }
   }
 }
