@@ -47,7 +47,7 @@
     "cpy-cli": "~2.0",
     "docsify-cli": "~4.3",
     "eslint-plugin-jest": "~22.15",
-    "jest": "~24.8",
+    "jest": "~24.9.0",
     "np": "~5.0",
     "prismjs": "~1.17",
     "rollup": "~1.19",
