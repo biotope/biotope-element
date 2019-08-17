@@ -9,8 +9,8 @@
   "scripts": {
     "start": "npm run docs",
     "prepublishOnly": "npm run build",
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
+    "build": "cpy src/*.scss lib && rollup -c",
+    "watch": "cpy src/*.scss lib && rollup -c -w",
     "release": "np",
     "docs": "docsify serve docs",
     "netlify": "mv docs docs-dist",
