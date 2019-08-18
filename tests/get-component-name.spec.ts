@@ -1,5 +1,5 @@
 import { getComponentName } from '../src/get-component-name';
-import { ComponentType } from '../src/types';
+import { ComponentType } from '../src/internal-types';
 
 describe('#getComponentName', (): void => {
   let component: Function;

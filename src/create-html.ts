@@ -1,6 +1,6 @@
 import { render, html } from 'lighterhtml';
 
-import { Renderer, ComponentInstance, RenderFuntion } from './types';
+import { Renderer, ComponentInstance, RenderFuntion } from './internal-types';
 
 export const createRender = (
   context: ComponentInstance,

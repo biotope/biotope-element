@@ -1,6 +1,6 @@
 import { attributeName, attributeValue } from './attribute-mapper';
 import { kebabToCamel } from './case-converters';
-import { ComponentInstance } from './types';
+import { ComponentInstance } from './internal-types';
 
 export const attributeChangedCallback = (
   // FIXME - false positive on linting
