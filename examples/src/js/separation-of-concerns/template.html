@@ -1,0 +1,58 @@
+<!--
+  Example of html template file for Biotope Element
+-->
+
+<h1>H1 {{ 'Headline' }}</h1>
+<p>{{ this.props.greeting }}</p>
+
+{{ if this.props.showSlot }}
+  <slot />
+{{ else }}
+  <p>Here's some nice js processing too: {{ `>${JSON.stringify({ hello: 'world' })}<` }}</p>
+{{ endif }}
+
+<h2>And lastly...</h2>
+{{ if this.numbersArray/* works like plain js! */.length }}
+  <ul>
+    <li>click the other items!</li>
+    {{ for item in this.numbersArray }}
+      <li
+        id="{{ item }}"
+        onclick="{{ this.handleClick(item) }}"
+      >
+        Number: {{ item }} =>
+        {{ if item % 2 !== 0 }}
+          <span>odd</span>
+        {{ else }}
+          <span>
+            even:
+            {{ for number in this.constructor.getCustomArray(item) }}
+              <span>{{ number }}</span>
+            {{ endfor }}
+          </span>
+        {{ endif }}
+      </li>
+    {{ endfor }}
+    <!--
+      This does not throw any errors because
+      it is not even processed!
+
+      {{ if @"SOME"+"WEIRD JS"+true/* unclosed comment }}
+        <span>not shown</span>
+      {{ else }}
+
+      {{ endfor }}
+      {{ endfor }}
+      {{ endfor }}
+      {{ endfor }}
+      {{ endfor }}
+      {{ endfor }}
+    -->
+  </ul>
+{{ endif }}
+
+{{ log `logging works like in js - ${this.numbersArray}` }}
+
+{{ console.log('regular instructions work too!') }}
+
+<button onclick="{{ this.handleClick('You clicked the button!') }}">Click me!</button>
