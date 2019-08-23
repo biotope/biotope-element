@@ -3,7 +3,7 @@ import { kebabToCamel } from './case-converters';
 import { ComponentInstance } from './internal-types';
 
 export const attributeChangedCallback = (
-  // FIXME - false positive on linting
+  // FIXME - false positive on linting for rule "arrow-parens"
   // eslint-disable-next-line arrow-parens
   context: ComponentInstance, name: string, oldValue: string, newValue: string,
 ): void => {

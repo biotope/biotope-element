@@ -8,7 +8,13 @@ export const createRender = (
   postFunction: Function,
 ): RenderFuntion => render
   .bind(context, context.shadowRoot || context, (): void => {
-    const element = originalRender();
+    let element = originalRender();
+    if (context.styles) {
+      element = context.html`
+        ${element}
+        ${context.createStyle(context.styles)}
+      `;
+    }
 
     // eslint-disable-next-line no-underscore-dangle
     if (!context.__initAttributesCallStack.length) {
