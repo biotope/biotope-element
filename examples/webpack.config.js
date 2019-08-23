@@ -8,12 +8,15 @@ module.exports = {
   mode: 'development',
   entry: entryPoints,
   context: path.resolve(__dirname),
+  devServer: {
+    port: 8080,
+  },
   output: {
     path: `${__dirname}/dist`,
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.scss', '.css'],
   },
   module: {
     rules: [
@@ -30,6 +33,21 @@ module.exports = {
             ['@babel/plugin-transform-classes', { loose: true }],
           ],
         },
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        use: 'raw-loader',
       },
     ],
   },
