@@ -3,8 +3,9 @@ import { createRender, createPartial } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
-import { Attribute } from './types';
+import { Attribute, HTMLElementContent } from './types';
 import { Renderer } from './internal-types';
+import { renderTemplate } from './render-template';
 
 export * from './refs';
 export * from './types';
@@ -47,6 +48,10 @@ export default abstract class Component<TProps = object, TState = object> extend
     return this.__html;
     /* eslint-enable no-underscore-dangle */
   }
+
+  protected readonly template: string;
+
+  protected readonly styles: HTMLElementContent;
 
   protected readonly defaultProps: TProps;
 
@@ -96,7 +101,8 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   public render(): HTMLElement {
-    return this.html``;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return renderTemplate(this as any, this.template);
   }
 
   /* istanbul ignore next */
