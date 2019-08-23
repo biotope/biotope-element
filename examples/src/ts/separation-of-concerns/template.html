@@ -8,7 +8,7 @@
 {{ if this.props.showSlot }}
   <slot />
 {{ else }}
-  <p>Here's some nice js processing too: {{ `>${JSON.stringify({ hello: 'world' })}<` }}</p>
+  <p>Here's some nice js processing too: {{ '>' + JSON.stringify({ hello: 'world' }) + '<' }}</p>
 {{ endif }}
 
 <h2>And lastly...</h2>
@@ -51,7 +51,7 @@
   </ul>
 {{ endif }}
 
-{{ log `logging works like in js - ${this.numbersArray}` }}
+{{ log 'logging works like in js - ' + this.numbersArray.toString() }}
 
 {{ console.log('regular instructions work too!') }}
 

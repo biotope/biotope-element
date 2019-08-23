@@ -5,6 +5,11 @@ interface Level {
   elseLine?: number;
 }
 
+const TEMPLATE_START = '{{';
+const TEMPLATE_END = '}}';
+const TEMPLATE_LITERAL_START = '{#?{';
+const TEMPLATE_LITERAL_END = '}#?}';
+
 const newArray = (length: number): undefined[] => [...Array(length)];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,16 +32,30 @@ const getValue = (value: string, context: ComponentInstance): object => (
   new Function(`return ${value}`)
 ).bind(context)();
 
-export const renderTemplate = (context: ComponentInstance, template: string = '', splitStart: string = '{{', splitEnd: string = '}}'): HTMLElement => {
+const customTemplate = (content: string): string => `${TEMPLATE_LITERAL_START}${content}${TEMPLATE_LITERAL_END}`;
+
+const splitByStartAndEnd = (
+  content: string, splitStart: string = TEMPLATE_START, splitEnd: string = TEMPLATE_END,
+): string[] => content
+  .split(splitStart)
+  .reduce(((accumulator, str): string[] => ([
+    ...accumulator,
+    ...str.split(splitEnd),
+  ])), []);
+
+const es5ThisHtml = (content: string): string => {
+  const contentSplit = splitByStartAndEnd(content, TEMPLATE_LITERAL_START, TEMPLATE_LITERAL_END);
+  const templates = contentSplit.filter((_, index): boolean => index % 2 === 0);
+  const args = contentSplit.filter((_, index): boolean => index % 2 === 1);
+
+  return `this.html(${JSON.stringify(templates)}${args.length ? ',' : ''}${args.toString()})`;
+};
+
+export const renderTemplate = (context: ComponentInstance, template: string = ''): HTMLElement => {
   const levelStarts: Level[] = [];
 
   // remove comments and parse strings from args
-  const parsedTemplate: string[] = template.replace(/<!--[\s\S]*?-->/g, '')
-    .split(splitStart)
-    .reduce(((accumulator, str): string[] => ([
-      ...accumulator,
-      ...str.split(splitEnd),
-    ])), []);
+  const parsedTemplate: string[] = splitByStartAndEnd(template.replace(/<!--[\s\S]*?-->/g, ''));
 
   // parse regular variables and values
   parsedTemplate
@@ -44,7 +63,7 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
     .map((arg): string => arg.trim())
     .forEach((arg, index): void => {
       if (!startsWith(arg, ['if ', 'else', 'endif', 'for ', 'endfor', 'log'])) {
-        parsedTemplate[index * 2] += `\${${arg}}`; // append to string before "arg"
+        parsedTemplate[index * 2] += customTemplate(arg); // append to string before "arg"
         parsedTemplate[index * 2 + 1] = ''; // remove current "arg" value
       }
     });
@@ -65,9 +84,9 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
         const condition = getIfArg(parsedTemplate[start.line * 2 + 1].trim());
         const content = parsedTemplate.slice(start.line * 2 + 2, start.elseLine === undefined ? index * 2 + 1 : start.elseLine * 2 + 1).join('');
         const contentFalse = start.elseLine !== undefined
-          ? `this.html\`${parsedTemplate.slice(start.elseLine * 2 + 2, index * 2 - 1).join('')}\``
+          ? es5ThisHtml(parsedTemplate.slice(start.elseLine * 2 + 2, index * 2 - 1).join(''))
           : null;
-        parsedTemplate[start.line * 2 + 1] = `\${${condition} ? this.html\`${content}\` : ${contentFalse}}`;
+        parsedTemplate[start.line * 2 + 1] = customTemplate(`${condition} ? ${es5ThisHtml(content)} : ${contentFalse}`);
         newArray((index - start.line) * 2).forEach((_, line): void => {
           parsedTemplate[start.line * 2 + 2 + line] = '';
         });
@@ -76,16 +95,16 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
         const start = levelStarts.pop();
         const { item, array } = getForArgs(parsedTemplate[start.line * 2 + 1].trim());
         const content = parsedTemplate.slice(start.line * 2 + 2, index * 2 + 1).join('');
-        parsedTemplate[start.line * 2 + 1] = `\${(${array}).map((function(${item}) { return this.html\`${content}\` }).bind(this))}`;
+        parsedTemplate[start.line * 2 + 1] = customTemplate(`(${array}).map((function(${item}) { return ${es5ThisHtml(content)} }).bind(this))`);
         newArray((index - start.line) * 2).forEach((_, line): void => {
           parsedTemplate[start.line * 2 + 2 + line] = '';
         });
       }
       if (startsWith(arg, 'log ')) {
         const [, ...valueSplit] = arg.split('log');
-        parsedTemplate[index * 2 + 1] = `\${console.log(${valueSplit.join('log')})}`;
+        parsedTemplate[index * 2 + 1] = customTemplate(`console.log(${valueSplit.join('log')})`);
       }
     });
 
-  return getValue(`this.html\`${parsedTemplate.join('')}\``, context) as HTMLElement;
+  return getValue(es5ThisHtml(parsedTemplate.join('')), context) as HTMLElement;
 };
