@@ -5,6 +5,12 @@ interface Level {
   elseLine?: number;
 }
 
+interface HelperArguments {
+  index: number;
+  levelStarts: Level[];
+  parsedTemplate: string[];
+}
+
 const TEMPLATE_START = '{{';
 const TEMPLATE_END = '}}';
 const TEMPLATE_LITERAL_START = '{#?{';
@@ -13,19 +19,9 @@ const TEMPLATE_LITERAL_END = '}#?}';
 const newArray = (length: number): undefined[] => [...Array(length)];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const startsWith = (haystack: string, needles: any | any[]): boolean => (Array.isArray(needles)
-  ? needles
-  : [needles]).some((needle): boolean => haystack.toString().indexOf(needle.toString()) === 0);
-
-const getIfArg = (line: string): string => line.split('if').slice(1).join('if').trim();
-
-const getForArgs = (line: string): { item: string; array: string } => {
-  const [, item, , ...arraySplit] = line.split(' ');
-  return {
-    item,
-    array: arraySplit.join(' '),
-  };
-};
+const startsWith = (haystack: string, needles: any | any[]): boolean => (
+  Array.isArray(needles) ? needles : [needles]
+).some((needle): boolean => haystack.toUpperCase().indexOf(needle.toString().toUpperCase()) === 0);
 
 const getValue = (value: string, context: ComponentInstance): object => (
   // eslint-disable-next-line no-new-func
@@ -51,6 +47,61 @@ const es5ThisHtml = (content: string): string => {
   return `this.html(${JSON.stringify(templates)}${args.length ? ',' : ''}${args.toString()})`;
 };
 
+const templateHelpers: { [key: string]: (...HelperArguments) => void } = {
+  /* eslint-disable no-param-reassign */
+  if(index, levelStarts): void {
+    levelStarts.push({ line: index });
+  },
+  else(index, levelStarts): void {
+    levelStarts[levelStarts.length - 1].elseLine = index;
+  },
+  endIf(index, levelStarts, parsedTemplate): void {
+    const start = levelStarts.pop();
+    const condition = parsedTemplate[start.line].trim().split('if').slice(1).join('if');
+
+    const content = parsedTemplate.slice(
+      start.line + 1,
+      start.elseLine !== undefined ? start.elseLine : index,
+    ).join('');
+
+    const contentFalse = start.elseLine !== undefined
+      ? es5ThisHtml(parsedTemplate.slice(start.elseLine + 1, index - 2).join(''))
+      : null;
+
+    parsedTemplate[start.line] = customTemplate(
+      `${condition} ? ${es5ThisHtml(content)} : ${contentFalse}`,
+    );
+
+    newArray(index - start.line).forEach((_, line): void => {
+      parsedTemplate[start.line + 1 + line] = '';
+    });
+  },
+
+  for(index, levelStarts): void {
+    levelStarts.push({ line: index });
+  },
+  endFor(index, levelStarts, parsedTemplate): void {
+    const start = levelStarts.pop();
+    const [, item, , ...arraySplit] = parsedTemplate[start.line].trim().split(' ');
+    const content = parsedTemplate.slice(start.line + 1, index).join('');
+
+    parsedTemplate[start.line] = customTemplate(
+      `(${arraySplit.join(' ')}).map((function(${item}) { return ${es5ThisHtml(content)} }).bind(this))`,
+    );
+
+    newArray(index - start.line).forEach((_, line): void => {
+      parsedTemplate[start.line + 1 + line] = '';
+    });
+  },
+
+  log(index, _, parsedTemplate): void {
+    const [, ...valueSplit] = parsedTemplate[index].split('log');
+
+    parsedTemplate[index] = customTemplate(`console.log(${valueSplit.join('log')})`);
+  },
+  /* eslint-enable no-param-reassign */
+};
+
 export const renderTemplate = (context: ComponentInstance, template: string = ''): HTMLElement => {
   const levelStarts: Level[] = [];
 
@@ -62,7 +113,7 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
     .filter((_, index): boolean => index % 2 === 1)
     .map((arg): string => arg.trim())
     .forEach((arg, index): void => {
-      if (!startsWith(arg, ['if ', 'else', 'endif', 'for ', 'endfor', 'log'])) {
+      if (!startsWith(arg, Object.keys(templateHelpers))) {
         parsedTemplate[index * 2] += customTemplate(arg); // append to string before "arg"
         parsedTemplate[index * 2 + 1] = ''; // remove current "arg" value
       }
@@ -71,40 +122,11 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
   // parse custom templating entries
   parsedTemplate
     .filter((_, index): boolean => index % 2 === 1)
-    .map((arg): string => arg.trim())
-    .forEach((arg, index): void => {
-      if (startsWith(arg, ['if ', 'for '])) {
-        levelStarts.push({ line: index });
+    .forEach((arg, index): void => Object.keys(templateHelpers).forEach((helper): void => {
+      if (startsWith(arg.trim(), helper)) {
+        templateHelpers[helper](index * 2 + 1, levelStarts, parsedTemplate);
       }
-      if (startsWith(arg, 'else')) {
-        levelStarts[levelStarts.length - 1].elseLine = index;
-      }
-      if (startsWith(arg, 'endif')) {
-        const start = levelStarts.pop();
-        const condition = getIfArg(parsedTemplate[start.line * 2 + 1].trim());
-        const content = parsedTemplate.slice(start.line * 2 + 2, start.elseLine === undefined ? index * 2 + 1 : start.elseLine * 2 + 1).join('');
-        const contentFalse = start.elseLine !== undefined
-          ? es5ThisHtml(parsedTemplate.slice(start.elseLine * 2 + 2, index * 2 - 1).join(''))
-          : null;
-        parsedTemplate[start.line * 2 + 1] = customTemplate(`${condition} ? ${es5ThisHtml(content)} : ${contentFalse}`);
-        newArray((index - start.line) * 2).forEach((_, line): void => {
-          parsedTemplate[start.line * 2 + 2 + line] = '';
-        });
-      }
-      if (startsWith(arg, 'endfor')) {
-        const start = levelStarts.pop();
-        const { item, array } = getForArgs(parsedTemplate[start.line * 2 + 1].trim());
-        const content = parsedTemplate.slice(start.line * 2 + 2, index * 2 + 1).join('');
-        parsedTemplate[start.line * 2 + 1] = customTemplate(`(${array}).map((function(${item}) { return ${es5ThisHtml(content)} }).bind(this))`);
-        newArray((index - start.line) * 2).forEach((_, line): void => {
-          parsedTemplate[start.line * 2 + 2 + line] = '';
-        });
-      }
-      if (startsWith(arg, 'log ')) {
-        const [, ...valueSplit] = arg.split('log');
-        parsedTemplate[index * 2 + 1] = customTemplate(`console.log(${valueSplit.join('log')})`);
-      }
-    });
+    }));
 
   return getValue(es5ThisHtml(parsedTemplate.join('')), context) as HTMLElement;
 };
