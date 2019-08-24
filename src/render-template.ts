@@ -15,9 +15,13 @@ const TEMPLATE_LITERAL_END = '}#?}';
 const newArray = (length: number): undefined[] => [...Array(length)];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const startsWith = (haystack: string, needles: any | any[]): boolean => (
+const startsWith = (haystack: string, needles: any | any[]): string | false => (
   Array.isArray(needles) ? needles : [needles]
-).some((needle): boolean => haystack.toUpperCase().indexOf(needle.toString().toUpperCase()) === 0);
+).filter((needle): boolean => {
+  const starter = needle.indexOf('end') === 0 || needle.indexOf('else') === 0
+    ? needle.toString() : `${needle.toString()} `;
+  return haystack.trim().toUpperCase().indexOf(starter.toUpperCase()) === 0;
+})[0] || false;
 
 const getValue = (value: string, context: ComponentInstance): object => (
   // eslint-disable-next-line no-new-func
@@ -107,10 +111,9 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
   // parse regular variables and values
   parsedTemplate
     .filter((_, index): boolean => index % 2 === 1)
-    .map((arg): string => arg.trim())
     .forEach((arg, index): void => {
       if (!startsWith(arg, Object.keys(templateHelpers))) {
-        parsedTemplate[index * 2] += customTemplate(arg); // append to string before "arg"
+        parsedTemplate[index * 2] += customTemplate(arg.trim()); // append to string before "arg"
         parsedTemplate[index * 2 + 1] = ''; // remove current "arg" value
       }
     });
@@ -118,11 +121,12 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
   // parse custom templating entries
   parsedTemplate
     .filter((_, index): boolean => index % 2 === 1)
-    .forEach((arg, index): void => Object.keys(templateHelpers).forEach((helper): void => {
-      if (startsWith(arg.trim(), helper)) {
+    .forEach((arg, index): void => {
+      const helper = startsWith(arg, Object.keys(templateHelpers));
+      if (helper) {
         templateHelpers[helper](index * 2 + 1, levelStarts, parsedTemplate);
       }
-    }));
+    });
 
   return getValue(es5ThisHtml(parsedTemplate.join('')), context) as HTMLElement;
 };
