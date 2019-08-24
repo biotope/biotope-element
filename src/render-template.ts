@@ -5,11 +5,7 @@ interface Level {
   elseLine?: number;
 }
 
-interface HelperArguments {
-  index: number;
-  levelStarts: Level[];
-  parsedTemplate: string[];
-}
+type HelperFunction = (index: number, levelStarts: Level[], parsedTemplate: string[]) => void;
 
 const TEMPLATE_START = '{{';
 const TEMPLATE_END = '}}';
@@ -47,7 +43,7 @@ const es5ThisHtml = (content: string): string => {
   return `this.html(${JSON.stringify(templates)}${args.length ? ',' : ''}${args.toString()})`;
 };
 
-const templateHelpers: { [key: string]: (...HelperArguments) => void } = {
+const templateHelpers: { [key: string]: HelperFunction } = {
   /* eslint-disable no-param-reassign */
   if(index, levelStarts): void {
     levelStarts.push({ line: index });
