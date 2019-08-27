@@ -6,19 +6,4 @@
   p {
     color: orange;
   }
-
-  li:not(:first-of-type) {
-    border: 1px solid transparent;
-    user-select: none;
-    cursor: pointer;
-
-    &:hover {
-      border-bottom: 1px solid black;
-    }
-
-    &:active,
-    &:focus {
-      border: 1px solid black;
-    }
-  }
 }

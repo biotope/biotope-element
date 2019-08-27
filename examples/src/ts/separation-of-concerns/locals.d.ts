@@ -1,4 +1,4 @@
 
-declare module '*.html';
+declare module '*.ejs';
 
 declare module '*.scss';

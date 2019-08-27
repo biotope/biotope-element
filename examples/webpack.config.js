@@ -46,7 +46,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.html$/,
+        test: /\.ejs$/,
         use: 'raw-loader',
       },
     ],
