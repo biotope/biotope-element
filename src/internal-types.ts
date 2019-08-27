@@ -1,6 +1,7 @@
 import { Attribute, HTMLElementContent } from './types';
 
-export type Renderer<TRender> = (template: TemplateStringsArray, ...args: object[]) => TRender;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
 
 export type RenderFuntion = () => HTMLElement;
 

@@ -1,4 +1,4 @@
-import { ComponentInstance } from './internal-types';
+import { ComponentInstance, RenderFuntion } from './internal-types';
 
 interface Level {
   line: number;
@@ -7,10 +7,10 @@ interface Level {
 
 type HelperFunction = (index: number, levelStarts: Level[], parsedTemplate: string[]) => void;
 
-const TEMPLATE_START = '{{';
-const TEMPLATE_END = '}}';
-const TEMPLATE_LITERAL_START = '{#?{';
-const TEMPLATE_LITERAL_END = '}#?}';
+const TEMPLATE_START = '<%';
+const TEMPLATE_END = '%>';
+const TEMPLATE_LITERAL_START = '<${%';
+const TEMPLATE_LITERAL_END = '%}$>';
 
 const newArray = (length: number): undefined[] => [...Array(length)];
 
@@ -30,9 +30,7 @@ const getValue = (value: string, context: ComponentInstance): object => (
 
 const customTemplate = (content: string): string => `${TEMPLATE_LITERAL_START}${content}${TEMPLATE_LITERAL_END}`;
 
-const splitByStartAndEnd = (
-  content: string, splitStart: string = TEMPLATE_START, splitEnd: string = TEMPLATE_END,
-): string[] => content
+const splitTemplate = (content: string, splitStart: string, splitEnd: string): string[] => content
   .split(splitStart)
   .reduce(((accumulator, str): string[] => ([
     ...accumulator,
@@ -40,7 +38,7 @@ const splitByStartAndEnd = (
   ])), []);
 
 const es5ThisHtml = (content: string): string => {
-  const contentSplit = splitByStartAndEnd(content, TEMPLATE_LITERAL_START, TEMPLATE_LITERAL_END);
+  const contentSplit = splitTemplate(content, TEMPLATE_LITERAL_START, TEMPLATE_LITERAL_END);
   const templates = contentSplit.filter((_, index): boolean => index % 2 === 0);
   const args = contentSplit.filter((_, index): boolean => index % 2 === 1);
 
@@ -102,11 +100,13 @@ const templateHelpers: { [key: string]: HelperFunction } = {
   /* eslint-enable no-param-reassign */
 };
 
-export const renderTemplate = (context: ComponentInstance, template: string = ''): HTMLElement => {
+export const templateToFunctionString = (
+  template: string = '', splitStart: string = TEMPLATE_START, splitEnd: string = TEMPLATE_END,
+): string => {
   const levelStarts: Level[] = [];
 
   // remove comments and parse strings from args
-  const parsedTemplate: string[] = splitByStartAndEnd(template.replace(/<!--[\s\S]*?-->/g, ''));
+  const parsedTemplate: string[] = splitTemplate(template.replace(/<!--[\s\S]*?-->/g, ''), splitStart, splitEnd);
 
   // parse regular variables and values
   parsedTemplate
@@ -128,5 +128,18 @@ export const renderTemplate = (context: ComponentInstance, template: string = ''
       }
     });
 
-  return getValue(es5ThisHtml(parsedTemplate.join('')), context) as HTMLElement;
+  return `function() { return ${es5ThisHtml(parsedTemplate.join(''))}; }`;
+};
+
+export const renderTemplate = (
+  context: ComponentInstance, template: string | RenderFuntion = '',
+): HTMLElement => {
+  if (typeof template === 'function') {
+    return template.bind(context)();
+  }
+
+  return (getValue(
+    `(${template.indexOf('function') === 0 ? template : templateToFunctionString(template)}).bind(this)`,
+    context,
+  ) as RenderFuntion)() as HTMLElement;
 };

@@ -4,11 +4,15 @@ import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
 import { Attribute, HTMLElementContent } from './types';
-import { Renderer } from './internal-types';
-import { renderTemplate } from './render-template';
+import { Renderer, RenderFuntion } from './internal-types';
+import { renderTemplate, templateToFunctionString } from './render-template';
 
 export * from './refs';
 export * from './types';
+
+export {
+  templateToFunctionString,
+};
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -49,7 +53,7 @@ export default abstract class Component<TProps = object, TState = object> extend
     /* eslint-enable no-underscore-dangle */
   }
 
-  protected readonly template: string;
+  protected readonly template: string | RenderFuntion;
 
   protected readonly styles: HTMLElementContent;
 
