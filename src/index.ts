@@ -13,8 +13,6 @@ export * from './types';
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
   public static componentName: string;
 
-  public static basedOn: string = null;
-
   public static dependencies: (typeof Component)[] = [];
 
   public static attributes: (string | Attribute)[] = [];
