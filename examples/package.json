@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "cd template-loader && npm i && npm run build && cd ..",
     "start": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack --progress --bail"
   },
@@ -27,6 +28,7 @@
     "raw-loader": "~3.1",
     "sass-loader": "~7.3",
     "style-loader": "~1.0",
+    "template-loader": "./template-loader",
     "typescript": "~3.5",
     "webpack": "~4.39",
     "webpack-cli": "~3.3",

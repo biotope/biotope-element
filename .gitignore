@@ -8,6 +8,7 @@ examples/node_modules
 examples/.cache
 examples/dist
 examples/package-lock.json
+examples/template-loader/package-lock.json
 .DS_Store
 .rpt2_cache
 stats.html

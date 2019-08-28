@@ -47,7 +47,12 @@ module.exports = {
       },
       {
         test: /\.ejs$/,
-        use: 'raw-loader',
+
+        // NOTE: import as simple string ("raw-loader")
+        // or as pre-parsed template (custom loader - "template loader")
+
+        loader: 'raw-loader',
+        // loader: 'template-loader',
       },
     ],
   },
