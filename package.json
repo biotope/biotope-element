@@ -48,7 +48,7 @@
     "docsify-cli": "~4.3",
     "eslint-plugin-jest": "~22.15",
     "jest": "~24.9.0",
-    "np": "~5.0",
+    "np": "~5.1.0",
     "prismjs": "~1.17",
     "rollup": "~1.20.3",
     "rollup-plugin-commonjs": "~10.0",
