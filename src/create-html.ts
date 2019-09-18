@@ -3,9 +3,7 @@ import { render, html } from 'lighterhtml';
 import { Renderer, ComponentInstance, RenderFuntion } from './internal-types';
 
 export const createRender = (
-  context: ComponentInstance,
-  originalRender: Function,
-  postFunction: Function,
+  context: ComponentInstance, originalRender: Function, postFunction: Function,
 ): RenderFuntion => render
   .bind(context, context.shadowRoot || context, (): void => {
     const element = originalRender();
