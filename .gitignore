@@ -1,16 +1,16 @@
+coverage
 node_modules
 lib
 .docz
 docs-dist
+.rpt2_cache
+stats.html
+.DS_Store
+thumbs.db
 *.log
 
-examples/node_modules
-examples/package-lock.json
 examples/.cache
+examples/node_modules
 examples/dist
 examples/package-lock.json
 examples/template-loader/package-lock.json
-.DS_Store
-.rpt2_cache
-stats.html
-coverage
