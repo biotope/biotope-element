@@ -5,6 +5,7 @@ docs-dist
 *.log
 
 examples/node_modules
+examples/package-lock.json
 examples/.cache
 examples/dist
 examples/package-lock.json

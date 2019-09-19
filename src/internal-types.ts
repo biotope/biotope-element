@@ -7,7 +7,6 @@ export type RenderFuntion = () => HTMLElement;
 
 export interface ComponentType extends Function {
   componentName: string;
-  basedOn: string;
   attributes: (string | Attribute)[];
   dependencies: ComponentType[];
   observedAttributes: string[];

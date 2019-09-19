@@ -78,9 +78,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     }
   };
 
-  customElements.define(context.componentName, context, {
-    ...(context.basedOn ? { extends: context.basedOn } : {}),
-  });
+  customElements.define(context.componentName, context);
 
   return true;
   /* eslint-enable no-param-reassign,no-underscore-dangle,func-names */
