@@ -28,8 +28,7 @@ const parseAndForceType = (value: string, type: 'array' | 'object'): object => {
 };
 
 export const attributeValue = (
-  attribute: string | Attribute,
-  value?: string,
+  attribute: string | Attribute, value?: string,
 ): string | boolean | object | number => {
   if (typeof attribute === 'string') {
     return value;

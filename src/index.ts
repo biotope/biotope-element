@@ -76,8 +76,13 @@ export default abstract class Component<TProps = object, TState = object> extend
       this.attachShadow({ mode: 'open' });
     }
 
+    const postFunction = (): void => this.rendered();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.render = createRender(this as any, this.render.bind(this), (): void => this.rendered());
+    const renderFunction = createRender(this as any, this.render.bind(this), postFunction);
+    this.render = (): HTMLElement => (
+      // eslint-disable-next-line no-underscore-dangle
+      !this.__initAttributesCallStack.length ? renderFunction() : null
+    );
   }
 
   /* istanbul ignore next */
