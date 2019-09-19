@@ -150,7 +150,7 @@ global: {
 ## `wire` function removal and `html` function update
 
 TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
-needs a return value to be a HTMLElement otherwise, nothing will get rendered.
+needs a return value to be a HTMLElement otherwise nothing will get rendered.
 
 v3 code:
 ```javascript
@@ -194,7 +194,7 @@ class MyComponent extends Component {
 
 ## `onPropsChanged` hook removal
 
-TLDR: `onPropsChanged` was removed - uou can use `attributeChangedCallback` to do the same thing.
+TLDR: `onPropsChanged` was removed - you can use `attributeChangedCallback` to do the same thing.
 
 v3 code:
 ```javascript
@@ -285,7 +285,7 @@ class MyComponent extends Component {
 
 ## Automatic types
 
-TLDR: no more converting strings js types - just add a `type` property to each attribute (manual
+TLDR: no more converting strings to js types - just add a `type` property to each attribute (manual
 converters still work).
 
 v3 code:
@@ -325,7 +325,7 @@ MyComponent.attributes = [
 ];
 ```
 
-## `setTimeout` usage
+## `rendered` hook and the `setTimeout` usage
 
 This was never a good practice to begin with and there were alternatives for almost every case, but
 now you have a way of doing this that is clean - the `rendered` hook and `ref`s.
