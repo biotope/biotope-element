@@ -1,6 +1,7 @@
 ---
-id: events
+id: version-3.2.0-events
 title: Events
+original_id: events
 ---
 
 Events are for communication of your components to the outside world.

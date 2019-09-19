@@ -1,6 +1,7 @@
 ---
-id: index
+id: version-3.2.0-index
 title: Quick Start
+original_id: index
 ---
 
 ## Installation

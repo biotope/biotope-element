@@ -1,0 +1,18 @@
+{
+  "docs": {
+    "Getting started": [
+      "index",
+      "component"
+    ],
+    "Component Development": [
+      "styling",
+      "lifecycleHooks",
+      "events",
+      "data"
+    ],
+    "Integration": [
+      "usedWith",
+      "migration"
+    ]
+  }
+}

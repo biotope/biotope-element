@@ -1,6 +1,7 @@
 ---
-id: component
+id: version-3.2.0-component
 title: Component
+original_id: component
 ---
 
 ## The concept of a component

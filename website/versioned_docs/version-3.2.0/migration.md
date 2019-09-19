@@ -1,6 +1,7 @@
 ---
-id: migration
+id: version-3.2.0-migration
 title: Migration
+original_id: migration
 ---
 
 # Make your biotope project ready for BioElement:

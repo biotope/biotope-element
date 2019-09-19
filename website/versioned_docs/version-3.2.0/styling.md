@@ -1,6 +1,7 @@
 ---
-id: styling
+id: version-3.2.0-styling
 title: Styling
+original_id: styling
 ---
 
 ## Adding styles
