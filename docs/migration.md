@@ -136,7 +136,6 @@ global: {
 }
 ```
 
-
 ## Write your component
 
 1. `npx @biotope/cli generate`
@@ -326,3 +325,28 @@ MyComponent.attributes = [
 ];
 ```
 
+## `setTimeout` usage
+
+This was never a good practice to begin with and there were alternatives for almost every case, but
+now you have a way of doing this that is clean - the `rendered` hook and `ref`s.
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.inputRef = createRef();
+  }
+
+  render() {
+    return this.html`
+      <input value="Nice!" ref=${this.inputRef} />
+    `;
+  }
+
+  rendered() {
+    // Prints "Nice!"
+    console.log(this.inputRef.current.value);
+  }
+}
+```
