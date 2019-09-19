@@ -10,6 +10,12 @@ You can install the biotope element in your project using npm
 npm install @biotope/element --save
 ```
 
+or yarn
+
+```bash
+yarn add @biotope/element
+```
+
 ## Create your first component
 First import the element in your component:
 
