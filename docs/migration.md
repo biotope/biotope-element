@@ -284,4 +284,45 @@ class MyComponent extends Component {
 }
 ```
 
+## Automatic types
+
+TLDR: no more converting strings js types - just add a `type` property to each attribute (manual
+converters still work).
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    converter: prop => /* my manual convertion to boolean */,
+  },
+];
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    type: 'boolean',
+    /**
+     * Also supports:
+     * - array
+     * - object
+     * - number
+     * - string (but this one is redundant...)
+     */
+  },
+];
+```
 
