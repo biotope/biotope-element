@@ -193,4 +193,31 @@ class MyComponent extends Component {
 }
 ```
 
+## `onPropsChanged` hook removal
+
+TLDR: `onPropsChanged` was removed - uou can use `attributeChangedCallback` to do the same thing.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  onPropsChanged() {
+    // Insert logic for attribute/prop changes
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  attributeChangedCallback(name, previous, current) {
+    // Insert logic for attribute changes
+
+    // This function updates the props
+    super.attributeChangedCallback(name, previous, current);
+
+    // Insert logic for prop changes
+  }
+}
+```
+
 
