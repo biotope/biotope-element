@@ -267,4 +267,21 @@ class MyComponent extends Component {
 }
 ```
 
+## Member-access in Typescript
+
+Some class properties have changed their member-access.
+
+Here is a list of changes:
+```javascript
+class MyComponent extends Component {
+  public static attributes;
+  private static observedAttributes;
+
+  public props;
+  protected state;
+  protected defaultProps;
+  protected defaultState;
+}
+```
+
 
