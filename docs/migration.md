@@ -146,4 +146,51 @@ global: {
 `<demo-component data-resources="[{paths: ['components/demo-component/index.js']}]"></demo-component>`
 
 
+# Migrating from v3 to v4
+
+## `wire` function removal and `html` function update
+
+TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
+needs a return value to be a HTMLElement otherwise, nothing will get rendered.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.wire()`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.html`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    return this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
 
