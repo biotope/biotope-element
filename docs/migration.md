@@ -220,4 +220,9 @@ class MyComponent extends Component {
 }
 ```
 
+## `basedOn` feature removal
+
+You can no longer use the `baseOn` feature. Please build the component you want using the `render`
+function.
+
 
