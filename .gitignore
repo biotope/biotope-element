@@ -1,6 +1,6 @@
 coverage
 node_modules
-lib
+# lib
 .docz
 docs-dist
 .rpt2_cache
@@ -13,6 +13,7 @@ examples/.cache
 examples/node_modules
 examples/dist
 examples/package-lock.json
+examples/template-loader/package-lock.json
 
 # Docusaurus
 lib/core/metadata.js

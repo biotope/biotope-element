@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "cd template-loader && npm i && npm run build && cd ..",
     "start": "webpack-dev-server --host 0.0.0.0",
-    "build": "webpack"
+    "build": "webpack --progress --bail"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +21,14 @@
     "@babel/preset-env": "~7.7",
     "@babel/preset-typescript": "~7.7",
     "babel-loader": "~8.0",
+    "css-loader": "~3.2",
     "glob": "~7.1",
     "html-webpack-plugin": "4.0.0-beta.5",
+    "node-sass": "~4.13",
+    "raw-loader": "~3.1",
+    "sass-loader": "~8.0",
+    "style-loader": "~1.0",
+    "template-loader": "./template-loader",
     "typescript": "~3.7",
     "webpack": "~4.41",
     "webpack-cli": "~3.3",

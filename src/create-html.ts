@@ -11,7 +11,13 @@ export const createRender = (
 ): RenderFunction => {
   const renderFunction: RenderFunction = render
     .bind(context, context.shadowRoot || context, (): void => {
-      const element = originalRender();
+      let element = originalRender();
+      if (context.styles) {
+        element = context.html`
+          ${element}
+          ${context.createStyle(context.styles)}
+        `;
+      }
       setTimeout(postFunction);
       return element;
     });

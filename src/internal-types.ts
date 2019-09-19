@@ -35,6 +35,8 @@ export interface ComponentInstance extends RuntimeComponent {
   constructor: ComponentType;
   props: object;
   state: object;
+  template: string;
+  styles: HTMLElementContent;
   defaultProps: object;
   defaultState: object;
   __currentProps: object;

@@ -1,0 +1,16 @@
+{
+  "name": "template-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@biotope/element": "../..",
+    "rollup": "~1.27",
+    "rollup-plugin-typescript": "~1.0"
+  }
+}

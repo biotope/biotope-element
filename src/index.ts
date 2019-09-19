@@ -4,14 +4,17 @@ import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
 import { render, rendered } from './create-renders';
-import { Attribute, PropValue, HTMLFragment } from './types';
-import { Renderer } from './internal-types';
+import {
+  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+} from './types';
+import { Renderer, RenderFunction } from './internal-types';
+import { renderTemplate, templateToFunctionString } from './render-template';
 
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
 export * from './create-style';
-export { html };
+export { html, templateToFunctionString };
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -49,6 +52,10 @@ export default abstract class Component<TProps = object, TState = object> extend
     return this.__html;
     /* eslint-enable no-underscore-dangle */
   }
+
+  protected readonly template: string | RenderFunction;
+
+  protected readonly styles: HTMLElementContent;
 
   protected readonly defaultProps: TProps;
 
@@ -101,9 +108,9 @@ export default abstract class Component<TProps = object, TState = object> extend
     return attributeChangedCallback(this as any, name, previous, current);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public render(): HTMLFragment {
-    return null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return this.template === undefined ? null : renderTemplate(this as any, this.template);
   }
 
   /* istanbul ignore next */

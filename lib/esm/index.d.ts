@@ -1,0 +1,38 @@
+import { html } from './create-html';
+import { Attribute, PropValue, HTMLFragment, HTMLElementContent } from './types';
+import { Renderer, RenderFunction } from './internal-types';
+import { templateToFunctionString } from './render-template';
+export * from './refs';
+export * from './attribute-converters';
+export * from './types';
+export * from './create-style';
+export { html, templateToFunctionString };
+export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
+    static componentName: string;
+    static dependencies: (typeof Component)[];
+    static attributes: (string | Attribute)[];
+    private static observedAttributes;
+    get props(): TProps;
+    protected get state(): TState;
+    protected get html(): Renderer<HTMLFragment>;
+    protected readonly template: string | RenderFunction;
+    protected readonly styles: HTMLElementContent;
+    protected readonly defaultProps: TProps;
+    protected readonly defaultState: TState;
+    private __currentProps;
+    private __currentState;
+    private __html;
+    private __created;
+    private __rendered;
+    private __attributeChangedCallbackStack;
+    static register(outputToConsole?: boolean): boolean;
+    constructor(useShadow?: boolean);
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void;
+    render(): HTMLFragment;
+    rendered(): void;
+    protected emit<TEvent>(name: string, detail?: TEvent, singleEmit?: boolean): boolean;
+    protected createStyle: (styleContent: HTMLElementContent) => HTMLFragment;
+    protected setState(state: Partial<TState> | ((state: TState) => Partial<TState>)): void;
+}
