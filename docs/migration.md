@@ -225,4 +225,46 @@ class MyComponent extends Component {
 You can no longer use the `baseOn` feature. Please build the component you want using the `render`
 function.
 
+## `defaultProps` and `defaultState`
+
+TLDR: You can now define `defaultProps` and `defaultState` as regular variables, instead of having
+to do it in a getter.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.defaultProps = {
+      // ...
+    };
+  }
+}
+// OR
+class MyComponent extends Component {
+  defaultProps = {
+    // ...
+  }
+}
+// OR
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
 
