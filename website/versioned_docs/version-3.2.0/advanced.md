@@ -1,6 +1,7 @@
 ---
-id: advanced
+id: version-3.2.0-advanced
 title: Advanced
+original_id: advanced
 ---
 
 ## Partials and Loops

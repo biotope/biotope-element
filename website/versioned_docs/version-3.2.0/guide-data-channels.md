@@ -1,6 +1,7 @@
 ---
-id: data
+id: version-3.2.0-data
 title: Data Channels
+original_id: data
 ---
 
 There are 3 ways to pass data to a component.

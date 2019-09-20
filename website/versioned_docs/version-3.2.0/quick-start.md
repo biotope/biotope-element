@@ -1,6 +1,7 @@
 ---
-id: index
+id: version-3.2.0-index
 title: Quick Start
+original_id: index
 ---
 
 ## Installation
@@ -8,12 +9,6 @@ You can install the biotope element in your project using npm
 
 ```bash
 npm install @biotope/element --save
-```
-
-or yarn
-
-```bash
-yarn add @biotope/element
 ```
 
 ## Create your first component

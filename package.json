@@ -12,7 +12,7 @@
     "build": "cpy src/*.scss lib && rollup -c",
     "watch": "cpy src/*.scss lib && rollup -c -w",
     "release": "np",
-    "docs": "docsify serve docs",
+    "docs": "cd website && npm start",
     "netlify": "mv docs docs-dist",
     "test": "jest",
     "test:report": "npm run test && codecov",
@@ -21,7 +21,10 @@
     "lint:code": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples,types",
     "lint:code:fix": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples,types -f",
     "lint:tests": "biotope-quality-gate -p tests -t",
-    "lint:tests:fix": "biotope-quality-gate -p tests -t -f"
+    "lint:tests:fix": "biotope-quality-gate -p tests -t -f",
+    "lint:website": "biotope-quality-gate -p website -t",
+    "lint:website:fix": "biotope-quality-gate -p website -t -f",
+    "version": "VERSION=$npm_package_version && cd website && npm run version $VERSION"
   },
   "repository": {
     "type": "git",
@@ -45,7 +48,6 @@
     "basichtml-elements": "~0.1",
     "codecov": "~3.5",
     "cpy-cli": "~2.0",
-    "docsify-cli": "~4.3",
     "eslint-plugin-jest": "~22.17",
     "jest": "~24.9.0",
     "np": "~5.1",

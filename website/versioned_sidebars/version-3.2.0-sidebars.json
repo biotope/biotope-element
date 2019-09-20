@@ -1,0 +1,18 @@
+{
+  "version-3.2.0-docs": {
+    "Getting started": [
+      "version-3.2.0-index",
+      "version-3.2.0-component"
+    ],
+    "Component Development": [
+      "version-3.2.0-styling",
+      "version-3.2.0-lifecycleHooks",
+      "version-3.2.0-events",
+      "version-3.2.0-data"
+    ],
+    "Integration": [
+      "version-3.2.0-usedWith",
+      "version-3.2.0-migration"
+    ]
+  }
+}
