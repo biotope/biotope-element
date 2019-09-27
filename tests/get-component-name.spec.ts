@@ -5,6 +5,7 @@ describe('#getComponentName', (): void => {
   let component: Function;
 
   beforeEach((): void => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     component = function MockName(): void {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (component as any).componentName = 'mock-component-name';

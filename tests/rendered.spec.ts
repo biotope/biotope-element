@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Component from '../src/index';
 
 describe('#rendered', (): void => {
@@ -59,3 +60,4 @@ describe('#rendered', (): void => {
     }, 50));
   });
 });
+/* eslint-enable max-classes-per-file */

@@ -1,11 +1,10 @@
 import Component, { createRef } from '@biotope/element';
 
 export class ExampleRefs extends Component {
-  inputRef = createRef();
-
   constructor() {
     super();
     this.handleFocus = this.handleFocus.bind(this);
+    this.inputRef = createRef();
   }
 
   render() {
