@@ -10,6 +10,7 @@ export * from './refs';
 export * from './types';
 export {
   html,
+  createStyle,
 };
 
 // eslint-disable-next-line import/no-default-export
