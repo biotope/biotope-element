@@ -38,15 +38,15 @@
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
-    "lighterhtml": "^1.2.0"
+    "lighterhtml": "^1.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.6",
-    "@biotope/quality-gate": "1.0.0-beta.11",
+    "@biotope/quality-gate": "1.0.0-beta.12",
     "@types/jest": "~24.0",
     "basichtml": "~1.1",
     "basichtml-elements": "~0.1",
-    "codecov": "~3.5",
+    "codecov": "~3.6",
     "cpy-cli": "~2.0",
     "eslint-plugin-jest": "~22.17",
     "jest": "~24.9.0",

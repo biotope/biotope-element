@@ -1,8 +1,8 @@
 import Component from '@biotope/element';
 
-const kebabToCamel = str => str.replace(
+const kebabToCamel = (str) => str.replace(
   /([-_][a-z])/g,
-  group => group.toUpperCase().replace('-', ''),
+  (group) => group.toUpperCase().replace('-', ''),
 );
 
 export class ExampleTable extends Component {

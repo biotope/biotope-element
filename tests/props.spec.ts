@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Component from '../src/index';
 
 describe('#props', (): void => {
@@ -92,3 +93,4 @@ describe('#props', (): void => {
     });
   });
 });
+/* eslint-enable max-classes-per-file */

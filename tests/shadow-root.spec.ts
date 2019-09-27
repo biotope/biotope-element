@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Component from '../src';
 
 describe('#shadowRoot', (): void => {
@@ -33,3 +34,4 @@ describe('#shadowRoot', (): void => {
     });
   });
 });
+/* eslint-enable max-classes-per-file */

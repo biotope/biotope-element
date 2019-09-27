@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Component from '../src/index';
 
 describe('#state', (): void => {
@@ -88,3 +89,4 @@ describe('#state', (): void => {
     });
   });
 });
+/* eslint-enable max-classes-per-file */

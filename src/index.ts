@@ -60,12 +60,12 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __initAttributesCallStack: (() => void)[];
 
-  public static register(silent: boolean = true): boolean {
+  public static register(silent = true): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return register(this as any, silent);
   }
 
-  public constructor(useShadow: boolean = true) {
+  public constructor(useShadow = true) {
     super();
     // eslint-disable-next-line no-underscore-dangle
     this.__initCallStack = [(): void => this.created()];
@@ -86,7 +86,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   /* istanbul ignore next */
-  // eslint-disable-next-line class-methods-use-this
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public created(): void {}
 
   public connectedCallback(): void {
@@ -103,10 +103,10 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   /* istanbul ignore next */
-  // eslint-disable-next-line class-methods-use-this
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public rendered(): void {}
 
-  protected emit<TEvent>(name: string, detail?: TEvent, addPrefix: boolean = false): boolean {
+  protected emit<TEvent>(name: string, detail?: TEvent, addPrefix = false): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return emit(this as any, name, detail, addPrefix);
   }
