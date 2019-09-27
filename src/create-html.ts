@@ -12,3 +12,5 @@ export const createRender = (
   });
 
 export const createPartial = (): Renderer<HTMLElement> => html;
+
+export { html };
