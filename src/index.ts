@@ -1,5 +1,5 @@
 import { register } from './register';
-import { createRender, createPartial } from './create-html';
+import { createRender, createPartial, html } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
@@ -8,6 +8,10 @@ import { Renderer } from './internal-types';
 
 export * from './refs';
 export * from './types';
+export {
+  html,
+  createStyle,
+};
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
