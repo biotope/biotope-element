@@ -1,8 +1,6 @@
 import { ComponentInstance } from './internal-types';
 
 export const emit = <T>(
-  // FIXME - false positive on linting for rule "arrow-parens"
-  // eslint-disable-next-line arrow-parens
   context: ComponentInstance, name: string, detail: T, addPrefix: boolean,
 ): boolean => {
   if (!name) {
