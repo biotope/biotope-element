@@ -141,7 +141,6 @@ global: {
 }
 ```
 
-
 ## Write your component
 
 1. `npx @biotope/cli generate`
@@ -151,4 +150,208 @@ global: {
 `<demo-component data-resources="[{paths: ['components/demo-component/index.js']}]"></demo-component>`
 
 
+# Migrating from v3 to v4
 
+## `wire` function removal and `html` function update
+
+TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
+needs a return value to be a HTMLElement otherwise nothing will get rendered.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.wire()`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.html`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    return this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
+## `onPropsChanged` hook removal
+
+TLDR: `onPropsChanged` was removed - you can use `attributeChangedCallback` to do the same thing.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  onPropsChanged() {
+    // Insert logic for attribute/prop changes
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  attributeChangedCallback(name, previous, current) {
+    // Insert logic for attribute changes
+
+    // This function updates the props
+    super.attributeChangedCallback(name, previous, current);
+
+    // Insert logic for prop changes
+  }
+}
+```
+
+## `basedOn` feature removal
+
+You can no longer use the `baseOn` feature. Please build the component you want using the `render`
+function.
+
+## `defaultProps` and `defaultState`
+
+TLDR: You can now define `defaultProps` and `defaultState` as regular variables, instead of having
+to do it in a getter.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.defaultProps = {
+      // ...
+    };
+  }
+}
+// OR
+class MyComponent extends Component {
+  defaultProps = {
+    // ...
+  }
+}
+// OR
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
+## Member-access in Typescript
+
+Some class properties have changed their member-access.
+
+Here is a list of changes:
+```javascript
+class MyComponent extends Component {
+  public static attributes;
+  private static observedAttributes;
+
+  public props;
+  protected state;
+  protected defaultProps;
+  protected defaultState;
+}
+```
+
+## Automatic types
+
+TLDR: no more converting strings to js types - just add a `type` property to each attribute (manual
+converters still work).
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    converter: prop => /* my manual convertion to boolean */,
+  },
+];
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    type: 'boolean',
+    /**
+     * Also supports:
+     * - array
+     * - object
+     * - number
+     * - string (but this one is redundant...)
+     */
+  },
+];
+```
+
+## `rendered` hook and the `setTimeout` usage
+
+This was never a good practice to begin with and there were alternatives for almost every case, but
+now you have a way of doing this that is clean - the `rendered` hook and `ref`s.
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.inputRef = createRef();
+  }
+
+  render() {
+    return this.html`
+      <input value="Nice!" ref=${this.inputRef} />
+    `;
+  }
+
+  rendered() {
+    // Prints "Nice!"
+    console.log(this.inputRef.current.value);
+  }
+}
+```
