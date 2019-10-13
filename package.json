@@ -48,7 +48,7 @@
     "basichtml-elements": "~0.1",
     "codecov": "~3.6",
     "cpy-cli": "~2.0",
-    "eslint-plugin-jest": "~22.17",
+    "eslint-plugin-jest": "~22.19.0",
     "jest": "~24.9.0",
     "np": "~5.1",
     "prismjs": "~1.17",
