@@ -52,7 +52,7 @@
     "jest": "~24.9.0",
     "np": "~5.1",
     "prismjs": "~1.17",
-    "rollup": "~1.21",
+    "rollup": "~1.23.1",
     "rollup-plugin-commonjs": "~10.1",
     "rollup-plugin-node-resolve": "~5.2",
     "rollup-plugin-progress": "~1.1",
