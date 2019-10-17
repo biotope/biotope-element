@@ -10,7 +10,7 @@ export const emit = <T>(
     `${addPrefix ? `${context.constructor.componentName}-` : ''}${name}`,
     {
       bubbles: true,
-      ...(detail !== undefined ? { detail } : {}),
+      ...(detail !== undefined && { detail }),
     },
   ));
 };

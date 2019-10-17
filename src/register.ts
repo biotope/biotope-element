@@ -54,11 +54,11 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
   const originalConnectedCallback = context.prototype.connectedCallback;
 
   context.prototype.connectedCallback = function (): void {
-    (this as ComponentInstance).__initCallStack
-      .unshift((): void => originalConnectedCallback.bind(this as ComponentInstance)());
+    const instance = (this as ComponentInstance);
+    instance.__initCallStack.unshift((): void => originalConnectedCallback.bind(instance)());
 
-    resolveCallStack((this as ComponentInstance), '__initCallStack');
-    resolveCallStack((this as ComponentInstance), '__initAttributesCallStack');
+    resolveCallStack(instance, '__initCallStack');
+    resolveCallStack(instance, '__initAttributesCallStack');
   };
 
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
@@ -68,13 +68,13 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
       return;
     }
 
-    const callFunction = (): void => originalAttributeChangedCallback
-      .bind((this as ComponentInstance))(...args);
+    const instance = (this as ComponentInstance);
+    const callFunction = (): void => originalAttributeChangedCallback.bind(instance)(...args);
 
-    if (!(this as ComponentInstance).__initCallStack.length) {
+    if (!instance.__initCallStack.length) {
       callFunction();
     } else {
-      (this as ComponentInstance).__initAttributesCallStack.unshift(callFunction);
+      instance.__initAttributesCallStack.unshift(callFunction);
     }
   };
 

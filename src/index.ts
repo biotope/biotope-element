@@ -82,11 +82,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
     const postFunction = (): void => this.rendered();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const renderFunction = createRender(this as any, this.render.bind(this), postFunction);
-    this.render = (): HTMLElement => (
-      // eslint-disable-next-line no-underscore-dangle
-      !this.__initAttributesCallStack.length ? renderFunction() : null
-    );
+    this.render = createRender(this as any, this.render.bind(this), postFunction);
   }
 
   /* istanbul ignore next */
