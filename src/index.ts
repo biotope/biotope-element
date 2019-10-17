@@ -3,7 +3,7 @@ import { createRender, createPartial, html } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
-import { Attribute, AnyValue } from './types';
+import { Attribute, PropValue } from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
@@ -95,7 +95,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public disconnectedCallback(): void {}
 
-  public attributeChangedCallback(name: string, previous: AnyValue, current: AnyValue): void {
+  public attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return attributeChangedCallback(this as any, name, previous, current);
   }

@@ -1,5 +1,5 @@
 import { attributeName, attributeValue } from '../src/attribute-mapper';
-import { ConvertableAttribute, TypedAttribute } from '../src/types';
+import { ConvertableAttribute, TypedAttribute, SimpleAttribute } from '../src/types';
 
 describe('attribute-mapper', () => {
   const mockAttribute: ConvertableAttribute = {
@@ -41,6 +41,32 @@ describe('attribute-mapper', () => {
     });
 
     describe('given a TypedAttribute', () => {
+      describe('as the default type', () => {
+        const mockStringAttribute: SimpleAttribute = {
+          name: 'mock-attribute',
+        };
+
+        it('returns the value a string', () => {
+          const result = attributeValue(mockStringAttribute, 'mock-value');
+          expect(result).toBe('mock-value');
+        });
+
+        it('returns the value of its\' toString function', () => {
+          const result = attributeValue(mockStringAttribute, {});
+          expect(result).toBe('[object Object]');
+        });
+
+        it('returns null on non-stringable value', () => {
+          const result = attributeValue(mockStringAttribute, { toString: undefined });
+          expect(result).toBe(null);
+        });
+
+        it('returns null', () => {
+          const result = attributeValue(mockStringAttribute, undefined);
+          expect(result).toBe(null);
+        });
+      });
+
       describe('as string', () => {
         const mockStringAttribute: TypedAttribute = {
           name: 'mock-attribute',
@@ -52,9 +78,19 @@ describe('attribute-mapper', () => {
           expect(result).toBe('mock-value');
         });
 
-        it('returns undefined', () => {
+        it('returns the value of its\' toString function', () => {
+          const result = attributeValue(mockStringAttribute, {});
+          expect(result).toBe('[object Object]');
+        });
+
+        it('returns null on non-stringable value', () => {
+          const result = attributeValue(mockStringAttribute, { toString: undefined });
+          expect(result).toBe(null);
+        });
+
+        it('returns null', () => {
           const result = attributeValue(mockStringAttribute, undefined);
-          expect(result).toBe('undefined');
+          expect(result).toBe(null);
         });
       });
 
@@ -63,6 +99,11 @@ describe('attribute-mapper', () => {
           name: 'mock-attribute',
           type: 'number',
         };
+
+        it('parses a number', () => {
+          const result = attributeValue(mockNumberAttribute, 8);
+          expect(result).toBe(8);
+        });
 
         it('parses a simple number', () => {
           const result = attributeValue(mockNumberAttribute, '9');
@@ -116,6 +157,11 @@ describe('attribute-mapper', () => {
           type: 'boolean',
         };
 
+        it('parses an attribute with true', () => {
+          const result = attributeValue(mockBooleanAttribute, true);
+          expect(result).toBe(true);
+        });
+
         it('parses an attribute with no value', () => {
           const result = attributeValue(mockBooleanAttribute, '');
           expect(result).toBe(true);
@@ -149,13 +195,18 @@ describe('attribute-mapper', () => {
         };
 
         it('parses an attribute with no value', () => {
+          const result = attributeValue(mockObjectAttribute, { a: 'b' });
+          expect(result).toEqual({ a: 'b' });
+        });
+
+        it('parses an attribute with no value', () => {
           const result = attributeValue(mockObjectAttribute, '');
           expect(result).toBe(null);
         });
 
         it('parses an attribute with undefined', () => {
           const result = attributeValue(mockObjectAttribute, undefined);
-          expect(result).toBe(null);
+          expect(result).toEqual({ 0: undefined });
         });
 
         it('parses an attribute with an object', () => {
@@ -175,6 +226,11 @@ describe('attribute-mapper', () => {
           type: 'array',
         };
 
+        it('parses an attribute with an object', () => {
+          const result = attributeValue(mockArrayAttribute, ['b']);
+          expect(result).toEqual(['b']);
+        });
+
         it('parses an attribute with no value', () => {
           const result = attributeValue(mockArrayAttribute, '');
           expect(result).toBe(null);
@@ -182,7 +238,7 @@ describe('attribute-mapper', () => {
 
         it('parses an attribute with undefined', () => {
           const result = attributeValue(mockArrayAttribute, undefined);
-          expect(result).toBe(null);
+          expect(result).toEqual([undefined]);
         });
 
         it('parses an attribute with an object', () => {
@@ -202,6 +258,12 @@ describe('attribute-mapper', () => {
           type: 'function',
         };
 
+        it('parses an attribute with a function', () => {
+          const value = jest.fn();
+          const result = attributeValue(mockArrayAttribute, value);
+          expect(result).toBe(value);
+        });
+
         it('parses an attribute with no value', () => {
           const result = attributeValue(mockArrayAttribute, '');
           expect(result).toBe(undefined);
@@ -214,18 +276,17 @@ describe('attribute-mapper', () => {
 
         it('parses an attribute with an object', () => {
           const result = attributeValue(mockArrayAttribute, '{"a": "b"}');
-          expect(result).toBe(null);
+          expect(result).toEqual({ a: 'b' });
         });
 
         it('parses an attribute with an array', () => {
           const result = attributeValue(mockArrayAttribute, '["a", "b"]');
-          expect(result).toBe(undefined);
+          expect(result).toEqual(['a', 'b']);
         });
 
-        it('parses an attribute with a function', () => {
-          const value = jest.fn();
-          const result = attributeValue(mockArrayAttribute, value);
-          expect(result).toBe(value);
+        it('parses an attribute with a non-function', () => {
+          const result = attributeValue(mockArrayAttribute, 'return');
+          expect(result).toBe(null);
         });
       });
     });

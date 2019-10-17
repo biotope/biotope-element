@@ -1,4 +1,4 @@
-import { AnyValue } from './types';
+import { PropValue } from './types';
 
 const parseOrUndefined = (value: string): object => {
   try {
@@ -8,14 +8,14 @@ const parseOrUndefined = (value: string): object => {
   }
 };
 
-export const toBoolean = (prop?: AnyValue): boolean => {
+export const toBoolean = (prop?: PropValue): boolean => {
   if (typeof prop === 'boolean') {
     return prop;
   }
   return (!!prop && prop !== 'false') || prop === '';
 };
 
-export const toNumber = (prop?: AnyValue): number => {
+export const toNumber = (prop?: PropValue): number => {
   if (typeof prop === 'number') {
     return prop;
   }
@@ -28,7 +28,7 @@ export const toNumber = (prop?: AnyValue): number => {
   return convertedProp;
 };
 
-export const toArray = <T>(prop?: AnyValue): T[] => {
+export const toArray = <T>(prop?: PropValue): T[] => {
   if (Array.isArray(prop)) {
     return prop;
   }
@@ -44,7 +44,7 @@ export const toArray = <T>(prop?: AnyValue): T[] => {
   return [...(new Array(prop))] as any[];
 };
 
-export const toObject = (prop?: AnyValue): object => {
+export const toObject = (prop?: PropValue): object => {
   if (typeof prop === 'object' && !Array.isArray(prop)) {
     return prop;
   }
@@ -59,7 +59,7 @@ export const toObject = (prop?: AnyValue): object => {
   return [...(new Array(prop))].reduce((acc, value, index) => ({ ...acc, [index]: value }), {});
 };
 
-export const toFunction = (prop?: AnyValue): Function => {
+export const toFunction = (prop?: PropValue): Function => {
   if (typeof prop === 'function') {
     return prop;
   }
@@ -71,12 +71,12 @@ export const toFunction = (prop?: AnyValue): Function => {
   }
 };
 
-export const toString = (prop?: AnyValue): string => {
+export const toString = (prop?: PropValue): string => {
   if (typeof prop === 'string') {
     return prop;
   }
-  if (!prop) {
+  if (!prop || typeof prop.toString !== 'function') {
     return null;
   }
-  return typeof prop.toString === 'function' ? prop.toString() : `${prop}`;
+  return prop.toString();
 };

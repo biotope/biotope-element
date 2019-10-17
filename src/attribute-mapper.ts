@@ -1,5 +1,5 @@
 import {
-  Attribute, TypedAttribute, ConvertableAttribute, AnyValue,
+  Attribute, TypedAttribute, ConvertableAttribute, PropValue,
 } from './types';
 import {
   toBoolean, toNumber, toArray, toObject, toFunction, toString,
@@ -9,7 +9,7 @@ export const attributeName = (attribute: string | Attribute): string => (
   typeof attribute === 'string' ? attribute : attribute.name
 );
 
-export const attributeValue = (attribute: string | Attribute, value?: AnyValue): AnyValue => {
+export const attributeValue = (attribute: string | Attribute, value?: PropValue): PropValue => {
   if (typeof attribute === 'string') {
     return value;
   }

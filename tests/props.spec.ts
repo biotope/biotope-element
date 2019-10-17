@@ -49,6 +49,18 @@ describe('#props', () => {
     });
   });
 
+  describe('attributeChangedCallback is called twice with the same attribute', () => {
+    beforeEach(() => {
+      element.render = jest.fn();
+      element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
+      element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
+    });
+
+    it('does not update props or call render on the second try', () => {
+      expect((element.render as jest.Mock).mock.calls).toHaveLength(1);
+    });
+  });
+
   describe('attributeChangedCallback is called for all props', () => {
     beforeEach(() => {
       element.render = jest.fn();

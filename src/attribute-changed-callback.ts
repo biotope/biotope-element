@@ -1,10 +1,10 @@
 import { attributeName, attributeValue } from './attribute-mapper';
 import { kebabToCamel } from './case-converters';
 import { ComponentInstance } from './internal-types';
-import { AnyValue } from './types';
+import { PropValue } from './types';
 
 export const attributeChangedCallback = (
-  context: ComponentInstance, name: string, previous: AnyValue, current: AnyValue,
+  context: ComponentInstance, name: string, previous: PropValue, current: PropValue,
 ): void => {
   const attribute = context.constructor.attributes
     .filter((attr): boolean => attributeName(attr) === name)[0];

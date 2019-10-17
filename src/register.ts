@@ -3,7 +3,7 @@ import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-mapper';
 import { kebabToCamel } from './case-converters';
 import { ComponentInstance, ComponentType } from './internal-types';
-import { AnyValue } from './types';
+import { PropValue } from './types';
 
 const resolveCallStack = (context: ComponentInstance, property: '__initCallStack' | '__initAttributesCallStack'): void => {
   while (context[property].length) {
@@ -42,10 +42,10 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     const name = attributeName(attribute);
     const nameCamel = kebabToCamel(name);
     const prop = {
-      get(): AnyValue {
+      get(): PropValue {
         return this.props[nameCamel];
       },
-      set(value?: AnyValue): void {
+      set(value?: PropValue): void {
         this.attributeChangedCallback(name, this.props[nameCamel], value);
       },
     };
