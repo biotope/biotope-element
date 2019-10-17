@@ -13,27 +13,11 @@ lifecycle callbacks of its parent class.
 For these callbacks, please have a look at the
 [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#Using_the_lifecycle_callbacks).
 
-Note: When extending customElement callbacks, be sure to call the super function as well:
-```javascript
-  connectedCallback() {
-    // call super to avoid shenanigans
-    super.connectedCallback();
-
-    // then do your logic :)
-  }
-```
-
-## created
-According to the web-compoennts spec, `attributeChangedCallback` is called with any attribute
-that's initially put in the component (once per attribute), then `connectedCallback` is called when
-the component is attached to the DOM.
-
-Biotope element on the other hand guarantees that `created` is called before any of those two
-methods and that `connectedCallback` is called before any `attributeChangedCallback`. All three
-methods are only called when the component is connected to the DOM. This means any setup you do on
-the `created` method can take into account the position of the element on the page.
-
-Note: No need to call `super.created()` here - it's empty.
+Note: Typically in plain web-components, the `connectedCallback` method will be fired after the
+initial attributes' callback (`attributeChangedCallback`). This is reversed in biotope-element. The
+`connectedCallback` will always fire before any `attributeChangedCallback` is triggered. We do make
+sure, however, that the render method is only fired once at startup (i.e. after all
+`attributeChangedCallback` have finished).
 
 ## rendered
 This method will be called when the DOM has been updated. If for example the render method is called
@@ -41,8 +25,19 @@ but you do not call `this.html` to print anything to the DOM, this function will
 
 Note that when creating a new component, you may have several calls to `attributeChangedCallback`
 due to having inserted more than one HTML attribute before the component is connected to the DOM.
-This will not cause `rendered` to be triggered more than once. On startup, `rendered` is prepared to
-wait for all the attributes to have finished parsing and set on the component `props`. Once the
-component is up-and-running though, any attribute/prop change will trigger the `rendered` method.
+Since `render` is only called once in this scenario, `rendered` will also only be called once.
 
-Note: No need to call `super.rendered()` here - it's empty.
+## Simple example flow
+
+- We add a custom component (built with biotope-element) on the page, with 2 attributes:
+  1. `constructor`
+  2. `connectedCallback`
+  3. `attributeChangedCallback` (for the first attribute)
+  4. `attributeChangedCallback` (for the second attribute)
+  5. `render`
+  6. `rendered`
+
+- (maybe the user did something and) 2 second later we add a new attribute to the component:
+  1. `attributeChangedCallback` (for the new attribute)
+  2. `render`
+  3. `rendered`

@@ -48,6 +48,11 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
+Note: We also provide the `this.createStyle` function out of the box should you need it, like so:
+```javascript
+import Component, { createStyle } from '@biotope/element';
+```
+
 !> __Important ⚠️:__ Style-Scoping only works in browsers that support Shadow DOM. Browsers like
 IE11/Edge until V18 inherit styles as used everywhere else. So use unique class names and techniques
 like [BEM](http://getbem.com)to keep everything sane.
@@ -95,17 +100,17 @@ note(!) only
 can be used in the slotted pseudoselector:
 
 ```css
-::slotted(span) {
+::slotted(span) {
   /* this will work */
   border: 1px solid black;
 }
 
-::slotted(span::before) {
+::slotted(span::before) {
   /* this will work too */
   border: 1px solid black;
 }
 
-::slotted(span + input) {
+::slotted(span + input) {
   /* this will not work */
   border: 1px solid black;
 }

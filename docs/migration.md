@@ -197,13 +197,17 @@ class MyComponent extends Component {
 }
 ```
 
-## `onPropsChanged` hook removal
+## `onPropsChanged` and `created` hooks removal
 
-TLDR: `onPropsChanged` was removed - you can use `attributeChangedCallback` to do the same thing.
+TLDR: `onPropsChanged` and `created` hooks were removed as they were redundant - you can use
+`attributeChangedCallback` and `connectedCallback` to do the same thing, respectively.
 
 v3 code:
 ```javascript
 class MyComponent extends Component {
+  created() {
+    // Insert your "init code" here
+  }
   onPropsChanged() {
     // Insert logic for attribute/prop changes
   }
@@ -213,6 +217,9 @@ class MyComponent extends Component {
 v4 code:
 ```javascript
 class MyComponent extends Component {
+  connectedCallback() {
+    // Insert your "init code" here - the element is in the DOM already
+  }
   attributeChangedCallback(name, previous, current) {
     // Insert logic for attribute changes
 
@@ -222,6 +229,24 @@ class MyComponent extends Component {
     // Insert logic for prop changes
   }
 }
+```
+
+## Bypassing attribute-to-prop conversion is not possible
+
+TLDR: You can no longer use set `props` when creating a component.
+
+v3 code:
+```html
+<my-component props=...></my-component>
+```
+
+v4 code:
+```html
+<my-component my-first-prop=... my-second-prop=...></my-component>
+<script>
+  // OR through js
+  myComponent.myFirstProp = ...;
+</script>
 ```
 
 ## `basedOn` feature removal
@@ -321,10 +346,11 @@ MyComponent.attributes = [
     type: 'boolean',
     /**
      * Also supports:
-     * - array
-     * - object
+     * - string (default type)
      * - number
-     * - string (but this one is redundant...)
+     * - object
+     * - array
+     * - function
      */
   },
 ];
@@ -333,10 +359,12 @@ MyComponent.attributes = [
 ## `rendered` hook and the `setTimeout` usage
 
 This was never a good practice to begin with and there were alternatives for almost every case, but
-now you have a way of doing this that is clean - the `rendered` hook and `ref`s.
+now you have a way of doing this that is clean - the `rendered` hook and `ref`s (no `setTimeout`s!).
 
 v4 code:
 ```javascript
+import Component, { createRef } from '@biotope-element';
+
 class MyComponent extends Component {
   constructor() {
     super();

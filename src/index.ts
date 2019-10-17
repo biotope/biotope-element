@@ -7,6 +7,7 @@ import { Attribute, AnyValue } from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
+export * from './attribute-converters';
 export * from './types';
 export {
   html,
