@@ -34,7 +34,7 @@ The result is a simple:
 ```
 
 You can also pass javascript objects to the attributes if needed. They will still go through the
-normal prop chain but our converters are prepared how to deal with them. For example, if you have an
+normal prop chain but our converters are prepared to deal with them. For example, if you have an
 attribute with `type: 'array'`, and you do either of the two lines of code:
 ```javascript
 document.getElementsByTagName('custom-element')[0].myArray = '[1,2,3]';

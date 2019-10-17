@@ -37,7 +37,7 @@ Since `render` is only called once in this scenario, `rendered` will also only b
   5. `render`
   6. `rendered`
 
-- (maybe the user did something and) 2 second later we add a new attribute to the component:
+- (maybe the user did something and) 2 seconds later we add a new attribute to the component:
   1. `attributeChangedCallback` (for the new attribute)
   2. `render`
   3. `rendered`
