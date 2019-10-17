@@ -1,15 +1,17 @@
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyValue = string | boolean | number | any[] | object | Function;
+
 export interface SimpleAttribute {
   name: string;
 }
 
 export interface TypedAttribute extends SimpleAttribute {
-  type: 'object' | 'array' | 'boolean' | 'number' | 'string';
+  type: 'string' | 'boolean' | 'number' | 'array' | 'object' | 'function';
 }
 
 export interface ConvertableAttribute extends SimpleAttribute {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  converter: (prop?: string) => any;
+  converter: (prop?: AnyValue) => AnyValue;
 }
 
 export type Attribute = SimpleAttribute | TypedAttribute | ConvertableAttribute;
