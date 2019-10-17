@@ -9,22 +9,24 @@ jest.mock('../src/create-html', (): object => {
   };
 });
 
-describe('loops', (): void => {
+describe('loops', () => {
   const calls = 5;
 
-  it('works with array maps', (): void => {
+  beforeEach(() => {
     class TestElement extends Component {
       public static componentName = 'test-element';
 
       public render(): HTMLElement {
         return this.html`
-          ${(new Array(calls)).fill(0).map((): HTMLElement => this.html`Hello World!`)}
+          ${[...new Array(calls)].map((): HTMLElement => this.html`Hello World!`)}
         `;
       }
     }
     const element = new TestElement();
-    element.connectedCallback();
+    element.render();
+  });
 
+  it('works with array maps', () => {
     expect((createPartial() as jest.Mock).mock.calls).toHaveLength(calls + 1);
   });
 });

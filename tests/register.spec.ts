@@ -1,11 +1,12 @@
 import { register } from '../src/register';
+import { ComponentType, ComponentPrototype, ComponentInstance } from '../src/internal-types';
 
 describe('#register', (): void => {
   let mockComponentClass;
   let mockDependency;
-  let originalCreateElement;
-  let originalCustomElementsDefine;
-  let result;
+  let originalCreateElement: typeof document.createElement;
+  let originalCustomElementsDefine: typeof customElements.define;
+  let result: boolean;
 
   beforeEach((): void => {
     originalCreateElement = document.createElement;
@@ -30,6 +31,7 @@ describe('#register', (): void => {
         setAttribute: jest.fn(),
         removeAttribute: jest.fn(),
         __initCallStack: [],
+        __initAttributesCallStack: [],
       },
     };
   });
@@ -40,7 +42,7 @@ describe('#register', (): void => {
   });
 
   describe('silent is false', (): void => {
-    let originalConsoleWarn;
+    let originalConsoleWarn: typeof console.warn;
 
     beforeEach((): void => {
       // eslint-disable-next-line no-console
@@ -69,16 +71,17 @@ describe('#register', (): void => {
   describe('silent is true', (): void => {
     describe('componentName exists', (): void => {
       describe('not registered', (): void => {
-        let originalACC;
+        let originalACC: ComponentType['prototype']['attributeChangedCallback'];
 
         beforeEach((): void => {
           // eslint-disable-next-line prefer-destructuring
-          originalACC = mockComponentClass.prototype.attributeChangedCallback;
+          originalACC = (mockComponentClass as ComponentType).prototype.attributeChangedCallback;
           result = register(mockComponentClass, true);
         });
 
         it('calls the dependencies\' register', (): void => {
-          expect(mockDependency.register.mock.calls).toHaveLength(2);
+          expect(((mockDependency as ComponentType).register as jest.Mock).mock.calls)
+            .toHaveLength(2);
         });
 
         it('calls getAttribute when getting an attribute directly', (): void => {
