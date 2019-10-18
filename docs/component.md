@@ -283,14 +283,9 @@ class MyButton extends Component {
 
 ...
 MyButton.attributes = [
-  {
-    name: 'primary',
-    converter: (prop) => {
-      const parsedProp = toBoolean(prop);
-      console.log('original prop:', prop, ', parsed prop:', parsedProp);
-      return parsedProp;
-    }
-  },
+  // Both lines do the same
+  // { name: 'primary', type: 'boolean' },
+  { name: 'primary', converter: toBoolean },
 ];
 ...
 ```
