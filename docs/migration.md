@@ -233,7 +233,7 @@ class MyComponent extends Component {
 
 ## Bypassing attribute-to-prop conversion is not possible
 
-TLDR: You can no longer use set `props` when creating a component.
+TLDR: You can no longer set a `props` attribute when creating a component to pass all attributes.
 
 v3 code:
 ```html
