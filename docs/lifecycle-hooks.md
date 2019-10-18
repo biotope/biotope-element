@@ -41,3 +41,22 @@ Since `render` is only called once in this scenario, `rendered` will also only b
   1. `attributeChangedCallback` (for the new attribute)
   2. `render`
   3. `rendered`
+
+Note: the `render` method will not be triggered if the new prop (after parsing/conversion) is the
+same as the current prop. In this following example, 
+
+```javascript
+MyComponent.attributes = [
+  { name: 'my-attribute', type: 'number' },
+];
+```
+```html
+<!-- Notice that the attribute given is in fact a string (since it's being passed in the HTML) -->
+<my-component my-attribute="1"></my-component>
+<!-- However, the component is converting it into the number 1 and setting it in the props -->
+
+<script>
+  // So this line will not trigger a new render, since 1 === 1
+  document.getElementsByTagName('my-component')[0].myAttribute = 1; // an actual number
+</script>
+```
