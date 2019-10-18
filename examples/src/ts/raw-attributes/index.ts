@@ -10,6 +10,8 @@ export class ExampleText extends Component {
 
   private myArray = [1, 2, 3, 4, 5];
 
+  private randomNumber = Math.round(Math.random() * 10);
+
   public render(): HTMLElement {
     // eslint-disable-next-line no-console
     console.log('parent rendered');
@@ -20,6 +22,7 @@ export class ExampleText extends Component {
         my-callback=${this.childCallback}
         my-array=${this.myArray}
         my-second-array=${JSON.stringify(this.myArray)}
+        my-interpolated="I like the number ${this.randomNumber} very much!"
       ></example-child>
     `;
   }

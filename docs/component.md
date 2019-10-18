@@ -61,7 +61,9 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   render() {
     return this.html`
-      🎰 ${this.props.foo}
+      <div>
+        🎰 ${this.props.foo}
+      </div>
     `;
   }
 }
@@ -78,7 +80,31 @@ MyButton.register();
 This will result in the following html:
 
 ```html
-<my-button>🎰 bar</my-button>
+<my-button>
+  <div>🎰 bar<div>
+</my-button>
+```
+
+You can also use interpolated attributes, like so:
+
+```javascript
+class MyButton extends Component {
+  render() {
+    return this.html`
+      <div class="fancy-${someCondition ? 'thing' : 'stuff'}">
+        🎰 ${this.props.foo}
+      </div>
+    `;
+  }
+}
+```
+
+Which will result in something like:
+
+```html
+<my-button>
+  <div class="fancy-thing">🎰 bar<div>
+</my-button>
 ```
 
 ### defaultProps

@@ -5,6 +5,7 @@ export class ExampleText extends Component {
   constructor() {
     super();
     this.myArray = [1, 2, 3, 4, 5];
+    this.randomNumber = Math.round(Math.random() * 10);
   }
 
   render() {
@@ -17,6 +18,7 @@ export class ExampleText extends Component {
         my-callback=${this.childCallback}
         my-array=${this.myArray}
         my-second-array=${JSON.stringify(this.myArray)}
+        my-interpolated="I like the number ${this.randomNumber} very much!"
       ></example-child>
     `;
   }
