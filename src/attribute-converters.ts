@@ -40,6 +40,12 @@ export const toArray = <T>(prop?: PropValue): T[] => {
         convertedProp[key],
       ]), []);
   }
+  if (prop) {
+    try {
+      return Object.keys(prop).reduce((acc, key) => ([...acc, prop[key]]), []);
+      // eslint-disable-next-line no-empty
+    } catch (_) {}
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return [...(new Array(prop))] as any[];
 };
@@ -55,6 +61,12 @@ export const toObject = (prop?: PropValue): object => {
         ...accumulator,
         [key]: convertedProp[key],
       }), {});
+  }
+  if (prop) {
+    try {
+      return Object.keys(prop).reduce((acc, key) => ({ ...acc, [key]: prop[key] }), {});
+      // eslint-disable-next-line no-empty
+    } catch (_) {}
   }
   return [...(new Array(prop))].reduce((acc, value, index) => ({ ...acc, [index]: value }), {});
 };

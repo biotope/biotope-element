@@ -100,7 +100,7 @@ describe('attribute-mapper', () => {
           type: 'number',
         };
 
-        it('parses a number', () => {
+        it('parses a raw number attribute', () => {
           const result = attributeValue(mockNumberAttribute, 8);
           expect(result).toBe(8);
         });
@@ -140,6 +140,16 @@ describe('attribute-mapper', () => {
           expect(result).toBe(12);
         });
 
+        it('parses a raw array', () => {
+          const result = attributeValue(mockNumberAttribute, [1, 2, 3]);
+          expect(result).toBe(1);
+        });
+
+        it('parses a raw object', () => {
+          const result = attributeValue(mockNumberAttribute, { a: 'b' });
+          expect(result).toBeNaN();
+        });
+
         it('does not parse a value staring with a letter', () => {
           const result = attributeValue(mockNumberAttribute, 'a13');
           expect(result).toBeNaN();
@@ -157,7 +167,7 @@ describe('attribute-mapper', () => {
           type: 'boolean',
         };
 
-        it('parses an attribute with true', () => {
+        it('parses a raw boolean attribute', () => {
           const result = attributeValue(mockBooleanAttribute, true);
           expect(result).toBe(true);
         });
@@ -174,6 +184,11 @@ describe('attribute-mapper', () => {
 
         it('parses an attribute with jiberish', () => {
           const result = attributeValue(mockBooleanAttribute, 'xrdctfvybgu');
+          expect(result).toBe(true);
+        });
+
+        it('parses an attribute with an array', () => {
+          const result = attributeValue(mockBooleanAttribute, [1]);
           expect(result).toBe(true);
         });
 
@@ -194,7 +209,7 @@ describe('attribute-mapper', () => {
           type: 'object',
         };
 
-        it('parses an attribute with no value', () => {
+        it('parses a raw object attribute', () => {
           const result = attributeValue(mockObjectAttribute, { a: 'b' });
           expect(result).toEqual({ a: 'b' });
         });
@@ -209,14 +224,19 @@ describe('attribute-mapper', () => {
           expect(result).toEqual({ 0: undefined });
         });
 
-        it('parses an attribute with an object', () => {
+        it('parses an attribute with an object as string', () => {
           const result = attributeValue(mockObjectAttribute, '{"a": "b"}');
           expect(result).toEqual({ a: 'b' });
         });
 
-        it('parses an attribute with an array', () => {
+        it('parses an attribute with an array as string', () => {
           const result = attributeValue(mockObjectAttribute, '["a", "b"]');
           expect(result).toEqual({ 0: 'a', 1: 'b' });
+        });
+
+        it('parses n raw array attribute', () => {
+          const result = attributeValue(mockObjectAttribute, ['b']);
+          expect(result).toEqual({ 0: 'b' });
         });
       });
 
@@ -226,7 +246,7 @@ describe('attribute-mapper', () => {
           type: 'array',
         };
 
-        it('parses an attribute with an object', () => {
+        it('parses a raw array attribute', () => {
           const result = attributeValue(mockArrayAttribute, ['b']);
           expect(result).toEqual(['b']);
         });
@@ -241,14 +261,19 @@ describe('attribute-mapper', () => {
           expect(result).toEqual([undefined]);
         });
 
-        it('parses an attribute with an object', () => {
+        it('parses an attribute with an object as string', () => {
           const result = attributeValue(mockArrayAttribute, '{"a": "b"}');
           expect(result).toEqual(['b']);
         });
 
-        it('parses an attribute with an array', () => {
+        it('parses an attribute with an array as string', () => {
           const result = attributeValue(mockArrayAttribute, '["a", "b"]');
           expect(result).toEqual(['a', 'b']);
+        });
+
+        it('parses a raw object attribute', () => {
+          const result = attributeValue(mockArrayAttribute, { a: 'b' });
+          expect(result).toEqual(['b']);
         });
       });
 
@@ -258,7 +283,7 @@ describe('attribute-mapper', () => {
           type: 'function',
         };
 
-        it('parses an attribute with a function', () => {
+        it('parses a raw function attribute', () => {
           const value = jest.fn();
           const result = attributeValue(mockArrayAttribute, value);
           expect(result).toBe(value);
@@ -274,14 +299,19 @@ describe('attribute-mapper', () => {
           expect(result).toBe(undefined);
         });
 
-        it('parses an attribute with an object', () => {
+        it('parses an attribute with an object as string', () => {
           const result = attributeValue(mockArrayAttribute, '{"a": "b"}');
           expect(result).toEqual({ a: 'b' });
         });
 
-        it('parses an attribute with an array', () => {
+        it('parses an attribute with an array as string', () => {
           const result = attributeValue(mockArrayAttribute, '["a", "b"]');
           expect(result).toEqual(['a', 'b']);
+        });
+
+        it('parses a raw array attribute', () => {
+          const result = attributeValue(mockArrayAttribute, ['a', 'b']);
+          expect(result).toEqual(null);
         });
 
         it('parses an attribute with a non-function', () => {
