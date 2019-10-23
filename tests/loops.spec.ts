@@ -1,4 +1,4 @@
-import Component from '../src/index';
+import Component from '../src';
 import { createPartial } from '../src/create-html';
 
 jest.mock('../src/create-html', (): object => {

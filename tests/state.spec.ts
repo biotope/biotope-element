@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import Component from '../src/index';
+import Component from '../src';
 
 describe('#state', (): void => {
   let element: Component;

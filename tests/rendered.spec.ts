@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import Component from '../src/index';
+import Component from '../src';
 import { ComponentInstance } from '../src/internal-types';
 
 describe('#rendered', () => {

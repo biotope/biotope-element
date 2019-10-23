@@ -1,4 +1,4 @@
-import Component from '../src/index';
+import Component from '../src';
 
 describe('#emit', () => {
   let element: Component;
