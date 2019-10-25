@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
-    "lighterhtml": "^1.2.1"
+    "lighterhtml": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "~7.6",
