@@ -30,6 +30,7 @@ describe('#register', (): void => {
         props: { first: 1, andSecond: 2 },
         connectedCallback: mockFunction,
         attributeChangedCallback: mockFunction,
+        render: mockFunction,
         __initCallStack: [mockDependency.register],
         __initAttributesCallStack: [mockDependency.register],
       },
