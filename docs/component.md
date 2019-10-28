@@ -42,6 +42,11 @@ In the template literal you can also add valid html code as well as the `<slot /
 current content of the component will be placed. Read more about it in the [shadow dom](#shadow-dom)
 section.
 
+Note: We also provide the `this.html` function out of the box should you need it, like so:
+```javascript
+import Component, { html } from '@biotope/element';
+```
+
 ## attributes / props
 Every component has its own props. The props are the result of picking and parsing of all the
 attributes of the component.
@@ -56,7 +61,9 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   render() {
     return this.html`
-      🎰 ${this.props.foo}
+      <div>
+        🎰 ${this.props.foo}
+      </div>
     `;
   }
 }
@@ -73,7 +80,31 @@ MyButton.register();
 This will result in the following html:
 
 ```html
-<my-button>🎰 bar</my-button>
+<my-button>
+  <div>🎰 bar<div>
+</my-button>
+```
+
+You can also use interpolated attributes, like so:
+
+```javascript
+class MyButton extends Component {
+  render() {
+    return this.html`
+      <div class="fancy-${someCondition ? 'thing' : 'stuff'}">
+        🎰 ${this.props.foo}
+      </div>
+    `;
+  }
+}
+```
+
+Which will result in something like:
+
+```html
+<my-button>
+  <div class="fancy-thing">🎰 bar<div>
+</my-button>
 ```
 
 ### defaultProps
@@ -157,20 +188,20 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   render() {
     return this.html`
-      ${this.props.anotherAttribute} 🌸
+      ${this.props.aComplexAttribute} 🌸
     `;
   }
 }
 
 MyButton.componentName = 'my-button';
-MyButton.attributes =  ['another-attribute'];
+MyButton.attributes =  ['a-complex-attribute'];
 MyButton.register();
 ```
 
 This will result in the following html:
 
 ```html
-<my-button another-attribute="Some simple value">
+<my-button a-complex-attribute="Some simple value">
   Some simple value 🌸
 <my-button>
 ```
@@ -183,7 +214,7 @@ of a simple string.
 
 Attribute types are pre-defined conversion functions made available to developers so that you can
 write more code that matters to your application and less code to parse strings. The types we offer
-are `string`, `number`, `boolean`, `object` and `array`.
+are `string`, `number`, `boolean`, `object`, `array` and `function`.
 Take note that all of them will try to force the conversion. For example, if an attribute like
 `'["a", "b"]'` is forced to an `object` type, it will be converted to `{0: 'a', 1: 'b'}`.
 
@@ -206,10 +237,9 @@ class MyButton extends Component {
 
 MyButton.componentName = 'my-button';
 // use our pre-defined converters
-MyButton.attributes = [{
-  name: 'fooNum',
-  type: 'number',
-}];
+MyButton.attributes = [
+  { name: 'fooNum', type: 'number' },
+];
 // OR use your custom converter function
 MyButton.attributes = [{
   name: 'fooNum',
@@ -253,10 +283,9 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-MyButton.attributes = [{
-  name: 'primary',
-  type: 'boolean',
-}];
+MyButton.attributes = [
+  { name: 'primary', type: 'boolean' },
+];
 MyButton.register();
 ```
 
@@ -267,6 +296,27 @@ MyButton.register();
   💼 hello boolean
 <my-button>
 ```
+
+Note that these converters are also available should you wish to extend them in your own custom
+converter. You can import and use them like so:
+
+```javascript
+import Component, { toBoolean } from '@biotope/element';
+
+class MyButton extends Component {
+  ...
+}
+
+...
+MyButton.attributes = [
+  // Both lines do the same
+  // { name: 'primary', type: 'boolean' },
+  { name: 'primary', converter: toBoolean },
+];
+...
+```
+
+The converters are: `toBoolean`, `toString`, `toNumber`, `toObject`, `toArray`, `toFunction`.
 
 ## Shadow DOM
 Every component extending the biotope element is using shadow dom. This will help you to not mess up

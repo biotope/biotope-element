@@ -18,8 +18,8 @@
     "test:report": "npm run test && codecov",
     "test:watch": "jest --watch",
     "lint": "npm run lint:code && npm run lint:tests",
-    "lint:code": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples,types",
-    "lint:code:fix": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples,types -f",
+    "lint:code": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples/src,types",
+    "lint:code:fix": "biotope-quality-gate -c lint.config.js -p src,./*.js,examples/src,types -f",
     "lint:tests": "biotope-quality-gate -p tests -t",
     "lint:tests:fix": "biotope-quality-gate -p tests -t -f",
     "lint:website": "biotope-quality-gate -p website -t",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
   "dependencies": {
-    "lighterhtml": "^1.2.1"
+    "lighterhtml": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "~7.6",
@@ -48,17 +48,17 @@
     "basichtml-elements": "~0.1",
     "codecov": "~3.6",
     "cpy-cli": "~2.0",
-    "eslint-plugin-jest": "~22.19.0",
-    "jest": "~24.9.0",
+    "eslint-plugin-jest": "~22.20",
+    "jest": "~24.9",
     "np": "~5.1",
     "prismjs": "~1.17",
-    "rollup": "~1.23.1",
+    "rollup": "~1.25",
     "rollup-plugin-commonjs": "~10.1",
     "rollup-plugin-node-resolve": "~5.2",
     "rollup-plugin-progress": "~1.1",
     "rollup-plugin-typescript2": "~0.24",
     "rollup-plugin-visualizer": "~2.6",
     "ts-jest": "~24.1",
-    "typescript": "~3.6.3"
+    "typescript": "~3.6"
   }
 }

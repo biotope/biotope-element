@@ -1,63 +1,60 @@
 /* eslint-disable max-classes-per-file */
-import Component from '../src/index';
+import Component from '../src';
+import { ComponentInstance } from '../src/internal-types';
 
-describe('#rendered', (): void => {
+describe('#rendered', () => {
   let element;
-  let functionCalls;
+  let mockRendered;
 
-  beforeEach((): void => {
-    functionCalls = [];
-
-    class TestElement extends Component {
-      public static componentName = 'test-element';
-
-      public render(): HTMLElement {
-        functionCalls.push('render');
-        return this.html``;
-      }
-
-      // eslint-disable-next-line class-methods-use-this
-      public rendered(): void {
-        functionCalls.push('rendered');
-      }
-    }
-    element = new TestElement();
-    element.connectedCallback();
+  beforeEach(() => {
+    mockRendered = jest.fn();
   });
 
-  it('calls the render method', (done): NodeJS.Timeout => setTimeout((): void => {
-    expect(functionCalls[0]).toBeTruthy();
-    expect(functionCalls[0]).toBe('render');
-    done();
-  }, 50));
+  describe('a render method is given', () => {
+    beforeEach(() => {
+      class TestElement extends Component {
+        public static componentName = 'test-element';
 
-  it('triggers the rendered method', (done): NodeJS.Timeout => setTimeout((): void => {
-    expect(functionCalls).toHaveLength(2);
-    expect(functionCalls[0]).toBe('render');
-    expect(functionCalls[1]).toBe('rendered');
-    done();
-  }, 50));
+        public render(): HTMLElement {
+          return this.html``;
+        }
 
-  describe('no render method is given', (): void => {
-    let mockRendered;
+        public rendered = mockRendered;
+      }
+      element = new TestElement();
+      element.render();
+    });
 
-    beforeEach((): void => {
-      mockRendered = jest.fn();
+    it('triggers the rendered method', (done) => setTimeout(() => {
+      expect(mockRendered.mock.calls).toHaveLength(1);
+      done();
+    }));
 
+    it('has a rrender method awaiting resolution', (done) => setTimeout(() => {
+      // eslint-disable-next-line no-underscore-dangle
+      (element as ComponentInstance).__initCallStack[0]();
+      setTimeout(() => {
+        expect(mockRendered.mock.calls).toHaveLength(2);
+        done();
+      });
+    }));
+  });
+
+  describe('no render method is given', () => {
+    beforeEach(() => {
       class TestElement extends Component {
         public static componentName = 'test-element';
 
         public rendered = mockRendered;
       }
       element = new TestElement();
-      element.connectedCallback();
       element.render();
     });
 
-    it('triggers the rendered method', (done): NodeJS.Timeout => setTimeout((): void => {
-      expect(mockRendered.mock.calls).toHaveLength(2);
+    it('triggers the rendered method', (done) => setTimeout(() => {
+      expect(mockRendered.mock.calls).toHaveLength(1);
       done();
-    }, 50));
+    }));
   });
 });
 /* eslint-enable max-classes-per-file */

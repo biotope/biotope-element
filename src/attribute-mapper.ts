@@ -1,65 +1,36 @@
-import { Attribute, TypedAttribute, ConvertableAttribute } from './types';
+import {
+  Attribute, TypedAttribute, ConvertableAttribute, PropValue,
+} from './types';
+import {
+  toBoolean, toNumber, toArray, toObject, toFunction, toString,
+} from './attribute-converters';
 
 export const attributeName = (attribute: string | Attribute): string => (
   typeof attribute === 'string' ? attribute : attribute.name
 );
 
-const parseAndForceType = (value: string, type: 'array' | 'object'): object => {
-  let parsedValue: object;
-  try {
-    parsedValue = JSON.parse(value);
-  } catch (_) {
-    parsedValue = undefined;
-  }
-
-  if (type === 'array') {
-    return typeof parsedValue !== 'object' ? null : Object.keys(parsedValue)
-      .reduce(<T>(accumulator: T[], key: string): T[] => ([
-        ...accumulator,
-        parsedValue[key],
-      ]), []);
-  }
-
-  return typeof parsedValue !== 'object' ? null : Object.keys(parsedValue)
-    .reduce((accumulator: object, key: string): object => ({
-      ...accumulator,
-      [key]: parsedValue[key],
-    }), {});
-};
-
-export const attributeValue = (
-  attribute: string | Attribute, value?: string,
-): string | boolean | object | number => {
+export const attributeValue = (attribute: string | Attribute, value?: PropValue): PropValue => {
   if (typeof attribute === 'string') {
     return value;
   }
 
-  if ((attribute as ConvertableAttribute).converter) {
+  if (typeof (attribute as ConvertableAttribute).converter === 'function') {
     return (attribute as ConvertableAttribute).converter(value);
   }
 
-  let convertedValue: string | boolean | object | number;
-  switch ((attribute as TypedAttribute).type) {
-    case 'array':
-      convertedValue = parseAndForceType(value, 'array');
-      break;
-    case 'object':
-      convertedValue = parseAndForceType(value, 'object');
-      break;
+  switch ((attribute as TypedAttribute).type || 'string') {
     case 'boolean':
-      convertedValue = (!!value && value !== 'false') || value === '';
-      break;
+      return toBoolean(value);
     case 'number':
-      convertedValue = +value;
-      // eslint-disable-next-line no-self-compare
-      if (convertedValue !== convertedValue) {
-        const float = parseFloat(value);
-        convertedValue = float || float === 0 ? float : convertedValue;
-      }
-      break;
+      return toNumber(value);
+    case 'array':
+      return toArray(value);
+    case 'object':
+      return toObject(value);
+    case 'function':
+      return toFunction(value);
+    case 'string':
     default:
-      convertedValue = value;
-      break;
+      return toString(value);
   }
-  return convertedValue;
 };

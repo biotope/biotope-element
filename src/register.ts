@@ -3,6 +3,7 @@ import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-mapper';
 import { kebabToCamel } from './case-converters';
 import { ComponentInstance, ComponentType } from './internal-types';
+import { PropValue } from './types';
 
 const resolveCallStack = (context: ComponentInstance, property: '__initCallStack' | '__initAttributesCallStack'): void => {
   while (context[property].length) {
@@ -32,49 +33,47 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
   context.dependencies.forEach((component): boolean => component.register(silent));
 
-  context.observedAttributes = context.attributes && context.attributes.length
-    ? context.attributes.map(attributeName)
-    : [];
+  const allAttributes = (context.attributes && context.attributes.length ? context.attributes : [])
+    .filter((attribute) => attribute);
 
-  context.observedAttributes.forEach((attribute): void => {
-    Object.defineProperty(context.prototype, kebabToCamel(attribute), {
-      get(): string {
-        return this.getAttribute(attribute);
+  context.observedAttributes = allAttributes.map(attributeName);
+
+  allAttributes.forEach((attribute): void => {
+    const name = attributeName(attribute);
+    const nameCamel = kebabToCamel(name);
+    const prop = {
+      get(): PropValue {
+        return this.props[nameCamel];
       },
-      set(value?: string): void {
-        if (!value && value !== '') {
-          this.removeAttribute(attribute);
-        } else {
-          this.setAttribute(attribute, value);
-        }
+      set(value?: PropValue): void {
+        this.attributeChangedCallback(name, this.props[nameCamel], value);
       },
-    });
+    };
+
+    Object.defineProperty(context.prototype, name, prop);
+    Object.defineProperty(context.prototype, nameCamel, prop);
   });
 
   const originalConnectedCallback = context.prototype.connectedCallback;
 
   context.prototype.connectedCallback = function (): void {
-    (this as ComponentInstance).__initCallStack
-      .unshift((): void => originalConnectedCallback.bind(this as ComponentInstance)());
+    const instance = (this as ComponentInstance);
+    instance.__initCallStack.unshift((): void => originalConnectedCallback.bind(instance)());
 
-    resolveCallStack((this as ComponentInstance), '__initCallStack');
-    resolveCallStack((this as ComponentInstance), '__initAttributesCallStack');
+    resolveCallStack(instance, '__initCallStack');
+    resolveCallStack(instance, '__initAttributesCallStack');
   };
 
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
 
   context.prototype.attributeChangedCallback = function (...args): void {
-    if (args[1] === args[2]) {
-      return;
-    }
+    const instance = (this as ComponentInstance);
+    const callFunction = (): void => originalAttributeChangedCallback.bind(instance)(...args);
 
-    const callFunction = (): void => originalAttributeChangedCallback
-      .bind((this as ComponentInstance))(...args);
-
-    if (!(this as ComponentInstance).__initCallStack.length) {
+    if (!instance.__initCallStack.length) {
       callFunction();
     } else {
-      (this as ComponentInstance).__initAttributesCallStack.unshift(callFunction);
+      instance.__initAttributesCallStack.unshift(callFunction);
     }
   };
 
