@@ -59,6 +59,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
   context.prototype.connectedCallback = function (): void {
     const instance = (this as ComponentInstance);
     instance.__initCallStack.unshift((): void => originalConnectedCallback.bind(instance)());
+    instance.__initAttributesCallStack.unshift((): HTMLElement => instance.render());
 
     resolveCallStack(instance, '__initCallStack');
     resolveCallStack(instance, '__initAttributesCallStack');
