@@ -1,4 +1,4 @@
-import { Attribute } from './types';
+import { Attribute, PropValue } from './types';
 
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args) => TRender;
 
@@ -18,7 +18,7 @@ export interface ComponentPrototype extends Function {
   partial: Renderer<HTMLElement>;
   created: () => void;
   connectedCallback: () => void;
-  attributeChangedCallback: (name: string, oldValue: string, newValue: string) => void;
+  attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
   render: RenderFuntion;
   rendered: () => void;
   emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;

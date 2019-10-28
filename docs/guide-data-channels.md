@@ -20,6 +20,8 @@ were inside the element (use camelCase!). Nothing to it really. Here's an exampl
 <custom-element></custom-element>
 <script>
   document.getElementsByTagName('custom-element')[0].myAttribute = 'Hey! It changed!';
+  // OR
+  document.getElementsByTagName('custom-element')[0]['my-attribute'] = 'Hey! It changed!';
 </script>
 ```
 
@@ -28,10 +30,23 @@ The result is a simple:
 ```html
 <!-- Very nice! -->
 <custom-element my-attribute="Hey! It changed!"></custom-element>
-<script>
-  document.getElementsByTagName('custom-element')[0].myProp = 'Hey! It changed!';
-</script>
+...
 ```
+
+You can also pass javascript objects to the attributes if needed. They will still go through the
+normal prop chain but our converters are prepared to deal with them. For example, if you have an
+attribute with `type: 'array'`, and you do either of the two lines of code:
+```javascript
+document.getElementsByTagName('custom-element')[0].myArray = '[1,2,3]';
+document.getElementsByTagName('custom-element')[0].myArray = [1,2,3];
+```
+the result will be the same. The difference is that the first one will take a bit longer since it
+has to convert the string into an array.
+
+Hint: this will also allow you to pass functions for any callbacks that you need.
+
+Remember though that passing non-strings to the attributes will not result in attributes being set
+in the DOM - don't let SEO bite you in the behind ;)
 
 Note: the custom element needs to recognise the attribute in order for this method to work, i.e. it
 needs to be defined in the `attributes` property of your class. Otherwise this won't result in any

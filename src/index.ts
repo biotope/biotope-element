@@ -3,10 +3,11 @@ import { createRender, createPartial, html } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
-import { Attribute } from './types';
+import { Attribute, PropValue } from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
+export * from './attribute-converters';
 export * from './types';
 export {
   html,
@@ -71,10 +72,6 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   public constructor(useShadow = true) {
     super();
-    // eslint-disable-next-line no-underscore-dangle
-    this.__initCallStack = [(): void => this.created()];
-    // eslint-disable-next-line no-underscore-dangle
-    this.__initAttributesCallStack = [];
 
     if (useShadow) {
       this.attachShadow({ mode: 'open' });
@@ -82,24 +79,25 @@ export default abstract class Component<TProps = object, TState = object> extend
 
     const postFunction = (): void => this.rendered();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const renderFunction = createRender(this as any, this.render.bind(this), postFunction);
-    this.render = (): HTMLElement => (
-      // eslint-disable-next-line no-underscore-dangle
-      !this.__initAttributesCallStack.length ? renderFunction() : null
-    );
+    this.render = createRender(this as any, this.render.bind(this), postFunction);
+
+    // eslint-disable-next-line no-underscore-dangle
+    this.__initCallStack = [(): HTMLElement => this.render()];
+    // eslint-disable-next-line no-underscore-dangle
+    this.__initAttributesCallStack = [];
   }
 
   /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
-  public created(): void {}
+  public connectedCallback(): void {}
 
-  public connectedCallback(): void {
-    this.render();
-  }
+  /* istanbul ignore next */
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
+  public disconnectedCallback(): void {}
 
-  public attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+  public attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return attributeChangedCallback(this as any, name, oldValue, newValue);
+    return attributeChangedCallback(this as any, name, previous, current);
   }
 
   public render(): HTMLElement {

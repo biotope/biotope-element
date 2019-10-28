@@ -1,10 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import Component from '../src/index';
+import Component from '../src';
 
-describe('#props', (): void => {
+describe('#props', () => {
   let element: Component;
 
-  beforeEach((): void => {
+  beforeEach(() => {
     interface TestElementProps {
       mockAttributeOne: string;
       mockAttributeTwo: string;
@@ -30,7 +30,7 @@ describe('#props', (): void => {
     element = new TestElement();
   });
 
-  it('initially contains the default props', (): void => {
+  it('initially contains the default props', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((element as any).props).toEqual({
       mockAttributeOne: '',
@@ -38,25 +38,37 @@ describe('#props', (): void => {
     });
   });
 
-  describe('attributeChangedCallback is called with the wrong attribute', (): void => {
-    beforeEach((): void => {
+  describe('attributeChangedCallback is called with the wrong attribute', () => {
+    beforeEach(() => {
       element.render = jest.fn();
       element.attributeChangedCallback('fake-attribute', '', 'fake-new-value');
     });
 
-    it('no new props are set', (): void => {
+    it('no new props are set', () => {
       expect((element.render as jest.Mock).mock.calls).toHaveLength(0);
     });
   });
 
-  describe('attributeChangedCallback is called for all props', (): void => {
-    beforeEach((): void => {
+  describe('attributeChangedCallback is called twice with the same attribute', () => {
+    beforeEach(() => {
+      element.render = jest.fn();
+      element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
+      element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
+    });
+
+    it('does not update props or call render on the second try', () => {
+      expect((element.render as jest.Mock).mock.calls).toHaveLength(1);
+    });
+  });
+
+  describe('attributeChangedCallback is called for all props', () => {
+    beforeEach(() => {
       element.render = jest.fn();
       element.attributeChangedCallback('mock-attribute-one', '', 'mock-new-value-one');
       element.attributeChangedCallback('mock-attribute-two', '', 'mock-new-value-two');
     });
 
-    it('contains the new props', (): void => {
+    it('contains the new props', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((element as any).props).toEqual({
         mockAttributeOne: 'mock-new-value-one',
@@ -64,13 +76,13 @@ describe('#props', (): void => {
       });
     });
 
-    it('calls render 2 times', (): void => {
+    it('calls render 2 times', () => {
       expect((element.render as jest.Mock).mock.calls).toHaveLength(2);
     });
   });
 
-  describe('no default props given', (): void => {
-    beforeEach((): void => {
+  describe('no default props given', () => {
+    beforeEach(() => {
       class TestElement extends Component {
         public static componentName = 'test-element';
 
@@ -87,7 +99,7 @@ describe('#props', (): void => {
       element = new TestElement();
     });
 
-    it('props is an empty object', (): void => {
+    it('props is an empty object', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((element as any).props).toEqual({});
     });

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Biotope Element</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+  </head>
+
+  <body>
+    <example-text></example-text>
+    <button>force parent render</button>
+
+    <script>
+      customElements.whenDefined('example-text').then(function () {
+        document.querySelector('button').addEventListener('click', function () {
+          document.querySelector('example-text').render();
+        });
+      });
+    </script>
+  </body>
+
+</html>
