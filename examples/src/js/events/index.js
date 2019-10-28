@@ -4,15 +4,25 @@ import { ExampleSender } from './child';
 export class ExampleReceiver extends Component {
   constructor() {
     super();
+    this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   render() {
     return this.html`
       <div>
-        <example-sender onexamplesender.change=${this.handleInputChange} />
+        <example-sender
+          onclick=${this.handleClick}
+          onexamplesender.change=${this.handleInputChange}
+        />
       </div>
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  handleClick() {
+    // eslint-disable-next-line no-console
+    console.log('simple click example');
   }
 
   // eslint-disable-next-line class-methods-use-this
