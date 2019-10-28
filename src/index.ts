@@ -59,9 +59,9 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __html: Renderer<HTMLElement>;
 
-  private __initCallStack: (() => void)[];
+  private __initCallStack: (() => void)[] = [];
 
-  private __initAttributesCallStack: (() => void)[];
+  private __initAttributesCallStack: (() => void)[] = [];
 
   public static register(silent = true): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
