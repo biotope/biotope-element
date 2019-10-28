@@ -9,10 +9,8 @@ import { Renderer } from './internal-types';
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
-export {
-  html,
-  createStyle,
-};
+export * from './create-style';
+export { html };
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
