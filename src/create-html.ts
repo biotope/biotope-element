@@ -1,5 +1,6 @@
 import { render, html } from 'lighterhtml';
 
+import { HTMLFragment } from './types';
 import { Renderer, ComponentInstance, RenderFuntion } from './internal-types';
 
 export { html };
@@ -14,7 +15,7 @@ export const createRender = (
       return element;
     });
   // eslint-disable-next-line no-underscore-dangle
-  return (): HTMLElement => (context.__created ? renderFunction() : null);
+  return (): HTMLFragment => (context.__created ? renderFunction() : null);
 };
 
-export const createPartial = (): Renderer<HTMLElement> => html;
+export const createPartial = (): Renderer<HTMLFragment> => html;

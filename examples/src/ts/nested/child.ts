@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 interface ExampleChildProps {
   text?: string;
@@ -13,7 +13,7 @@ export class ExampleChild extends Component<ExampleChildProps> {
     'another-text',
   ];
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <p>parent prop: ${this.props.text}</p>
       <p>my prop: ${this.props.anotherText}</p>

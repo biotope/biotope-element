@@ -1,8 +1,8 @@
-import { Attribute, PropValue } from './types';
+import { Attribute, PropValue, HTMLFragment } from './types';
 
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args) => TRender;
 
-export type RenderFuntion = () => HTMLElement;
+export type RenderFuntion = () => HTMLFragment;
 
 export interface ComponentType extends Function {
   componentName: string;
@@ -14,7 +14,7 @@ export interface ComponentType extends Function {
 }
 
 export interface ComponentPrototype extends Function {
-  html: Renderer<ShadowRoot | HTMLElement>;
+  html: Renderer<HTMLFragment>;
   created: () => void;
   connectedCallback: () => void;
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
@@ -35,7 +35,7 @@ export interface ComponentInstance extends RuntimeComponent {
   defaultState: object;
   __currentProps: object;
   __currentState: object;
-  __html: Renderer<ShadowRoot | HTMLElement>;
+  __html: Renderer<HTMLFragment>;
   __created: boolean;
   __attributeChangedCallbackStack: (() => void)[];
 }

@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 import { ExampleSender, ExampleSenderChangeType } from './child';
 
 export class ExampleReceiver extends Component {
@@ -14,7 +14,7 @@ export class ExampleReceiver extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <div>
         <example-sender
