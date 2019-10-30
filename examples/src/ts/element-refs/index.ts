@@ -1,4 +1,4 @@
-import Component, { createRef, RefObject } from '@biotope/element';
+import Component, { createRef, RefObject, HTMLFragment } from '@biotope/element';
 
 export class ExampleRefs extends Component {
   public static componentName = 'example-refs';
@@ -12,7 +12,7 @@ export class ExampleRefs extends Component {
     this.handleFocus = this.handleFocus.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <input type="text" ref=${this.inputRef} />
       <button onclick=${this.handleFocus}>Focus input</button>

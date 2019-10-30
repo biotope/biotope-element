@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import Component from '../src';
+import Component, { HTMLFragment } from '../src';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockRegister = (element: any): void => {
@@ -20,7 +20,7 @@ describe('#rendered', () => {
       class TestElement extends Component {
         public static componentName = 'test-element';
 
-        public render(): HTMLElement {
+        public render(): HTMLFragment {
           return this.html``;
         }
 

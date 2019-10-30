@@ -18,6 +18,11 @@ export type Attribute = SimpleAttribute | TypedAttribute | ConvertableAttribute;
 
 export type HTMLElementContent = string | { toString: () => string };
 
+export interface HTMLFragment {
+  type: 'html';
+  args: TemplateStringsArray;
+}
+
 export interface RefObject<TRef> {
   current?: TRef;
 }

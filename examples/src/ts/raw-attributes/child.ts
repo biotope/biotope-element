@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 interface ExampleChildProps {
   myCallback: (randomNumber?: number) => string;
@@ -24,7 +24,7 @@ export class ExampleChild extends Component<ExampleChildProps> {
     myInterpolated: '',
   };
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     // eslint-disable-next-line no-console
     console.log('child rendered');
     const randomNumber = Math.round(Math.random() * 200 - 100) / 10;

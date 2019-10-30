@@ -1,9 +1,9 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 class ExampleButton extends Component {
   public static componentName = 'example-button';
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <style>
         :host {

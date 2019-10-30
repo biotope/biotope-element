@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 import { ExampleChild } from './child';
 
 const childCallback = (number?: number): string => {
@@ -17,7 +17,7 @@ export class ExampleText extends Component {
 
   private randomNumber = Math.round(Math.random() * 10);
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     // eslint-disable-next-line no-console
     console.log('parent rendered');
 

@@ -1,4 +1,4 @@
-import Component, { createRef, RefObject } from '@biotope/element';
+import Component, { createRef, RefObject, HTMLFragment } from '@biotope/element';
 
 export const ExampleSenderEvents = {
   change: 'examplesender.change',
@@ -17,7 +17,7 @@ export class ExampleSender extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <label>Label</label>
       <input ref=${this.input} onkeyup=${this.handleChange} type="text" />

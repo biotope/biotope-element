@@ -1,4 +1,4 @@
-import Component, { Attribute } from '@biotope/element';
+import Component, { Attribute, HTMLFragment } from '@biotope/element';
 
 const kebabToCamel = (str: string): string => str.replace(
   /([-_][a-z])/g,
@@ -54,7 +54,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     this.handleClick = this.handleClick.bind(this);
   }
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     const { showCounter } = this.props;
     const { counter } = this.state;
 
@@ -78,7 +78,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
     `;
   }
 
-  private getRow(attribute: string | Attribute): HTMLElement {
+  private getRow(attribute: string | Attribute): HTMLFragment {
     const name = typeof attribute === 'string' ? attribute : attribute.name;
 
     return this.html`

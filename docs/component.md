@@ -165,7 +165,7 @@ class MyButton extends Component<MyButtonProps> {
     foo: 'bar',
   };
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       🎰 ${this.props.foo}
     `;

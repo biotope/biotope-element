@@ -1,4 +1,4 @@
-import Component from '../src';
+import Component, { HTMLFragment } from '../src';
 import { createPartial } from '../src/create-html';
 
 jest.mock('../src/create-html', (): object => {
@@ -16,9 +16,9 @@ describe('loops', () => {
     class TestElement extends Component {
       public static componentName = 'test-element';
 
-      public render(): HTMLElement {
+      public render(): HTMLFragment {
         return this.html`
-          ${[...new Array(calls)].map((): HTMLElement => this.html`Hello World!`)}
+          ${[...new Array(calls)].map((): HTMLFragment => this.html`Hello World!`)}
         `;
       }
     }

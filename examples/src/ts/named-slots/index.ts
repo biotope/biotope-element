@@ -1,9 +1,9 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 export class ExampleSlots extends Component {
   public static componentName = 'example-slots';
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <style>
         .slotted {

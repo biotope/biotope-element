@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 import { ExampleChild } from './child';
 
 export class ExampleParent extends Component {
@@ -8,7 +8,7 @@ export class ExampleParent extends Component {
     ExampleChild as typeof Component,
   ];
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <example-child>
         <slot />

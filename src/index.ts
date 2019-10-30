@@ -3,7 +3,7 @@ import { createRender, createPartial, html } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
-import { Attribute, PropValue } from './types';
+import { Attribute, PropValue, HTMLFragment } from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
@@ -40,7 +40,7 @@ export default abstract class Component<TProps = object, TState = object> extend
     /* eslint-enable no-underscore-dangle */
   }
 
-  protected get html(): Renderer<HTMLElement> {
+  protected get html(): Renderer<HTMLFragment> {
     /* eslint-disable no-underscore-dangle */
     if (!this.__html) {
       this.__html = createPartial();
@@ -57,7 +57,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __currentState: TState;
 
-  private __html: Renderer<HTMLElement>;
+  private __html: Renderer<HTMLFragment>;
 
   private __created = false;
 
@@ -93,7 +93,7 @@ export default abstract class Component<TProps = object, TState = object> extend
     return attributeChangedCallback(this as any, name, previous, current);
   }
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html``;
   }
 

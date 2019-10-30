@@ -1,4 +1,4 @@
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 import { ExampleChild } from './child';
 
 interface ExampleParentProps {
@@ -14,7 +14,7 @@ export class ExampleParent extends Component<ExampleParentProps> {
     ExampleChild as typeof Component,
   ];
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       <div>
         <example-child
