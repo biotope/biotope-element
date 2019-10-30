@@ -55,8 +55,8 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
     originalConnectedCallback.bind(instance)();
 
-    while (instance.__initAttributesCallStack.length) {
-      instance.__initAttributesCallStack.pop()();
+    while (instance.__attributeChangedCallbackStack.length) {
+      instance.__attributeChangedCallbackStack.pop()();
     }
 
     instance.__created = true;
@@ -72,7 +72,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     if (instance.__created) {
       callFunction();
     } else {
-      instance.__initAttributesCallStack.unshift(callFunction);
+      instance.__attributeChangedCallbackStack.unshift(callFunction);
     }
   };
 

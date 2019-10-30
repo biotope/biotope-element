@@ -32,7 +32,7 @@ describe('#register', (): void => {
         attributeChangedCallback: mockFunction,
         render: mockFunction,
         __created: false,
-        __initAttributesCallStack: [mockDependency.register],
+        __attributeChangedCallbackStack: [mockDependency.register],
       },
     };
   });

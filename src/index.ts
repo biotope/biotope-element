@@ -61,7 +61,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __created = false;
 
-  private __initAttributesCallStack: (() => void)[] = [];
+  private __attributeChangedCallbackStack: (() => void)[] = [];
 
   public static register(silent = true): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
