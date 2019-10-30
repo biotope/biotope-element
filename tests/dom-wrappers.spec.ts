@@ -22,7 +22,7 @@ describe('#dom-wrappers', () => {
 
   describe('#createRender', () => {
     const context = {
-      __initAttributesCallStack: [],
+      __created: true,
       shadowRoot: {},
     };
     let mockRender: jest.Mock;
@@ -82,7 +82,7 @@ describe('#dom-wrappers', () => {
 
       beforeEach(() => {
         // eslint-disable-next-line no-underscore-dangle
-        context.__initAttributesCallStack = [jest.fn()];
+        context.__created = false;
         result = createRender(context as ComponentInstance, mockRender, mockPost)();
       });
 
