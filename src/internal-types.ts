@@ -15,7 +15,6 @@ export interface ComponentType extends Function {
 
 export interface ComponentPrototype extends Function {
   html: Renderer<ShadowRoot | HTMLElement>;
-  partial: Renderer<HTMLElement>;
   created: () => void;
   connectedCallback: () => void;
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
@@ -37,7 +36,6 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentProps: object;
   __currentState: object;
   __html: Renderer<ShadowRoot | HTMLElement>;
-  __partial: Renderer<HTMLElement>;
   __created: boolean;
   __attributeChangedCallbackStack: (() => void)[];
 }
