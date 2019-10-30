@@ -14,7 +14,7 @@ export const createRender = (
       return element;
     });
   // eslint-disable-next-line no-underscore-dangle
-  return (): HTMLElement => (!context.__initAttributesCallStack.length ? renderFunction() : null);
+  return (): HTMLElement => (context.__created ? renderFunction() : null);
 };
 
 export const createPartial = (): Renderer<HTMLElement> => html;

@@ -1,6 +1,12 @@
 /* eslint-disable max-classes-per-file */
 import Component from '../src';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockRegister = (element: any): void => {
+  // eslint-disable-next-line no-underscore-dangle,no-param-reassign
+  element.__created = true;
+};
+
 describe('#rendered', () => {
   let element;
   let mockRendered;
@@ -21,6 +27,7 @@ describe('#rendered', () => {
         public rendered = mockRendered;
       }
       element = new TestElement();
+      mockRegister(element);
       element.render();
     });
 
@@ -38,6 +45,7 @@ describe('#rendered', () => {
         public rendered = mockRendered;
       }
       element = new TestElement();
+      mockRegister(element);
       element.render();
     });
 

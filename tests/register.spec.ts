@@ -31,8 +31,8 @@ describe('#register', (): void => {
         connectedCallback: mockFunction,
         attributeChangedCallback: mockFunction,
         render: mockFunction,
-        __initCallStack: [mockDependency.register],
-        __initAttributesCallStack: [mockDependency.register],
+        __created: false,
+        __attributeChangedCallbackStack: [mockDependency.register],
       },
     };
   });
@@ -82,7 +82,7 @@ describe('#register', (): void => {
             (mockComponentClass as ComponentType).prototype.connectedCallback();
 
             expect(((mockDependency as ComponentType).register as jest.Mock).mock.calls)
-              .toHaveLength(4);
+              .toHaveLength(3);
           });
 
           it('attributeChangedCallback is called directly when no callback stacks exist', (): void => {
@@ -102,7 +102,7 @@ describe('#register', (): void => {
 
           it('prop setters were set', () => {
             // eslint-disable-next-line no-underscore-dangle
-            (mockComponentClass as ComponentInstance).prototype.__initCallStack = [];
+            (mockComponentClass as ComponentInstance).prototype.__created = true;
             mockComponentClass.prototype.first = 3;
 
             expect(mockFunction.mock.calls).toHaveLength(1);

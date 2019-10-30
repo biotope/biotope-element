@@ -5,12 +5,6 @@ import { kebabToCamel } from './case-converters';
 import { ComponentInstance, ComponentType } from './internal-types';
 import { PropValue } from './types';
 
-const resolveCallStack = (context: ComponentInstance, property: '__initCallStack' | '__initAttributesCallStack'): void => {
-  while (context[property].length) {
-    context[property].pop()();
-  }
-};
-
 export const register = (context: ComponentType, silent: boolean): boolean => {
   /* eslint-disable no-param-reassign,no-underscore-dangle,func-names */
   const dashedName = getComponentName(context);
@@ -58,11 +52,15 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
   context.prototype.connectedCallback = function (): void {
     const instance = (this as ComponentInstance);
-    instance.__initCallStack.unshift((): void => originalConnectedCallback.bind(instance)());
-    instance.__initAttributesCallStack.unshift((): HTMLElement => instance.render());
 
-    resolveCallStack(instance, '__initCallStack');
-    resolveCallStack(instance, '__initAttributesCallStack');
+    originalConnectedCallback.bind(instance)();
+
+    while (instance.__attributeChangedCallbackStack.length) {
+      instance.__attributeChangedCallbackStack.pop()();
+    }
+
+    instance.__created = true;
+    instance.render();
   };
 
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
@@ -71,10 +69,10 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     const instance = (this as ComponentInstance);
     const callFunction = (): void => originalAttributeChangedCallback.bind(instance)(...args);
 
-    if (!instance.__initCallStack.length) {
+    if (instance.__created) {
       callFunction();
     } else {
-      instance.__initAttributesCallStack.unshift(callFunction);
+      instance.__attributeChangedCallbackStack.unshift(callFunction);
     }
   };
 
