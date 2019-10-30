@@ -155,7 +155,7 @@ global: {
 ## `wire` function removal and `html` function update
 
 TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
-needs a return value to be a HTMLFragment otherwise nothing will get rendered.
+needs it's return value to be the result of `this.html`, otherwise nothing will get rendered.
 
 v3 code:
 ```javascript
