@@ -39,7 +39,7 @@ class HelloWorldComponent extends Component {
   // needed if you transpile to es5 and uglify your code at the same time
   public static componentName = 'hello-world';
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       Hello World 🐤
     `;
