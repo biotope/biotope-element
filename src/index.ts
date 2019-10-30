@@ -59,7 +59,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __html: Renderer<HTMLElement>;
 
-  private __initCallStack: (() => void)[] = [];
+  private __created = false;
 
   private __initAttributesCallStack: (() => void)[] = [];
 

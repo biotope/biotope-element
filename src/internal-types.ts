@@ -38,6 +38,6 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentState: object;
   __html: Renderer<ShadowRoot | HTMLElement>;
   __partial: Renderer<HTMLElement>;
-  __initCallStack: (() => void)[];
+  __created: boolean;
   __initAttributesCallStack: (() => void)[];
 }
