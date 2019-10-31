@@ -169,7 +169,7 @@ class MyButton extends Component<object, MyButtonState> {
     });
   }
 
-  public render(): HTMLFragment {
+  public render(): HTMLElement {
     return this.html`
       Powermode ${this.state.powermode}!
     `;
@@ -190,7 +190,7 @@ import Component from '@biotope/element';
 class XSlide extends Component {
   public static componentName = 'x-slide';
 
-  public render(): HTMLFragment {
+  public render(): HTMLElement {
     return this.html``;
   }
 }
@@ -203,7 +203,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render(): HTMLFragment {
+  public render(): HTMLElement {
     return this.html`
       <x-slide></x-slide>
     `;
@@ -225,7 +225,7 @@ import Component from '@biotope/element';
 class XSlide extends Component {
   public static componentName = 'x-slide';
 
-  public render(): HTMLFragment {
+  public render(): HTMLElement {
     return this.html``;
   }
 }
@@ -237,7 +237,7 @@ class XSlider extends Component {
     XSlide as typeof Component,
   ];
 
-  public render(): HTMLFragment {
+  public render(): HTMLElement {
     // Here we use this.children to access the three child x-slides
     return this.html`
       ${this.children.map(child => 'Slide')}
