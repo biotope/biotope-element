@@ -1,5 +1,5 @@
 ---
-id: version-3.2.0-index
+id: version-4.0.0-0-index
 title: Quick Start
 original_id: index
 ---
@@ -9,6 +9,12 @@ You can install the biotope element in your project using npm
 
 ```bash
 npm install @biotope/element --save
+```
+
+or yarn
+
+```bash
+yarn add @biotope/element
 ```
 
 ## Create your first component
@@ -39,7 +45,7 @@ class HelloWorldComponent extends Component {
   // needed if you transpile to es5 and uglify your code at the same time
   public static componentName = 'hello-world';
 
-  public render(): HTMLElement {
+  public render(): HTMLFragment {
     return this.html`
       Hello World 🐤
     `;
