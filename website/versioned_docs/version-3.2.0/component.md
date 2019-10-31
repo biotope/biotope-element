@@ -120,7 +120,7 @@ In typescript, it would look like this:
 
 ```javascript
 // typescript
-import Component, { HTMLFragment } from '@biotope/element';
+import Component from '@biotope/element';
 
 interface MyButtonProps {
   foo: string;
