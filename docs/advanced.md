@@ -144,7 +144,7 @@ In typescript, it would look like this:
 
 ```javascript
 // typescript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 interface MyButtonState {
   powermode: 'on' | 'off';
@@ -184,7 +184,7 @@ you need them, you can define dependencies for every component:
 
 ```javascript
 // typescript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 class XSlide extends Component {
   public static componentName = 'x-slide';
@@ -219,7 +219,7 @@ component and manipulate them.
 
 ```javascript
 // typescript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 class XSlide extends Component {
   public static componentName = 'x-slide';
