@@ -24,7 +24,7 @@ import Component from '@biotope/element';
 To use the biotope element, you have to extend it with your custom class:
 
 ```javascript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
@@ -57,7 +57,7 @@ MyButton.register();
 /////////////////////////////////////////////
 
 // typescript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 export class MyButton extends Component {
   public static componentName = 'my-button';
