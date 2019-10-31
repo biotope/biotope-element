@@ -150,7 +150,7 @@ In typescript, it would look like this:
 
 ```javascript
 // typescript
-import Component from '@biotope/element';
+import Component, { HTMLFragment } from '@biotope/element';
 
 interface MyButtonProps {
   foo: string;
