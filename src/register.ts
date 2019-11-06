@@ -40,6 +40,12 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
         return this.props[nameCamel];
       },
       set(value?: PropValue): void {
+        if (value === null || value === undefined || value === false || value === 'false') {
+          this.removeAttribute(name);
+        } else if (typeof value === 'string') {
+          this.setAttribute(name, value);
+        }
+
         this.attributeChangedCallback(name, this.props[nameCamel], value);
       },
     };
