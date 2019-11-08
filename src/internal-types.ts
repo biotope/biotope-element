@@ -1,4 +1,6 @@
-import { Attribute, PropValue, HTMLFragment } from './types';
+import {
+  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+} from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
