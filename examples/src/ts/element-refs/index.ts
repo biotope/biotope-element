@@ -1,11 +1,13 @@
-import Component, { createRef, RefObject, HTMLFragment } from '@biotope/element';
+import Component, { createRef, HTMLFragment } from '@biotope/element';
 
 export class ExampleRefs extends Component {
   public static componentName = 'example-refs';
 
   public static attributes = ['text'];
 
-  private inputRef: RefObject<HTMLInputElement> = createRef();
+  private refs = {
+    input: createRef<HTMLInputElement>(),
+  };
 
   public constructor() {
     super();
@@ -14,14 +16,15 @@ export class ExampleRefs extends Component {
 
   public render(): HTMLFragment {
     return this.html`
-      <input type="text" ref=${this.inputRef} />
+      <input type="text" ref=${this.refs.input} />
       <button onclick=${this.handleFocus}>Focus input</button>
     `;
   }
 
   private handleFocus(): void {
-    if (this.inputRef.current) {
-      this.inputRef.current.focus();
+    const { input } = this.refs;
+    if (input.current) {
+      input.current.focus();
     }
   }
 }

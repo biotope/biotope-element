@@ -368,18 +368,20 @@ import Component, { createRef } from '@biotope-element';
 class MyComponent extends Component {
   constructor() {
     super();
-    this.inputRef = createRef();
+    this.refs = {
+      input: createRef(),
+    };
   }
 
   render() {
     return this.html`
-      <input value="Nice!" ref=${this.inputRef} />
+      <input value="Nice!" ref=${this.refs.input} />
     `;
   }
 
   rendered() {
     // Prints "Nice!"
-    console.log(this.inputRef.current.value);
+    console.log(this.refs.input.current.value);
   }
 }
 ```

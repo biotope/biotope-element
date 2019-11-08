@@ -54,20 +54,23 @@ import Component, { createRef } from '@biotope/element';
 class XInput extends Component {
   constructor() {
     super();
-    this.inputRef = createRef();
+    this.refs = {
+      input: createRef();
+    };
   }
 
   render() {
     return this.html`
-      <input type="text" id=${Math.random()} ref=${this.inputRef} />
+      <input type="text" id=${Math.random()} ref=${this.refs.input} />
     `;
   }
 
   rendered() {
+    const { input } = this.refs;
     // this "if" is not needed in this scenario - it's just a best practice :)
-    if (this.inputRef.current) {
+    if (input.current) {
       // This will output whatever number the "Math.random" function returned
-      console.log(this.inputRef.current.getAttribute('id'));
+      console.log(input.current.getAttribute('id'));
     }
   }
 }
@@ -78,6 +81,50 @@ XInput.register();
 
 References are immediately available after a render, which means that in terms of references, the
 `rendered` function is the ideal place to do/check whatever you want.
+
+In the example above you can see that we use a `refs` object to keep all our reference objects. This
+is ideal in order to have a cleaner and more accessible code base. In this sense, and in addition to
+`createRef`, we also provide `createRefCallback` that still lets you create references using regular
+functions (should you ever need it). Here's an example:
+
+```javascript
+import Component, { createRef, createRefCallback } from '@biotope/element';
+
+class XInput extends Component {
+  constructor() {
+    super();
+    this.refs = {
+      input: createRef();
+      secondInput: createRefCallback(() => this.shadowRoot.querySelector('.my-cute-input-class')),
+    };
+  }
+
+  render() {
+    return this.html`
+      <input type="text" id=${Math.random()} ref=${this.refs.input} />
+      <input type="number" id=${Math.random() + 1} class="my-cute-input-class" />
+    `;
+  }
+
+  rendered() {
+    const { input, secondInput } = this.refs;
+    if (input.current) {
+      console.log(input.current.getAttribute('id'));
+    }
+    // same usage as the "input" reference above!
+    if (secondInput.current) {
+      // This will output whatever number the "Math.random + 1" function returned
+      console.log(secondInput.current.getAttribute('id'));
+    }
+  }
+}
+
+XInput.componentName = 'x-input';
+XInput.register();
+```
+
+Notice that the `secondInput` is only calculated at the moment of access, so you always get the
+"freshest" possible result.
 
 ## Handling state
 Every component can have its own internal state. To set the state just call the `setState` function
