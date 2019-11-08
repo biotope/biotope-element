@@ -53,18 +53,22 @@ Note: We also provide the `this.createStyle` function out of the box should you 
 import Component, { createStyle } from '@biotope/element';
 ```
 
+!> __Important ⚠️:__ Notice we're adding the styles to the bottom of the element, after our content.
+This is intentional, as IE11 will sometimes not fully render the style you applied to your component
+if the style is added before the content of your component.
+
 !> __Important ⚠️:__ Style-Scoping only works in browsers that support Shadow DOM. Browsers like
 IE11/Edge until V18 inherit styles as used everywhere else. So use unique class names and techniques
 like [BEM](http://getbem.com)to keep everything sane.
 
 !> __Important ⚠️:__ If you come across that issue, that your styles are displayed as text. Most
 likely you use a class-name that is the same as your component name. Together with the polyfill, the
-style tag itself get styled which causes the issue in IE11/Edge V18 and below.
+style tag itself get styled which causes the issue in IE11/Edge v18 and below.
 
 ## Dynamic styles
 If your styles are dynamic and depending on some values in the javascript context, just use inline
-styles in your template string. ⚠️ Recommended is to use javascript values as little as possible and
-keep CSS static. Use Precompiler like SASS or CSS Variables instead.
+styles in your template string. ⚠️ We recommend using javascript values as little as possible and
+keep CSS static. Use a precompiler like SASS or CSS Variables instead.
 
 ```javascript
 import Component from '@biotope/element';
@@ -87,10 +91,6 @@ class MyButton extends Component {
 MyButton.componentName = 'my-button';
 MyButton.register();
 ```
-
-!> __Important ⚠️:__ If you come across that issue, that your styles are displayed as text. Most
-likely you use a class-name that is the same as your component name. Together with the polyfill, the
-style tag itself get styled which causes the issue in IE11/Edge V18 and below.
 
 ## Styling slots
 If you want to style slotted content, you can so by using the `::slotted` pseudoselector. For a
