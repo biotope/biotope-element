@@ -5,6 +5,10 @@ export class ExampleChild extends Component {
 
   public render(): HTMLFragment {
     return this.html`
+      <div class="slotted">
+        <slot />
+      </div>
+      <p>I am not slotted.</p>
       <style>
         .slotted {
           color: blue;
@@ -15,10 +19,6 @@ export class ExampleChild extends Component {
           color: blue;
         }
       </style>
-      <div class="slotted">
-        <slot />
-      </div>
-      <p>I am not slotted.</p>
     `;
   }
 }

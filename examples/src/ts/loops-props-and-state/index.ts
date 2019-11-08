@@ -21,10 +21,7 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
 
   public static attributes = [
     'simple-text',
-    {
-      name: 'complex-attribute',
-      type: 'array',
-    },
+    { name: 'complex-attribute', type: 'array' },
     {
       name: 'converted-attribute',
       converter(prop?: string): number {
@@ -34,17 +31,14 @@ export class ExampleTable extends Component<ExampleTableProps, ExampleTableState
         return prop === 'two' ? 2 : 0;
       },
     },
-    {
-      name: 'show-counter',
-      type: 'boolean',
-    },
+    { name: 'show-counter', type: 'boolean' },
   ];
 
-  protected defaultProps: ExampleTableProps = {
+  protected readonly defaultProps: ExampleTableProps = {
     showCounter: false,
   };
 
-  protected defaultState: ExampleTableState = {
+  protected readonly defaultState: ExampleTableState = {
     counter: 0,
   };
 

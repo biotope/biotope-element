@@ -153,7 +153,7 @@ interface MyButtonState {
 class MyButton extends Component<object, MyButtonState> {
   public static componentName = 'my-button';
 
-  protected defaultState: MyButtonState = {
+  protected readonly defaultState: MyButtonState = {
     powermode: 'off',
   }
 

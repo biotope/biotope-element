@@ -161,7 +161,7 @@ class MyButton extends Component<MyButtonProps> {
 
   public static attributes = ['foo'];
 
-  protected defaultProps: MyButtonProps = {
+  protected readonly defaultProps: MyButtonProps = {
     foo: 'bar',
   };
 

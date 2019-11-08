@@ -5,6 +5,7 @@ class ExampleButton extends Component {
 
   public render(): HTMLFragment {
     return this.html`
+      <button>Normal Button</button>
       <style>
         :host {
           --base-font-size: 24px;
@@ -72,7 +73,6 @@ class ExampleButton extends Component {
         }
         /* ************************************* */
       </style>
-      <button>Normal Button</button>
     `;
   }
 }
