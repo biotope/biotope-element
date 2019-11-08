@@ -1,6 +1,9 @@
-import { Attribute, PropValue, HTMLFragment } from './types';
+import {
+  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+} from './types';
 
-export type Renderer<TRender> = (template: TemplateStringsArray, ...args) => TRender;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
 
 export type RenderFuntion = () => HTMLFragment;
 
@@ -21,7 +24,7 @@ export interface ComponentPrototype extends Function {
   render: RenderFuntion;
   rendered: () => void;
   emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;
-  createStyle: () => HTMLStyleElement;
+  createStyle: (styleContent: HTMLElementContent) => HTMLStyleElement;
   setState: (state: object | ((state: object) => object)) => void;
 }
 
