@@ -15,8 +15,8 @@ import style from './styles.css';
 class MyButton extends Component {
   render() {
     return this.html`
-      ${this.createStyle(style)}
       Hello World 🐤
+      ${this.createStyle(style)}
     `;
   }
 }
@@ -34,12 +34,12 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   render() {
     return this.html`
+      Hello World 🐤
       <style>
         :host {
           background-color: orange;
         }
       </style>
-      Hello World 🐤
     `;
   }
 }
@@ -74,12 +74,12 @@ class MyButton extends Component {
 
   render() {
     return this.html`
+      Hello World 🐤
       <style>
         :host {
           background-color: ${this.color};
         }
       </style>
-      Hello World 🐤
     `;
   }
 }
