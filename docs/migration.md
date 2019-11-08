@@ -308,8 +308,8 @@ class MyComponent extends Component {
 
   public props;
   protected state;
-  protected defaultProps;
-  protected defaultState;
+  protected readonly defaultProps;
+  protected readonly defaultState;
 }
 ```
 

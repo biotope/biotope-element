@@ -66,10 +66,7 @@ export class ExampleTable extends Component {
 ExampleTable.componentName = 'example-table';
 ExampleTable.attributes = [
   'simple-text',
-  {
-    name: 'complex-attribute',
-    type: 'array',
-  },
+  { name: 'complex-attribute', type: 'array' },
   {
     name: 'converted-attribute',
     converter(prop) {
@@ -79,9 +76,6 @@ ExampleTable.attributes = [
       return prop === 'two' ? 2 : 0;
     },
   },
-  {
-    name: 'show-counter',
-    type: 'boolean',
-  },
+  { name: 'show-counter', type: 'boolean' },
 ];
 ExampleTable.register();

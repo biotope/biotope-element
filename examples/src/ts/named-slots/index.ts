@@ -5,6 +5,11 @@ export class ExampleSlots extends Component {
 
   public render(): HTMLFragment {
     return this.html`
+      <div>
+        Firstname: <span class="slotted"><slot name="first">FIRSTNAME</slot></span>
+        Lastname: <span class="slotted"><slot name="last">LASTNAME</slot></span>
+        Default: <span class="slotted"><slot /></span>
+      </div>
       <style>
         .slotted {
           color: orange;
@@ -15,11 +20,6 @@ export class ExampleSlots extends Component {
           color: orange;
         }
       </style>
-      <div>
-        Firstname: <span class="slotted"><slot name="first">FIRSTNAME</slot></span>
-        Lastname: <span class="slotted"><slot name="last">LASTNAME</slot></span>
-        Default: <span class="slotted"><slot /></span>
-      </div>
     `;
   }
 }
