@@ -39,7 +39,6 @@ import Component from '@biotope/element';
 ```
 
 ## Your first component
-
 To use `biotope-element`, you have to extend it with your custom class.
 
 After defining your class, you have to call the `register` function. This function comes with
@@ -82,7 +81,6 @@ Note: It's irrelevant where the `script` is placed. But remember that the compon
 to render after the `script` is parsed and the component is registered.
 
 ## Compatibility and Polyfills
-
 Natively, Web Components are not supported by all browsers - this includes `biotope-element`. You
 can check out a list of compatible browsers using [caniuse](https://caniuse.com/#search=Custom%20Elements%20v1).
 
