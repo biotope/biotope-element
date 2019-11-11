@@ -4,11 +4,11 @@ title: Lifecycle Hooks
 ---
 
 A `biotope-element` component goes through several lifecycle stages which have callbacks associated.
-These callbacks can be used to add custom functionality in several point in the lifetime of the
-component. As `biotope-element` is based on Web Components, it supports all lifecycle hooks from
+These callbacks can be used to add custom functionality on the different stage in the lifetime of
+the component. As `biotope-element` is based on Web Components, it supports all lifecycle hooks from
 Web Components.
 
-We did a small adjustment however on the timing of two of the hooks. But we'll get into more detail
+However, we did a small adjustment on the timing of two of the hooks. But we'll get into more detail
 on their sections.
 
 ## Hook order
@@ -16,26 +16,26 @@ When registering and rendering a component for the first time, you can expect th
 order:
   1. constructor
   2. connectedCallback
-  3. attributeChangedCallback
+  3. attributeChangedCallback (if any attributes are present)
   4. render
   5. rendered
 
-When a component is rendered and idle on the page and one of its attributes gets changed, these
-hooks are called in this order:
+When a component is rendered and idle on the page and one of its attributes changes, these hooks are
+called in this order:
   1. attributeChangedCallback
   2. render
   3. rendered
 
 When the component is removed from the page, only the `disconnectedCallback` hooks gets triggered.
 
-We will be providing a simple explanation and simple examples of how all of these hooks work, when
-they are called and what you should be doing on each one. This does not replace however any Web
-Components documentation out there.
+Below we provide a simple explanation and simple examples of how all of these hooks work, when they
+are called and what you should be doing on each one. This however does not replace any Web Component
+hook documentation.
 
 ## constructor
 Simple enough to understand - just a class constructor.
 
-This is the point of entry for the creation of the instance of your component. Here are some
+This is the point of entry point for the creation of the instance of your component. Here are some
 examples of things you can/should do in this function:
   - bind functions to the `this` context;
   - apply any needed function debouncing;
@@ -49,9 +49,9 @@ from the DOM and re-attached to it, then this function gets called again.
 This is where you can typically:
   - query the DOM (upwards or downwards)
   - add event listeners to the component itself
-  - read/write to your slot (innerHTML) - if need be…
+  - read/write to your slot (`innerHTML`) - if need be…
 
-__Important ⚠️:__ In vanilla Web Components, this hook is called only after `attributeChangedCallback`.
+__⚠️ Important:__ In vanilla Web Components, this hook is called only **after** `attributeChangedCallback`.
 In `biotope-element`however, this order is switched for render optimization purposes.
 
 ## attributeChangedCallback
@@ -63,18 +63,18 @@ You can use this function for 2 main purposes. Here is an example:
 ```javascript
 class MyButton extends Component {
   attributeChangedCallback(name, previous, current) {
-    // Here, no props have changed
+    // Here, no props have changed yet
     // You can do any check you want on the "current" attribute
 
     super.attributeChangedCallback(name, previus, current)
 
     // Here, prop with the name in "name" has changed
-    // You can access "this.props[name]" and the result would be "current"
-    // Here you can do some state changes if you need to update the state based on the changed prop
+    // You can access "this.props[name]" and the result is the value of "current"
+    // Here you can do state changes if you need to update it based on the new prop
   }
 
   render() {
-    // Will only be triggered if the "current" value is not equal or equivalent to "previous"
+    // Will only be triggered if the "current" value is not equal to "previous"
     …
   }
 }
@@ -82,9 +82,9 @@ class MyButton extends Component {
 
 This hook will be called once per attribute changed, even if two attributes change at the same time.
 
-This is the only hook that required you to call the `super` function in order to work normally.
-Remember to always call it, otherise no props will get changed, unless you do it manually - we don't
-advise it.
+This is the only hook that requires you to call the `super` function in order to work as intended.
+Remember to always call it, otherwise no props will get changed, unless you do it manually - we
+don't advise it.
 
 ## render
 This is the first hook provided by `biotope-element`. It's responsible for returning the HTML that
@@ -94,23 +94,27 @@ The returned HTML should fully represent the variables of the component. This me
 components of the same class, with the same props and state should return the same HTML.
 Side-effects are very much discouraged!
 
-__Note 📝:__ When creating a new component, you may have several calls to `attributeChangedCallback`
+__📝 Note:__ When creating a new component, you may have several calls to `attributeChangedCallback`
 due to having inserted more than one HTML attribute before the component is connected to the DOM.
 This will only result in one `render` being called though.
 
 ## rendered
 This is the second hook provided by `biotope-element`. This hook will only be called when a `render`
-has finished and the DOM has been updated. If 2 `render`s are called, this hook will also be called
-twice.
+has finished and the DOM has been updated. If two `render`s are called, this hook will also be
+called twice.
 
-This means you can go ahead and:
+This means that, in this hook, you can:
   - query the newly created element for anything you want
   - add some attributes that are can only be added after a DOM element is rendered (like the
 `readonly` attribute on the native `input` element)
   - add some custom event listeners to the newly created elements
 
 ## disconnectedCallback
-The complete opposite of `connectedCallback`. This hook gets called whenever a component leaves the
-DOM. Just like `connectedCallback`, this hook will be called and will be called again if the component gets attached and detached from the DOM again.
+The counterpart of the `connectedCallback` hook. This hook gets called whenever a component leaves
+the DOM. Just like `connectedCallback`, this hook will be called again if the component gets
+attached and again detached from the DOM.
 
-This hook is ideal for cleanup operation you may need.
+This hook is ideal for any cleanup operations you may need.
+
+## Example
+// TODO

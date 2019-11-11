@@ -3,7 +3,7 @@ id: attr-parsing
 title: Attribute Parsing
 ---
 
-In relugar HTMLElements, you can set attributes like `class`, `id`, `title`, `lang`, … These
+In regular HTMLElements, you can set attributes like `class`, `id`, `title`, `lang`, … These
 attributes are all strings, as you might discover when trying to set one of them to a Javascript
 object but you ending up with something like `class="[object Object]"`.
 
@@ -11,7 +11,7 @@ In Web Components, this is no different. However, `biotope-element` gives you th
 these string values to any other type of object you want. This is achieved through the use of
 automatic type converters or manual converter functions that you can set.
 
-## Forced types
+## Automatic type conversion
 When defining a watched attribute in this documentation we've used simple strings inside an `attributes`
 property, like so:
 
@@ -42,14 +42,15 @@ The list of possible types is the following:
   - `array`
   - `function`
 
-__Note 📝:__ The difference between having just a `'text'` or a `{ name: 'text', type: 'string' }`
+__📝 Note:__ The difference between having just a `'text'` or a `{ name: 'text', type: 'string' }`
 is definitely big - the former accepts any type of value without question, passing it through to the
-props with not conversions, while the latter forces a conversion to a string, so the number `1`
-would become a string with that number: `'1'`.
+props with no conversion, while the latter forces a conversion to a string, so the number `1` would
+become a string with that number: `'1'`.
 
-## Manual Conversion
-If your type is just too complex for it to be converted automatically, then you can use the `converter`
-property we provide and set up your own conversion function.
+## Manual conversion
+If your type is just too specific for it to be converted automatically (like an `enum` value that
+only accepts certain strings or number), then you can use the `converter` property we provide and
+set up your own conversion function.
 
 ```javascript
 MyButton.attributes = [
@@ -64,8 +65,8 @@ MyButton.attributes = [
 ```
 
 Additionally, and because we don't want you to have to choose between the two types of attribute
-parsing when developing, we also provide our forced-types converters for you to use in your custom
-converter functions.
+parsing when developing, we also provide our automatic types converters for you to use in your
+custom converter functions.
 
 ```javascript
 import Component, { toBoolean } from '@biotope/element';
@@ -83,7 +84,7 @@ MyButton.attributes = [
 ];
 ```
 
-The converters are you can import and use out of the box are: `toBoolean`, `toString`, `toNumber`,
+The converters you can import and use out of the box are: `toBoolean`, `toString`, `toNumber`,
 `toObject`, `toArray` and `toFunction`.
 
 ## Examples
@@ -125,7 +126,7 @@ MyButton.register();
 This will result in the following html:
 
 ```html
-<my-button fooNum="5">
+<my-button foo="5">
   🚀 number
 <my-button>
 ```
@@ -167,8 +168,8 @@ This will result in the following html:
 When you have nested components, you might need to pass some value from the parent component to the
 child component.
 
-With strings, this is easy. just set the attribute normally and you're good to go. Even your
-favorite Search Engine will thank you since all string attributes get writtent to the DOM.
+With strings, this is easy: just set the attribute normally and you're good to go. Even your
+favorite Search Engine will thank you since all string attributes get written to the DOM.
 
 However, when dealing with non-string attributes this is not so easy as explained in the begining of
 this section. The HTML5 way to accomplish this task would be for the parent component to convert the

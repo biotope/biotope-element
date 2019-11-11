@@ -4,24 +4,24 @@ title: Styling
 ---
 
 Web components use a shadow DOM to write their HTML. The shadow DOM has some interesting features
-that make it very different from writing to an element using `innerHTML`. In terms of styling, the
-shadow DOM scopes the style, so that styles from the page does not leak into the component and style
-and vice-versa.
+that make it very different from writing to an element using `innerHTML`. Styling-wise, the shadow
+DOM scopes the style, so that styles from the page does not leak into the component and style and
+vice-versa.
 
 However, applying styles to any HTMLElement is just like applying styles to any `biotope-element`
 component. You basically have two approaches: the `style` element and inline styling - with the same
 advantages and disadvantages as normal HTMLElements.
 
-__Important ⚠️:__ When adding styles to IE11 specifically, the browser will sometimes not fully
-render the style you applied to your component even though your css is fully loaded onto the page.
-This is easily solved by moving your CSS to the bottom of your component (like in all our examples).
+__⚠️ Important:__ When adding styles to IE11 specifically, the browser will sometimes not fully
+render the style you applied to your component even though your CSS is fully loaded onto the page.
+This is easily solved by moving your CSS to the bottom of the component (like in all our examples).
 
-__Important ⚠️:__ Style-scoping only works in browsers that require the Web Component polyfill.
+__⚠️ Important:__ Style-scoping only works in browsers that require the Web Component polyfill.
 Writing styles for these components is like writing styles for the entire page. So use unique class
 names (for example [BEM](http://getbem.com)) or a build system that renames your classes to keep
 your codebase maintainable and sane.
 
-__Important ⚠️:__ Class names that are equal to your component name should also be avoided as the
+__⚠️ Important:__ Class names that are equal to your component name should also be avoided as the
 Web Components polyfill also creates this class as part of the polyfilling process.
 
 ## Style element
@@ -41,7 +41,7 @@ return this.html`
 ```
 
 ### createStyle function
-We also provide you with a pretty cool function to do most of this automatically - the `createStyle`
+We provide you with a pretty cool function to do most of this automatically - the `createStyle`
 function. It can take either take a string (or an object with a `toString` function) and convert it
 into a `style` element that you can use directly in your component.
 
@@ -60,7 +60,7 @@ return this.html`
 `;
 ```
 
-This will produce the same result as the example above at the beginning of this section.
+This will produce the same result as the previous example.
 
 Additionally, as we mentioned before, this will also work if you give the `createStyle` function an
 object that is "toStringable". This next example is equal to the one above.
@@ -86,7 +86,7 @@ This is extremely relevant and useful when you're using webpack or other build t
 into your Javascript files. With this function, `biotope-element` will be able to stringify whatever
 a loader throws at you and print your CSS seamlessly.
 
-__Note 📝:__ The `this.createStyle` function is also provided out of the box, like so:
+__📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
 ```javascript
 import Component, { createStyle } from '@biotope/element';
 ```
@@ -94,19 +94,18 @@ import Component, { createStyle } from '@biotope/element';
 ### Dynamic styles
 Since a component is fully written in Javascript, it can be very tempting to just interpolate inside
 the `style` element and add in your Javascript variable to the style. However, due to how the Web
-Components polyfill works, this is very bad practice as the modified style will get applied to the
+Components polyfill works, this is a very bad practice as the modified style will get applied to the
 entire page. This means that any component-specific state-dependant modification can be applied to
 all components of a page.
 
-To counter this, either use a second class to add/modify some properties on a specific element or
+To avoid this, either use a second class to add/modify some properties on a specific element or
 use inline styles (shown in the next section).
 
 Here is an example of adding a modifier class using the `classnames` package.
 
 ```javascript
 import classnames from 'classnames';
-
-...
+…
 
 // render function
 const mainClasses = classnames('myMainClass', {
@@ -135,7 +134,7 @@ return this.html`
 `;
 ```
 
-In the same manner of css-in-js, and in order to have an easy dev experience in javascript, any
+In the same manner of css-in-js, and in order to have an easy dev experience in Javascript, any
 kebab-cased CSS properties are available as camelCase, like so:
 
 ```javascript
@@ -155,13 +154,36 @@ writing CSS for your component as it can select the component itself.
 Unfortunately, on browsers that require the Web Component polyfills, this selector is not available.
 We provide you with a `host` scss mixin that tries to counter this problem.
 
-Here is how to use it:
+Here is how you can use it in a component named "my-button":
 
 ```scss
-@include host(my-component-name) {
-  // my component element CSS
+@include host(my-button) {
+  /* my component element CSS */
 }
 ```
 
 This mixin is just an example however - you can chose to use it, ignore it, modify it or port it to
-another language very easily.
+another language very easily. The mixin will produce the following code:
+
+```css
+:host {
+  /* my component element CSS */
+}
+
+my-button {
+  /* my component element CSS */
+}
+```
+
+The `:host` fule is there for modern browsers and the `my-button` rule is there mainly for IE11. The
+reason why the code has to be repeated has to do with how browsers read and apply CSS rules. If IE11
+encounters the following example, it will crash uppon reading the `:host` selector and will not
+apply any of the rules we set.
+
+```css
+/* This breaks IE11 */
+:host,
+my-button {
+  /* my component element CSS */
+}
+```

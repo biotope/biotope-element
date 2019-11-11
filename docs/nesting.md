@@ -63,7 +63,7 @@ Then, when the component is rendered, a nested component is present in the DOM.
 
 This representation is not completely accurate though. What actually happens is that the render
 function renders the HTML inside of the shadow DOM, not the actual DOM. So, if after a render, you
-query the element for it's innerHTML, you will still get an empty string.
+query the element for it's `innerHTML`, you will still get an empty string.
 
 This would be a more accurate representation of the DOM element after a render finishes:
 
@@ -79,7 +79,7 @@ This would be a more accurate representation of the DOM element after a render f
 </my-button>
 ```
 
-The slot (i.e. the innerHTML) is never shown when the component renders, even if it does contain
+The slot (i.e. the `innerHTML`) is never shown when the component renders, even if it does contain
 some content. However, when building a component that is, for example, a container that adds some
 "box" styling, you would most likely want to put some content inside of it - and having the render
 function contain that static HTML is probably not a good idea when you're dealing with CMSs.
@@ -143,8 +143,8 @@ inside other components (like the `my-fancy-span` component). In the latter case
 become the slot for that component and `my-fancy-slot` can then re-use the `slot` element itself!
 
 ## Removing the shadow DOM
-If for some reason you do not wish to use the shadow DOM and want the component to directly output
-the result of the render function to the innerHTML, the you can simply override the constructor
+If for some reason you don't want to use the shadow DOM and want the component to directly output
+the result of the `render` function to the `innerHTML`, the you can simply override the constructor
 like so:
 
 ```javascript
@@ -172,7 +172,7 @@ MyButton.register();
 ```
 
 In this scenario, if you output the content of `innerHTML` of that component, instead of an empty
-string, you will get the content of the render function.
+string, you will get the content of the `render` function.
 
 This is not an ideal scenario due to how slotting and style scoping work in Web Components and
 should be used only when you are absolutely sure what you're doing.

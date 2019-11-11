@@ -7,8 +7,8 @@ title: Component
 We trust in the web.
 
 `biotope-element` is an extension of a vanilla a HTMLElement with some nice features on top. So
-everything you build using `biotope-element` is a component. Anything else you need you can grab it
-off other libraries.
+everything you build using `biotope-element` is a component. Anything else you need can be grabbed
+from other libraries.
 
 In this sense, a component is a piece of a UI that you can use and re-use throughout your
 application to deliver a consistent UI. Buttons, sliders, accordions, menus, content boxes, … all
@@ -35,11 +35,11 @@ MyButton.register();
 
 ## Rendering
 The `render` function was designed to complement the concept of Web Components and take it to the
-next level. It provides the developer with a simple and intuitive way to render information inside
-the component.
+next level. It provides you with a simple and intuitive way to render information inside the
+component.
 
-Thus, every component implements a `render` function. Inside it, you need to call and return the
-`this.html` function on a template literal to add HTML to your component:
+Every component implements a `render` function. Inside it, you need to call and return the `this.html`
+function on a template literal to add HTML to your component:
 
 ```javascript
 // my-button.js
@@ -60,10 +60,9 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-This new HTML code will be added to something called the shadow DOM. You can think of this process
-as something similar to writing a string to the `innerHTML` property of a HTMLElement.
-
-The result of the code above is the following:
+This new HTML code will be added to the shadow DOM (think of this process as something similar to
+writing a string to the `innerHTML` property of a HTMLElement). The result of the code above is the
+following:
 
 ```html
 <my-button>
@@ -73,9 +72,8 @@ The result of the code above is the following:
 </my-button>
 ```
 
-__Important ⚠️:__ Due to some under-the-hood-magic though, you need to create the `render` function
-when you define your class so that it is already available during the component registration phase.
-This means you cannot simply do:
+__⚠️ Important:__ You need to create the `render` function when you define your class so that it is
+already available during the component registration phase. This means you **cannot** simply do:
 
 ```javascript
 // my-button.js
@@ -83,6 +81,7 @@ import Component from '@biotope/element';
 import { template } from './template';
 
 class MyButton extends Component {
+  // this won't work
   render = template
 }
 
@@ -91,7 +90,7 @@ MyButton.register();
 ```
 
 If you implement the example above, the `render` function will only be set during the constructor,
-and not when calling the `register` function. This will cause your component to render nothing.
+and not when calling the `register` function. This will also cause your component to render nothing.
 
 ### Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
@@ -155,7 +154,7 @@ This will result in:
 
 And clicking the button will result in the click event being printed to the console, as expected.
 
-__Note 📝:__ We also provide the `this.html` function out of the box, should you need it, like so:
+__📝 Note:__ We also provide the `this.html` function out of the box, should you need it, like so:
 ```javascript
 import Component, { html } from '@biotope/element';
 ```
@@ -251,19 +250,19 @@ Which will result in:
 <my-button></my-button>
 ```
 
-__Note 📝:__ Passing non-string attributes through the shorhand notation we provide is possible,
+__📝 Note:__ Passing non-string attributes through the shorhand notation we provide is possible,
 however they will not be printed in the HTML - instead, they will just be passed to the props. You
 can learn more about props in the next section.
 
 ## Props
 Since attributes are the main API for passing information to your component, we decided to add props
 to our components to simplify and streamline this process. This means that, props are the result of
-picking and parsing of all the attributes of the component. This is only efficient though if the
+picking and parsing of all the attributes of the component. However, this is only efficient if the
 component knows which attributes to watch and which ones to ignore.
 
-A prop change will always trigger a new render. If we take the example above and add a new "greet"
-attribute to the component, we can customize the greeting message the component outputs by accessing
-that same prop.
+A prop change will always trigger a new render. Consider this next example component, with a "greet"
+attribute. We can customize the greeting message the component outputs by sending it through that
+same attribute and accessing it in the prop.
 
 ```javascript
 // my-button.js
@@ -284,7 +283,7 @@ MyButton.attributes = ['greet']; // Here are the attributes that should be watch
 MyButton.register();
 ```
 
-Now, by adding it to the HTML, like so:
+By adding this HTML to the page:
 
 ```html
 <script src="my-button.js"></script>
@@ -302,7 +301,7 @@ The output will be:
 </my-button>
 ```
 
-Adding other attributes to elements inside the render function is also possible - and so is
+Adding other attributes to elements inside the `render` function is also possible - and so is
 interpolating attributes or content. Notice that attributes in HTML are written in kebab-case,
 however when used inside `this.props`, they can be accesssed through camelCase.
 
@@ -364,8 +363,8 @@ Default props are exactly what they sound like. They are the values of props whe
 set. This is an important mechanic for you, the developer, to avoid a lot of `if`s to check whether
 a prop exists, can be accessed and used.
 
-`defaultProps` are only set once. This means that you shouldn't treat defaultProps as fallback
-values for your props, every time you set/reset them. They are rather just initial values.
+`defaultProps` are only set once. This means that you shouldn't treat them as fallback values for
+your props every time you set/reset them. They are rather just initial values.
 
 Looking at this example:
 
@@ -411,18 +410,20 @@ The above code will output the following:
 </my-button>
 ```
 
-And after you change that prop normally:
+And after you change that attribute normally:
 
 ```html
 <script src="my-button.js"></script>
-<my-button greet="Hello Foo World"></my-button>
+<my-button greet="Hello Foo World">
+  …
+</my-button>
 ```
 
-Then the result will be as expected:
+The result will be as expected:
 
 ```html
 <script src="my-button.js"></script>
-<my-button>
+<my-button greet="Hello Foo World">
   <div>
     Hello Foo World 🐤
   </div>
@@ -436,8 +437,8 @@ the information of a component. The HTML that is rendered should just be a refle
 variables and should not add to it in any way.
 
 A state change will always trigger a new render. The state of a component can be changed using the
-`setState` function. Let's take this next example of a simple component that, after some type of
-user click, changes its state to reflect it.
+`setState` function. Let's take this next example of a simple component that, after the user clicks
+the button, the component changes its state to reflect it.
 
 ```javascript
 // my-button.js
@@ -446,22 +447,24 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   constructor() {
     super();
-
-    // This code is just a simple way to simulate some type
-    // of user interaction that causes the state to change
-    setTimeout(() => {
-      this.setState({
-        userClicked: true,
-      });
-    }, 5000);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   render() {
     const { userClicked } = this.state;
     return this.html`
-      The user has${!userClicked ? ' not' : ''} clicked me!
-      The type of "userClicked" is ${typeof userClicked}.
+      <div>
+        The user has${!userClicked ? ' not' : ''} clicked me!
+        The type of "userClicked" is ${typeof userClicked}.
+      </div>
+      <button onclick=${this.handleClick}>Click me!</button>
     `;
+  }
+
+  handleClick() {
+    this.setState({
+      userClicked: true,
+    });
   }
 }
 
@@ -473,8 +476,11 @@ Initially, the component will look like the following:
 
 ```html
 <my-button>
-  The user has not clicked me!
-  The type of "userClicked" is undefined.
+  <div>
+    The user has not clicked me!
+    The type of "userClicked" is undefined.
+  </div>
+  <button>Click me!</button>
 </my-button>
 ```
 
@@ -482,12 +488,15 @@ And after the state change, it will show:
 
 ```html
 <my-button>
-  The user has clicked me!
-  The type of "userClicked" is boolean.
+  <div>
+    The user has clicked me!
+    The type of "userClicked" is boolean.
+  </div>
+  <button>Click me!</button>
 </my-button>
 ```
 
-Alternatively to setting the state using an object (like tin the example above), you can also do it
+Alternatively to setting the state using an object (like in the example above), you can also do it
 by passing a function. This function will receive the current state and should return the new state.
 This can be very useful when programming in a functional approach. Here's an example:
 
@@ -511,7 +520,7 @@ class MyButton extends Component {
 The `setState` function is a synchronous process, so right after it's finished, you can be sure the
 component has re-rendered and DOM has been updated.
 
-__Important ⚠️:__ Do not try to update the state inside the render function or inside any function
+__⚠️ Important:__ Do not try to update the state inside the render function or inside any function
 that is called by the render function as this can lead to infinite render loops!
 
 ### Default State
@@ -527,25 +536,28 @@ import Component from '@biotope/element';
 class MyButton extends Component {
   constructor() {
     super();
+    this.handleClick = this.handleClick.bind(this);
+
     this.defaultState = {
       userClicked: false,
     };
-
-    // This code is just a simple way to simulate some type
-    // of user interaction that causes the state to change
-    setTimeout(() => {
-      this.setState({
-        userClicked: true,
-      });
-    }, 5000);
   }
 
   render() {
     const { userClicked } = this.state;
     return this.html`
-      The user has${!userClicked ? ' not' : ''} clicked me!
-      The type of "userClicked" is ${typeof userClicked}.
+      <div>
+        The user has${!userClicked ? ' not' : ''} clicked me!
+        The type of "userClicked" is ${typeof userClicked}.
+      </div>
+      <button onclick=${this.handleClick}>Click me!</button>
     `;
+  }
+
+  handleClick() {
+    this.setState({
+      userClicked: true,
+    });
   }
 }
 
@@ -553,7 +565,7 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-which will initially render this (notice the initial type change!):
+which will initially render this (**⚠️ notice the initial type change!**):
 
 ```html
 <my-button>
@@ -562,7 +574,7 @@ which will initially render this (notice the initial type change!):
 </my-button>
 ```
 
-But after 5 seconds, the component will re-render to:
+But after the user clicks the button, the component will re-render to:
 
 ```html
 <my-button>

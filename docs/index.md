@@ -8,16 +8,16 @@ yet powerful concepts from other frontend libraries to empower you, the develope
 needs - be them integration with popular CMSs or developing amazing design-systems to be used
 anywere.
 
-`biotope-element` was developed using mostly vanilla web technologies and with the intention of
-being used for component development and not page assembly. This means we dedicate ourselves to
-making sure that page assembly libraries like React, Vue or Angular have the best possible
-experience when using our components. This also means that every piece of knowledge you have about
-HTMLElements is 100% valid and applicable when working with `biotope-element`.
+`biotope-element` uses mostly vanilla web technologies and is built with the intention of being used
+for component development and not page assembly. This means we dedicate ourselves to making sure
+that page assembly libraries like React, Vue or Angular have the best possible experience when using
+our components. This also means that every piece of knowledge you have about HTMLElements is
+applicable when working with `biotope-element`.
 
-This documentation aims at showing you how `biotope-element` works and how to create components
-using it. It will also assume that you have no knowledge of what a Web Component is. This means we
-will explain some Web Component concepts as we go along but not all and certainly not to an
-unnecessary depth. You can read more about Web Components [here](https://www.webcomponents.org/introduction).
+This documentation shows you how `biotope-element` works and how to create components using it. It
+also assumes that you have no knowledge of what a Web Component is, which means we will explain some
+Web Component concepts as we go along but not all and certainly not to an unnecessary depth. You can
+read more about Web Components [here](https://www.webcomponents.org/introduction).
 
 ## Installation
 You can install the biotope element in your project using npm:
@@ -84,7 +84,10 @@ to render after the `script` is parsed and the component is registered.
 Natively, Web Components are not supported by all browsers - this includes `biotope-element`. You
 can check out a list of compatible browsers using [caniuse](https://caniuse.com/#search=Custom%20Elements%20v1).
 
-To get it to work almost all non-dead browsers, you can use [these polyfills](https://github.com/webcomponents/polyfills).
+To get it to work on almost all non-dead browsers, you can use [these polyfills](https://github.com/webcomponents/polyfills).
 You can also checkout their [npm package](https://www.npmjs.com/package/@webcomponents/webcomponentsjs)
 or you can simply put a script pointing to [unpkg](https://unpkg.com/@webcomponents/webcomponentsjs@2.3.0/webcomponents-loader.js)
 which will load only the necessary polyfills.
+
+Remember to make sure that the polyfill is fully loaded before attempting to load any component with
+a `script` element.

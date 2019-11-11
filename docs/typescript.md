@@ -20,7 +20,7 @@ This first example is a child component (to be used by the parent component):
 
 ```typescript
 // my-button.ts
-import Component, { HTMLFragment } from '@biotope/element';
+import Component, { HTMLFragment, PropValue } from '@biotope/element';
 
 export type MuButtonEventPressed = string;
 
@@ -55,7 +55,7 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
     // do some cleanup here
   }
 
-  public attributeChangedCallback(name: tring, previous: PropValue, current: PropValue): void {
+  public attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void {
     super.attributeChangedCallback(name, previous, current);
     // update state given a set of new props
   }
@@ -109,10 +109,6 @@ export class MyForm extends Component {
       <input class="my-fancy-class" />
       <my-button ref=${this.refs.myButton} onpressed=${this.handlePress}></my-button>
     `;
-  }
-
-  public rendered(): void {
-    // do some event listener attaching here
   }
 
   private handlePress({ detail }: CustomEvent<MuButtonEventPressed>): void {
