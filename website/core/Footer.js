@@ -40,11 +40,23 @@ class Footer extends React.Component {
             <a href={this.docUrl('index.html', this.props.language)}>
               Getting Started
             </a>
+            <a href={this.docUrl('lifecycle.html', this.props.language)}>
+              Advanced
+            </a>
+            <a href={this.docUrl('peers.html', this.props.language)}>
+              Misc
+            </a>
+          </div>
+          <div>
+            <h5>Community</h5>
+            <a href={this.pageUrl('users.html', this.props.language)}>
+              User Showcase
+            </a>
           </div>
           <div>
             <h5>More</h5>
             <a href={`${this.props.config.baseUrl}blog`}>Blog</a>
-            <a href="https://github.com/">GitHub</a>
+            <a href="https://github.com/biotope/biotope-element">GitHub</a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}
@@ -58,9 +70,7 @@ class Footer extends React.Component {
             {this.props.config.twitterUsername && (
               <div className="social">
                 <a
-                  href={`https://twitter.com/${
-                    this.props.config.twitterUsername
-                  }`}
+                  href={`https://twitter.com/${this.props.config.twitterUsername}`}
                   className="twitter-follow-button">
                   Follow @{this.props.config.twitterUsername}
                 </a>

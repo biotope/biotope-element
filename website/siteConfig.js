@@ -22,15 +22,12 @@ const users = [
 
 const siteConfig = {
   title: 'Biotope Element', // Title for your website.
-  tagline: 'TODO',
-  url: 'https://your-docusaurus-test-site.com', // Your website URL
+  tagline: 'Web Components made simple, for any evergreen browser and IE11',
+  url: 'https://element.biotope.sh', // Your website URL
   baseUrl: '/', // Base URL for your project */
-  // For github.io type URLs, you would set the url and baseUrl like:
-  //   url: 'https://facebook.github.io',
-  //   baseUrl: '/test-site/',
 
   // Used for publishing and more
-  projectName: 'element',
+  projectName: 'biotope-element',
   organizationName: 'biotope',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
@@ -38,8 +35,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'index', label: 'Docs'},
-    {blog: true, label: 'Blog'},
+    { doc: 'index', label: 'Docs' },
+    { blog: true, label: 'Blog' },
   ],
 
   // If you have users set above, you add it here:
@@ -71,11 +68,11 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} VirtualIdentity`,
+  copyright: `Copyright © ${new Date().getFullYear()} Virtual Identity`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: 'default',
+    theme: 'tomorrow-night',
   },
 
   // Add custom scripts here that would be placed in <script> tags.

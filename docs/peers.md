@@ -1,6 +1,6 @@
 ---
-id: usedWith
-title: Used with...
+id: peers
+title: Peer Packages
 ---
 
 ## Biotope Resource Loader
@@ -12,3 +12,7 @@ you to load the components you built with biotope-element like so:
 ```
 
 This will load the script and attatch it to the dom.
+
+
+## Generator
+...

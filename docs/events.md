@@ -3,52 +3,42 @@ id: events
 title: Events
 ---
 
-Events are for communication of your components to the outside world.
-There is nothing different from normal javascript events here.
-We just have some guidelines which may help you using biotope-element with events.
+Events in HTMl are used for communication between your components and the outside world
 
-## Definition
-To prevent typos in your events, we encourage you to define you events as constants and always
-reference it instead of just using a string:
+In `biotope-element`, we use the native CustomEvent implementation, so you can expect no shenanigans
+and no magic behind the scenes - just pure unadulterated Javascript… and a helper function to help
+you out.
 
-```javascript
-const MY_BUTTON_EVENTS = {
-  PRESSED: 'pressed',
-};
+We'd also like to show you some guidelines for using CustomElements so that you have the best
+possible experience developing and maintaining components built with `biotope-element`.
 
-export default MY_BUTTON_EVENTS;
-```
-
-!> __Important ⚠️: Camelcase will not work with callbacks on elements.__
-
-## Emit
+## Emitting
 To prevent event cluttering on the window element you should only dispatch events on the component
 itself or on its children. Anything outside is not under your control and should be handled with
 care.
 
-To dispatch an event you can just call `emit` on the component:
+To dispatch an event you can just call the `this.emit` function on your component:
 
 ```javascript
 import Component from '@biotope/element';
-import MY_BUTTON_EVENTS from './events';
 
 class MyButton extends Component {
   constructor() {
     super();
-    // we have to bind the callback to accesss this inside the function
-    this.onclick = this.onclick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   render() {
     return this.html`
-      <button onclick=${this.onclick}>
+      <button onclick=${this.handleClick}>
         <slot />
       </button>
     `;
   }
 
-  onclick(event) {
-    this.emit(MY_BUTTON_EVENTS.PRESSED);
+  handleClick(event) {
+    // Emitting the event
+    this.emit('pressed');
   }
 }
 
@@ -56,30 +46,94 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
-## Listen
-Now to listen to these custom events, you can just pass a function to an attribute with the same
-name as your event. The function you pass should bind `this` so we can access the component inside:
+This will dispatch an event with the name "pressed" that any parent element can listen to.
+
+__Note 📝:__ You can always ignore the `this.emit` function and just call an event dispatcher
+yourself with a `new CustomEvent`. It's up to you.
+
+__Important__ ⚠️: Event names should always be written in lowercase - camelCase is not supported.
+
+### Sending a value
+In the previous example, nothing else gets passed trough to the parent, just the event. But there
+are some cases where you may need to pass some additional information about the event, like a value.
+
+You can simply do it by sending a second argument to the `emit` function, like so:
+
+```javascript
+// handleClick function
+this.emit('pressed', 'Super secret value');
+```
+
+Now the parent can read that value and get more info about the event.
+
+### Scoping the event
+The third argument of the `emit` function is a boolean that can scope the event being sent by
+appending the component name to the event name.
+
+The code below will send an event named "my-button-pressed" instead of just pressed. This can be
+useful in situations where you are sure to have a lot of similar event being fired by different
+components.
+
+```javascript
+// handleClick function
+this.emit('pressed', 'Super secret value', true);
+```
+
+## Listening
+To listen to these custom events, you can just pass a function to an attribute with the same
+name as your event. The function you pass should bind `this` so we can access the component inside.
+
+If we take the simple "my-button" component as a child component of this next one:
 
 ```javascript
 import Component from '@biotope/element';
-import MY_BUTTON_EVENTS from '../MyButton/events';
+import { MyButton } from './my-button';
 
-class ImageStage extends Component {
+class MyForm extends Component {
+  constructor() {
+    super();
+    this.handlePress = this.handlePress.bind(this);
+  }
+
   render() {
     return this.html`
-      <img src="some/fancy/img.jpg"> 
-      <my-button onpressed=${this.onButtonPress.bind(this)}>CLick me!</button>
+      …
+      <my-button onpressed=${this.handlePress}>CLick me!</button>
     `;
   }
 
-  onButtonPress(event) {
-    // Execute code here
+  handlePress(event) {
+    // Do somthing with that "pressed" event
   }
 }
 
-ImageStage.componentName = 'image-stage';
-ImageStage.register();
+MyForm.componentName = 'my-form';
+MyForm.dependencies = [
+  MyButton,
+];
+MyForm.register();
 ```
 
-This will call the `onButtonPress` function on the `ImageStage`, as soon as the `my-button`
-component fires the `pressed` event.
+Then we can see how the event is received by the parent.
+
+If the event contains some more information, be it a string or a more complex object, then you can
+get it by accessing the `event.detail` property.
+
+```javascript
+// the handlePress event listener
+handlePress({ detail }) {
+  // Now you have the detail that was sent by the child
+}
+```
+
+## Naming
+To prevent typos in your events, and because magic number and magic strings aren't god practice
+altogether, we advise you to keep your event names in an object that can potentially be exported.
+
+```javascript
+export const MY_BUTTON_EVENTS = {
+  PRESSED: 'pressed',
+};
+```
+
+This will also allow parent elements not to have typos when listening to the events themselves.
