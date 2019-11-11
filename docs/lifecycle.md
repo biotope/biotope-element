@@ -116,5 +116,88 @@ attached and again detached from the DOM.
 
 This hook is ideal for any cleanup operations you may need.
 
-## Example
-// TODO
+## Examples
+```javascript
+// my-button.js
+import Component from '@biotope/element';
+
+export class MyButton extends Component {
+  constructor() {
+    super();
+    console.log('first');
+  }
+
+  connectedCallback() {
+    console.log('second');
+  }
+
+  attributeChangedCallback(name, previous, current) {
+    super.attributeChangedCallback(name, previous, current);
+    console.log('third', name);
+  }
+
+  render(): HTMLFragment {
+    console.log('fourth');
+    return this.html`
+      …
+    `;
+  }
+
+  rendered() {
+    console.log('fifth');
+    // do some event listener attaching here
+  }
+
+  disconnectedCallback() {
+    console.log('sixth');
+    // do some cleanup here
+  }
+}
+
+MyButton.componentName = 'my-button';
+MyButton.attributes = ['text', 'another-text'];
+MyButton.register();
+```
+
+## No attributes
+Considering the component above, and given this next HTML:
+
+```html
+<my-button></my-button>
+```
+
+Then the ouputs to the console would be:
+
+```bash
+> first
+> second
+> fourth
+> fifth
+```
+
+If we then remove the element from the DOM, it would just output:
+
+```bash
+> sixth
+```
+
+## Two attributes
+Considering the component above, and given this next HTML:
+
+```html
+<my-button
+  text="Hello"
+  another-text="World"
+></my-button>
+```
+
+Then the ouputs to the console would be:
+
+```bash
+> first
+> second
+> third texts
+> third another-text
+> fourth
+> fifth
+```
