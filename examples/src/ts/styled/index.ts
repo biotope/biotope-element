@@ -15,7 +15,7 @@ class ExampleButton extends Component {
           font-size: var(--base-font-size);
           background: transparent;
           border-radius: 3px;
-          border: 2px solid blue;
+          border: 2px dotted blue;
           color: blue;
           margin: 0 1em;
           padding: 0.25em 1em;
@@ -23,17 +23,12 @@ class ExampleButton extends Component {
           position: relative;
         }
 
+        :host button:hover,
+        :host button:active,
         :host button:focus {
-          border-style: dotted;
-        }
-
-        :host button:active {
+          border-style: solid;
           top: 1px;
           left: 1px;
-        }
-
-        :host button:hover {
-          border-style: solid;
         }
 
         /* *************************************
@@ -51,7 +46,7 @@ class ExampleButton extends Component {
           font-size: var(--base-font-size);
           background: transparent;
           border-radius: 3px;
-          border: 2px solid blue;
+          border: 2px dotted blue;
           color: blue;
           margin: 0 1em;
           padding: 0.25em 1em;
@@ -59,17 +54,12 @@ class ExampleButton extends Component {
           position: relative;
         }
 
+        example-button button:hover,
+        example-button button:active,
         example-button button:focus {
-          border-style: dotted;
-        }
-
-        example-button button:active {
+          border-style: solid;
           top: 1px;
           left: 1px;
-        }
-
-        example-button button:hover {
-          border-style: solid;
         }
         /* ************************************* */
       </style>
