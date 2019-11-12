@@ -196,7 +196,7 @@ Then the ouputs to the console would be:
 ```bash
 > first
 > second
-> third texts
+> third text
 > third another-text
 > fourth
 > fifth
