@@ -157,6 +157,9 @@ We provide you with a `host` scss mixin that tries to counter this problem.
 Here is how you can use it in a component named "my-button":
 
 ```scss
+/* This is just a symbolic import to show you where the file is */
+@import '@biotope/element/lib/host.mixin';
+
 @include host(my-button) {
   /* my component element CSS */
 }
