@@ -42,7 +42,7 @@ The list of possible types is the following:
   - `array`
   - `function`
 
-__📝 Note:__ The difference between having just a `'text'` or a `{ name: 'text', type: 'string' }`
+> __📝 Note:__ The difference between having just a `'text'` or a `{ name: 'text', type: 'string' }`
 is definitely big - the former accepts any type of value without question, passing it through to the
 props with no conversion, while the latter forces a conversion to a string, so the number `1` would
 become a string with that number: `'1'`.
@@ -76,7 +76,7 @@ MyButton.attributes = [
   {
     name: 'disabled',
     converter: (prop) => {
-      return toBoolean(prop)
+      return toBoolean(prop);
     },
   },
   // which would be the same as

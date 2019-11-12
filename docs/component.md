@@ -3,7 +3,6 @@ id: component
 title: Component
 ---
 
-## What is a component?
 We trust in the web.
 
 `biotope-element` is an extension of a vanilla a HTMLElement with some nice features on top. So
@@ -72,7 +71,7 @@ following:
 </my-button>
 ```
 
-__⚠️ Important:__ You need to create the `render` function when you define your class so that it is
+> __⚠️ Important:__ You need to create the `render` function when you define your class so that it is
 already available during the component registration phase. This means you **cannot** simply do:
 
 ```javascript
@@ -154,7 +153,7 @@ This will result in:
 
 And clicking the button will result in the click event being printed to the console, as expected.
 
-__📝 Note:__ We also provide the `this.html` function out of the box, should you need it, like so:
+> __📝 Note:__ We also provide the `this.html` function out of the box, should you need it, like so:
 ```javascript
 import Component, { html } from '@biotope/element';
 ```
@@ -250,11 +249,11 @@ Which will result in:
 <my-button></my-button>
 ```
 
-__📝 Note:__ Passing non-string attributes through the shorhand notation we provide is possible,
+> __📝 Note:__ Passing non-string attributes through the shorhand notation we provide is possible,
 however they will not be printed in the HTML - instead, they will just be passed to the props. You
 can learn more about props in the next section.
 
-## Props
+### Props
 Since attributes are the main API for passing information to your component, we decided to add props
 to our components to simplify and streamline this process. This means that, props are the result of
 picking and parsing of all the attributes of the component. However, this is only efficient if the
@@ -520,7 +519,7 @@ class MyButton extends Component {
 The `setState` function is a synchronous process, so right after it's finished, you can be sure the
 component has re-rendered and DOM has been updated.
 
-__⚠️ Important:__ Do not try to update the state inside the render function or inside any function
+> __⚠️ Important:__ Do not try to update the state inside the render function or inside any function
 that is called by the render function as this can lead to infinite render loops!
 
 ### Default State

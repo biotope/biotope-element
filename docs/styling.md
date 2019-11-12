@@ -12,16 +12,16 @@ However, applying styles to any HTMLElement is just like applying styles to any 
 component. You basically have two approaches: the `style` element and inline styling - with the same
 advantages and disadvantages as normal HTMLElements.
 
-__⚠️ Important:__ When adding styles to IE11 specifically, the browser will sometimes not fully
+> __⚠️ Important:__ When adding styles to IE11 specifically, the browser will sometimes not fully
 render the style you applied to your component even though your CSS is fully loaded onto the page.
 This is easily solved by moving your CSS to the bottom of the component (like in all our examples).
 
-__⚠️ Important:__ Style-scoping only works in browsers that require the Web Component polyfill.
+> __⚠️ Important:__ Style-scoping only works in browsers that require the Web Component polyfill.
 Writing styles for these components is like writing styles for the entire page. So use unique class
 names (for example [BEM](http://getbem.com)) or a build system that renames your classes to keep
 your codebase maintainable and sane.
 
-__⚠️ Important:__ Class names that are equal to your component name should also be avoided as the
+> __⚠️ Important:__ Class names that are equal to your component name should also be avoided as the
 Web Components polyfill also creates this class as part of the polyfilling process.
 
 ## Style element
@@ -86,7 +86,7 @@ This is extremely relevant and useful when you're using webpack or other build t
 into your Javascript files. With this function, `biotope-element` will be able to stringify whatever
 a loader throws at you and print your CSS seamlessly.
 
-__📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
+> __📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
 ```javascript
 import Component, { createStyle } from '@biotope/element';
 ```

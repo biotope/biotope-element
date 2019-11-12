@@ -3,9 +3,245 @@ id: migration
 title: Migration
 ---
 
-# Make your biotope project ready for BioElement:
+## Migrating from v3 to v4
 
-## Change your typescript config
+### `wire` function removal and `html` function update
+
+TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
+needs it's return value to be the result of `this.html`, otherwise nothing will get rendered.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.wire()`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  renderPartial() {
+    // The next line changed
+    return this.html`
+      <div>My Partial Div</div>
+    `;
+  }
+
+  render() {
+    // The next line changed
+    return this.html`
+      <div>Main render function</div>
+      ${this.renderPartial()}
+    `;
+  }
+}
+```
+
+### `onPropsChanged` and `created` hooks removal
+
+TLDR: `onPropsChanged` and `created` hooks were removed as they were redundant - you can use
+`attributeChangedCallback` and `connectedCallback` to do the same thing, respectively.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  created() {
+    // Insert your "init code" here
+  }
+  onPropsChanged() {
+    // Insert logic for attribute/prop changes
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  connectedCallback() {
+    // Insert your "init code" here - the element is in the DOM already
+  }
+  attributeChangedCallback(name, previous, current) {
+    // Insert logic for attribute changes
+
+    // This function updates the props
+    super.attributeChangedCallback(name, previous, current);
+
+    // Insert logic for prop changes
+  }
+}
+```
+
+### Bypassing attribute-to-prop conversion is not possible
+
+TLDR: You can no longer set a `props` attribute when creating a component to pass all attributes.
+
+v3 code:
+```html
+<my-component props=...></my-component>
+```
+
+v4 code:
+```html
+<my-component my-first-prop=... my-second-prop=...></my-component>
+<script>
+  // OR through js
+  myComponent.myFirstProp = ...;
+</script>
+```
+
+### `basedOn` feature removal
+
+You can no longer use the `baseOn` feature. Please build the component you want using the `render`
+function.
+
+### `defaultProps` and `defaultState`
+
+TLDR: You can now define `defaultProps` and `defaultState` as regular variables, instead of having
+to do it in a getter.
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.defaultProps = {
+      // ...
+    };
+  }
+}
+// OR
+class MyComponent extends Component {
+  defaultProps = {
+    // ...
+  }
+}
+// OR
+class MyComponent extends Component {
+  get defaultProps() {
+    return {
+      // ...
+    };
+  }
+}
+```
+
+### Member-access in Typescript
+
+Some class properties have changed their member-access.
+
+Here is a list of changes:
+```javascript
+class MyComponent extends Component {
+  public static attributes;
+  private static observedAttributes;
+
+  public props;
+  protected state;
+  protected readonly defaultProps;
+  protected readonly defaultState;
+}
+```
+
+### Automatic types
+
+TLDR: no more converting strings to js types - just add a `type` property to each attribute (manual
+converters still work).
+
+v3 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    converter: prop => /* my manual convertion to boolean */,
+  },
+];
+```
+
+v4 code:
+```javascript
+class MyComponent extends Component {
+  ...
+}
+
+MyComponent.attributes = [
+  'simple-text',
+  {
+    name: 'open',
+    type: 'boolean',
+    /**
+     * Also supports:
+     * - string (default type)
+     * - number
+     * - object
+     * - array
+     * - function
+     */
+  },
+];
+```
+
+### `rendered` hook and the `setTimeout` usage
+
+This was never a good practice to begin with and there were alternatives for almost every case, but
+now you have a way of doing this that is clean - the `rendered` hook and `ref`s (no `setTimeout`s!).
+
+v4 code:
+```javascript
+import Component, { createRef } from '@biotope-element';
+
+class MyComponent extends Component {
+  constructor() {
+    super();
+    this.refs = {
+      input: createRef(),
+    };
+  }
+
+  render() {
+    return this.html`
+      <input value="Nice!" ref=${this.refs.input} />
+    `;
+  }
+
+  rendered() {
+    // Prints "Nice!"
+    console.log(this.refs.input.current.value);
+  }
+}
+```
+
+## Adding biotope-element to a biotope project
+
+### Change your typescript config
 ```json
 {
   "compilerOptions": {
@@ -44,7 +280,7 @@ title: Migration
 }
 ```
 
-## Add types for `*.scss` files and whatever custom loader you have for webpack.
+### Add types for `*.scss` files and whatever custom loader you have for webpack.
 
 Create a new file under `src/types` with the name `sass.d.ts` <-- actually that name doesn't matter.
 ```ts
@@ -54,18 +290,18 @@ declare module '*.scss' {
 }
 ```
 
-## Change your biotope-build version
+### Change your biotope-build version
 Run `npm install --save-dev @biotope/build@next`
 
-## Add Biotope Element to your project
+### Add Biotope Element to your project
 Run `npm install --save @biotope/element`
 
-## Generate files with biotope cli
+### Generate files with biotope cli
 Run `npx @biotope/cli generate`
 
 Follow the instructions, you may follow the naming pattern `XYourComponentName`
 
-## Add polyfills for IE11 and Edge
+### Add polyfills for IE11 and Edge
 Copy the following files from `node_modules/@webcomponents` to `src/resources/js/polyfills`
 ```js
 'webcomponents-loader.js',
@@ -141,7 +377,7 @@ global: {
 }
 ```
 
-## Write your component
+### Write your component
 
 1. `npx @biotope/cli generate`
 2. inside your the generated index.ts add new line `DemoComponent.register();` thats necessary to
@@ -149,239 +385,3 @@ global: {
 3. Use the component with resource loader
 `<demo-component data-resources="[{paths: ['components/demo-component/index.js']}]"></demo-component>`
 
-
-# Migrating from v3 to v4
-
-## `wire` function removal and `html` function update
-
-TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
-needs it's return value to be the result of `this.html`, otherwise nothing will get rendered.
-
-v3 code:
-```javascript
-class MyComponent extends Component {
-  renderPartial() {
-    // The next line changed
-    return this.wire()`
-      <div>My Partial Div</div>
-    `;
-  }
-
-  render() {
-    // The next line changed
-    this.html`
-      <div>Main render function</div>
-      ${this.renderPartial()}
-    `;
-  }
-}
-```
-
-v4 code:
-```javascript
-class MyComponent extends Component {
-  renderPartial() {
-    // The next line changed
-    return this.html`
-      <div>My Partial Div</div>
-    `;
-  }
-
-  render() {
-    // The next line changed
-    return this.html`
-      <div>Main render function</div>
-      ${this.renderPartial()}
-    `;
-  }
-}
-```
-
-## `onPropsChanged` and `created` hooks removal
-
-TLDR: `onPropsChanged` and `created` hooks were removed as they were redundant - you can use
-`attributeChangedCallback` and `connectedCallback` to do the same thing, respectively.
-
-v3 code:
-```javascript
-class MyComponent extends Component {
-  created() {
-    // Insert your "init code" here
-  }
-  onPropsChanged() {
-    // Insert logic for attribute/prop changes
-  }
-}
-```
-
-v4 code:
-```javascript
-class MyComponent extends Component {
-  connectedCallback() {
-    // Insert your "init code" here - the element is in the DOM already
-  }
-  attributeChangedCallback(name, previous, current) {
-    // Insert logic for attribute changes
-
-    // This function updates the props
-    super.attributeChangedCallback(name, previous, current);
-
-    // Insert logic for prop changes
-  }
-}
-```
-
-## Bypassing attribute-to-prop conversion is not possible
-
-TLDR: You can no longer set a `props` attribute when creating a component to pass all attributes.
-
-v3 code:
-```html
-<my-component props=...></my-component>
-```
-
-v4 code:
-```html
-<my-component my-first-prop=... my-second-prop=...></my-component>
-<script>
-  // OR through js
-  myComponent.myFirstProp = ...;
-</script>
-```
-
-## `basedOn` feature removal
-
-You can no longer use the `baseOn` feature. Please build the component you want using the `render`
-function.
-
-## `defaultProps` and `defaultState`
-
-TLDR: You can now define `defaultProps` and `defaultState` as regular variables, instead of having
-to do it in a getter.
-
-v3 code:
-```javascript
-class MyComponent extends Component {
-  get defaultProps() {
-    return {
-      // ...
-    };
-  }
-}
-```
-
-v4 code:
-```javascript
-class MyComponent extends Component {
-  constructor() {
-    super();
-    this.defaultProps = {
-      // ...
-    };
-  }
-}
-// OR
-class MyComponent extends Component {
-  defaultProps = {
-    // ...
-  }
-}
-// OR
-class MyComponent extends Component {
-  get defaultProps() {
-    return {
-      // ...
-    };
-  }
-}
-```
-
-## Member-access in Typescript
-
-Some class properties have changed their member-access.
-
-Here is a list of changes:
-```javascript
-class MyComponent extends Component {
-  public static attributes;
-  private static observedAttributes;
-
-  public props;
-  protected state;
-  protected readonly defaultProps;
-  protected readonly defaultState;
-}
-```
-
-## Automatic types
-
-TLDR: no more converting strings to js types - just add a `type` property to each attribute (manual
-converters still work).
-
-v3 code:
-```javascript
-class MyComponent extends Component {
-  ...
-}
-
-MyComponent.attributes = [
-  'simple-text',
-  {
-    name: 'open',
-    converter: prop => /* my manual convertion to boolean */,
-  },
-];
-```
-
-v4 code:
-```javascript
-class MyComponent extends Component {
-  ...
-}
-
-MyComponent.attributes = [
-  'simple-text',
-  {
-    name: 'open',
-    type: 'boolean',
-    /**
-     * Also supports:
-     * - string (default type)
-     * - number
-     * - object
-     * - array
-     * - function
-     */
-  },
-];
-```
-
-## `rendered` hook and the `setTimeout` usage
-
-This was never a good practice to begin with and there were alternatives for almost every case, but
-now you have a way of doing this that is clean - the `rendered` hook and `ref`s (no `setTimeout`s!).
-
-v4 code:
-```javascript
-import Component, { createRef } from '@biotope-element';
-
-class MyComponent extends Component {
-  constructor() {
-    super();
-    this.refs = {
-      input: createRef(),
-    };
-  }
-
-  render() {
-    return this.html`
-      <input value="Nice!" ref=${this.refs.input} />
-    `;
-  }
-
-  rendered() {
-    // Prints "Nice!"
-    console.log(this.refs.input.current.value);
-  }
-}
-```

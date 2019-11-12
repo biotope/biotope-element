@@ -11,7 +11,7 @@ Web Components.
 However, we did a small adjustment on the timing of two of the hooks. But we'll get into more detail
 on their sections.
 
-## Hook order
+## Hooks
 When registering and rendering a component for the first time, you can expect the following hook
 order:
   1. constructor
@@ -32,7 +32,7 @@ Below we provide a simple explanation and simple examples of how all of these ho
 are called and what you should be doing on each one. This however does not replace any Web Component
 hook documentation.
 
-## constructor
+### constructor
 Simple enough to understand - just a class constructor.
 
 This is the point of entry point for the creation of the instance of your component. Here are some
@@ -42,7 +42,7 @@ examples of things you can/should do in this function:
   - initialize some service you need (tracking for example)
   - set `defaultProps` and/or `defaultState`
 
-## connectedCallback
+### connectedCallback
 This hook gets called once the component is already attached to the DOM. If the component is removed
 from the DOM and re-attached to it, then this function gets called again.
 
@@ -51,10 +51,10 @@ This is where you can typically:
   - add event listeners to the component itself
   - read/write to your slot (`innerHTML`) - if need be…
 
-__⚠️ Important:__ In vanilla Web Components, this hook is called only **after** `attributeChangedCallback`.
+> __⚠️ Important:__ In vanilla Web Components, this hook is called only **after** `attributeChangedCallback`.
 In `biotope-element`however, this order is switched for render optimization purposes.
 
-## attributeChangedCallback
+### attributeChangedCallback
 This hooks is called when an attribute has changed on the component. It can trigger a new render if
 it determines that the props need to be changed. If they don't, no new render will be triggered.
 
@@ -86,7 +86,7 @@ This is the only hook that requires you to call the `super` function in order to
 Remember to always call it, otherwise no props will get changed, unless you do it manually - we
 don't advise it.
 
-## render
+### render
 This is the first hook provided by `biotope-element`. It's responsible for returning the HTML that
 results from the "variables" of the component (i.e. props, state, ...).
 
@@ -94,11 +94,11 @@ The returned HTML should fully represent the variables of the component. This me
 components of the same class, with the same props and state should return the same HTML.
 Side-effects are very much discouraged!
 
-__📝 Note:__ When creating a new component, you may have several calls to `attributeChangedCallback`
+> __📝 Note:__ When creating a new component, you may have several calls to `attributeChangedCallback`
 due to having inserted more than one HTML attribute before the component is connected to the DOM.
 This will only result in one `render` being called though.
 
-## rendered
+### rendered
 This is the second hook provided by `biotope-element`. This hook will only be called when a `render`
 has finished and the DOM has been updated. If two `render`s are called, this hook will also be
 called twice.
@@ -109,7 +109,7 @@ This means that, in this hook, you can:
 `readonly` attribute on the native `input` element)
   - add some custom event listeners to the newly created elements
 
-## disconnectedCallback
+### disconnectedCallback
 The counterpart of the `connectedCallback` hook. This hook gets called whenever a component leaves
 the DOM. Just like `connectedCallback`, this hook will be called again if the component gets
 attached and again detached from the DOM.
@@ -159,7 +159,7 @@ MyButton.attributes = ['text', 'another-text'];
 MyButton.register();
 ```
 
-## No attributes
+### No attributes
 Considering the component above, and given this next HTML:
 
 ```html
@@ -181,7 +181,7 @@ If we then remove the element from the DOM, it would just output:
 > sixth
 ```
 
-## Two attributes
+### Two attributes
 Considering the component above, and given this next HTML:
 
 ```html

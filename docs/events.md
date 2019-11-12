@@ -45,10 +45,10 @@ MyButton.register();
 
 This will dispatch an event with the name "pressed" that any parent element can listen to.
 
-__📝 Note:__ You can always ignore the `emit` function and just call an event dispatcher yourself
+> __📝 Note:__ You can always ignore the `emit` function and just call an event dispatcher yourself
 with a `new CustomEvent`. It's up to you.
 
-__⚠️ Important__: Event names should always be written in lowercase - capital letters are not
+> __⚠️ Important:__ Event names should always be written in lowercase - capital letters are not
 supported.
 
 ### Sending a value

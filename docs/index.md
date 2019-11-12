@@ -77,7 +77,7 @@ This will result in the following html:
 </my-button>
 ```
 
-Note: It's irrelevant where the `script` is placed. But remember that the component will only start
+> __📝 Note:__ It's irrelevant where the `script` is placed. But remember that the component will only start
 to render after the `script` is parsed and the component is registered.
 
 ## Compatibility and Polyfills

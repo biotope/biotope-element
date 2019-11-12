@@ -3,9 +3,21 @@ id: peers
 title: Peer Packages
 ---
 
-## Biotope Resource Loader
-The [biotope-resource-loader](https://github.com/biotope/biotope-resource-loader) makes it easy for
-you to load the components you built with biotope-element like so:
+Here you can find packages that are helpful when using `biotope-element`.
+
+## biotope
+`biotope` is our CLI tool to create projects with Biotope. This also includes generating `biotope-element`
+components with:
+
+```bash
+biotope generate
+```
+
+You can install it with `npm install biotope` and can read more about it in our [github repo](https://github.com/biotope/biotope).
+
+## @biotope/resource-loader
+`@biotope/resource-loader` makes it easy for you to load the components you built with `biotope-element`
+like so:
 
 ```html
 <my-button data-resources="[{paths: ['path/to/js/my-button.js']}]"></my-button>
@@ -13,6 +25,5 @@ you to load the components you built with biotope-element like so:
 
 This will load the script and attatch it to the dom.
 
-
-## Generator
-...
+You can install it with `npm install @biotope/resource-loader` and you can read more about it in our
+[github repo](https://github.com/biotope/biotope-resource-loader).
