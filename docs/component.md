@@ -93,7 +93,7 @@ and not when calling the `register` function. This will also cause your componen
 
 ### Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
-you need to render a non-HTML string, then you can simply interpolate it inside the emplate string
+you need to render a non-HTML string, then you can simply interpolate it inside the template string
 that you pass to the `this.html` function. You can even use regular Javascript - inline `if`s are
 your friends ;)
 
@@ -249,7 +249,7 @@ Which will result in:
 <my-button></my-button>
 ```
 
-> __📝 Note:__ Passing non-string attributes through the shorhand notation we provide is possible,
+> __📝 Note:__ Passing non-string attributes through the shorthand notation we provide is possible,
 however they will not be printed in the HTML - instead, they will just be passed to the props. You
 can learn more about props in the next section.
 
@@ -302,7 +302,7 @@ The output will be:
 
 Adding other attributes to elements inside the `render` function is also possible - and so is
 interpolating attributes or content. Notice that attributes in HTML are written in kebab-case,
-however when used inside `this.props`, they can be accesssed through camelCase.
+however when used inside `this.props`, they can be accessed through camelCase.
 
 ```javascript
 // my-button.js

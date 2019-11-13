@@ -171,10 +171,11 @@ child component.
 With strings, this is easy: just set the attribute normally and you're good to go. Even your
 favorite Search Engine will thank you since all string attributes get written to the DOM.
 
-However, when dealing with non-string attributes this is not so easy as explained in the begining of
-this section. The HTML5 way to accomplish this task would be for the parent component to convert the
-value to a string, set it as a normal attribute on the child component and have the child component
-parse it again as a proper non-string value. This can obviously become a very inneficient process.
+However, when dealing with non-string attributes this is not so easy as explained in the beginning
+of this section. The HTML5 way to accomplish this task would be for the parent component to convert
+the value to a string, set it as a normal attribute on the child component and have the child
+component parse it again as a proper non-string value. This can obviously become a very inefficient
+process.
 
 `biotope-element` lets you pass a non-string attribute to another `biotope-element` seamlessly and
 without any change for the developer. Here's an example:
@@ -193,7 +194,7 @@ return this.html`
 `;
 ```
 
-If we now consider that the child treats `text` and `another-text` both as strings `example-aray`
+If we now consider that the child treats `text` and `another-text` both as strings `example-array`
 and `another-array` both as of type "array", then we can safely deduce that the attribute `another-array`
 will definitely take longer to parse due to being converted to/from string into an array.
 

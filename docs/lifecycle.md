@@ -66,7 +66,7 @@ class MyButton extends Component {
     // Here, no props have changed yet
     // You can do any check you want on the "current" attribute
 
-    super.attributeChangedCallback(name, previus, current)
+    super.attributeChangedCallback(name, previous, current)
 
     // Here, prop with the name in "name" has changed
     // You can access "this.props[name]" and the result is the value of "current"
@@ -166,7 +166,7 @@ Considering the component above, and given this next HTML:
 <my-button></my-button>
 ```
 
-Then the ouputs to the console would be:
+Then the outputs to the console would be:
 
 ```bash
 > first
@@ -191,7 +191,7 @@ Considering the component above, and given this next HTML:
 ></my-button>
 ```
 
-Then the ouputs to the console would be:
+Then the outputs to the console would be:
 
 ```bash
 > first

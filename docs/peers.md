@@ -23,7 +23,7 @@ like so:
 <my-button data-resources="[{paths: ['path/to/js/my-button.js']}]"></my-button>
 ```
 
-This will load the script and attatch it to the dom.
+This will load the script and attach it to the dom.
 
 You can install it with `npm install @biotope/resource-loader` and you can read more about it in our
 [github repo](https://github.com/biotope/biotope-resource-loader).

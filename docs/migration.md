@@ -181,7 +181,7 @@ MyComponent.attributes = [
   'simple-text',
   {
     name: 'open',
-    converter: prop => /* my manual convertion to boolean */,
+    converter: prop => /* my manual conversion to boolean */,
   },
 ];
 ```

@@ -6,7 +6,7 @@ title: Introduction
 `biotope-element` is a library to create Web Components in a simple way, taking advantage of simple
 yet powerful concepts from other frontend libraries to empower you, the developer, and your clients'
 needs - be them integration with popular CMSs or developing amazing design-systems to be used
-anywere.
+anywhere.
 
 `biotope-element` uses mostly vanilla web technologies and is built with the intention of being used
 for component development and not page assembly. This means we dedicate ourselves to making sure

@@ -69,7 +69,7 @@ object that is "toStringable". This next example is equal to the one above.
 // "style" variable coming from a loader
 // imported with, for example: import style from './styles.css';
 const style = {
-  // doesnt mater what's inside the object
+  // doesn't mater what's inside the object
 };
 style.toString = () => 'color: red;';
 
@@ -180,8 +180,8 @@ my-button {
 
 The `:host` fule is there for modern browsers and the `my-button` rule is there mainly for IE11. The
 reason why the code has to be repeated has to do with how browsers read and apply CSS rules. If IE11
-encounters the following example, it will crash uppon reading the `:host` selector and will not
-apply any of the rules we set.
+encounters the following example, it will crash upon reading the `:host` selector and will not apply
+any of the rules we set.
 
 ```css
 /* This breaks IE11 */

@@ -125,7 +125,7 @@ Then the rendered component (according to the previous shadow DOM notation we us
 </my-button>
 ```
 
-However, the user would effectivle only see the following:
+However, the user would effectively only see the following:
 
 ```html
 <my-button>

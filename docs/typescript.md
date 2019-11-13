@@ -12,7 +12,7 @@ export all the types that you might need to develop your codebase without using 
 Additionally, we have also established clear and predictable member-access for all properties and
 functions `biotope-element` provides.
 
-Here are two examples of components that encorporate most of what you can see in these docs, so that
+Here are two examples of components that incorporate most of what you can see in these docs, so that
 you don't need to scour them to look for that little piece of the puzzle that `tsc` is complaining
 about.
 

@@ -9,7 +9,7 @@ home.
 
 References are basically objects that represent DOM elements in Javascript. It's like doing a `document.getElementById(…)`
 on an element that has an `id` attribute and storing the return value in a variable - and then
-everytime that element is rewritten, the variable pointing to it gets updated.
+every time that element is rewritten, the variable pointing to it gets updated.
 
 Usually, and due to how Javacript memory allocation and pointers work, a reference is usually an
 object that looks like this:
@@ -20,7 +20,7 @@ const input = {
 };
 ```
 
-The `current` property stores a pointer to the DOM element and it gets rewritten everythime that
+The `current` property stores a pointer to the DOM element and it gets rewritten every time that
 DOM element is recreated. This means that you can send the `input` variable to any function at one
 point in time and, if the element it's storing gets updated, only the `current` value would be
 overwritten.
