@@ -24,7 +24,7 @@ export interface ComponentPrototype extends Function {
   render: RenderFuntion;
   rendered: () => void;
   emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;
-  createStyle: (styleContent: HTMLElementContent) => HTMLStyleElement;
+  createStyle: (styleContent: HTMLElementContent) => HTMLFragment;
   setState: (state: object | ((state: object) => object)) => void;
 }
 
