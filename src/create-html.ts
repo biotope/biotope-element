@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { render, html } from 'lighterhtml';
 
 import { HTMLFragment } from './types';

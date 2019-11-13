@@ -37,9 +37,6 @@
     "url": "https://github.com/biotope/biotope-element/issues"
   },
   "homepage": "https://github.com/biotope/biotope-element#readme",
-  "dependencies": {
-    "lighterhtml": "^1.4.1"
-  },
   "devDependencies": {
     "@babel/core": "~7.7",
     "@biotope/quality-gate": "~1.0",
@@ -51,9 +48,10 @@
     "docusaurus": "~1.14",
     "eslint-plugin-jest": "~23.0",
     "jest": "~24.9",
+    "lighterhtml": "~1.4",
     "np": "~5.1",
     "prismjs": "~1.17",
-    "rollup": "~1.26",
+    "rollup": "~1.27",
     "rollup-plugin-commonjs": "~10.1",
     "rollup-plugin-node-resolve": "~5.2",
     "rollup-plugin-progress": "~1.1",
