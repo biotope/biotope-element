@@ -1,0 +1,32 @@
+# Override .gitignore and include lib folder
+!/lib
+
+# Ignore all the following
+
+## Source and test code
+/coverage
+/src
+/tests
+/types
+
+## Config files
+/Dockerfile
+/.*
+!/.eslintrc.code
+!/.stylelintrc
+/*.js
+/*.yml
+
+## Website and old docs
+/website
+
+## Example code generated files
+/examples/node_modules
+/examples/package-lock.json
+
+## Occasional dev/log files
+/TODO
+/stats.html
+/*.txt
+/*.log
+/*.tgz
