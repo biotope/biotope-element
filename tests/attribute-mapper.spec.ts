@@ -1,8 +1,8 @@
 import { attributeName, attributeValue } from '../src/attribute-mapper';
-import { ConvertableAttribute, TypedAttribute, SimpleAttribute } from '../src/types';
+import { ConvertibleAttribute, TypedAttribute, SimpleAttribute } from '../src/types';
 
 describe('attribute-mapper', () => {
-  const mockAttribute: ConvertableAttribute = {
+  const mockAttribute: ConvertibleAttribute = {
     name: 'mock-attribute',
     converter(value: string): string {
       return value;
@@ -33,7 +33,7 @@ describe('attribute-mapper', () => {
       });
     });
 
-    describe('given a ConvertableAttribute', () => {
+    describe('given a ConvertibleAttribute', () => {
       it('returns the converted value', () => {
         const result = attributeValue(mockAttribute, 'mock-value');
         expect(result).toBe('mock-value');

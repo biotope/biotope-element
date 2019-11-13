@@ -2,14 +2,14 @@
 import { render, html } from 'lighterhtml';
 
 import { HTMLFragment } from './types';
-import { Renderer, ComponentInstance, RenderFuntion } from './internal-types';
+import { Renderer, ComponentInstance, RenderFunction } from './internal-types';
 
 export { html };
 
 export const createRender = (
   context: ComponentInstance, originalRender: Function, postFunction: Function,
-): RenderFuntion => {
-  const renderFunction: RenderFuntion = render
+): RenderFunction => {
+  const renderFunction: RenderFunction = render
     .bind(context, context.shadowRoot || context, (): void => {
       const element = originalRender();
       setTimeout(postFunction);
