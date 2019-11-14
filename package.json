@@ -48,7 +48,7 @@
     "docusaurus": "~1.14",
     "eslint-plugin-jest": "~23.0",
     "jest": "~24.9",
-    "lighterhtml": "~1.4",
+    "lighterhtml": "~2.0",
     "np": "~5.1",
     "prismjs": "~1.17",
     "rollup": "~1.27",
