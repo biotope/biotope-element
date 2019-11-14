@@ -27,3 +27,14 @@ This will load the script and attach it to the dom.
 
 You can install it with `npm install @biotope/resource-loader` and you can read more about it in our
 [github repo](https://github.com/biotope/biotope-resource-loader).
+
+## @biotope/quality-gate
+`@biotope/quality-gate` makes it easy for you to lint the components you built with `biotope-element`
+by running a simple command:
+
+```bash
+> biotope-quality-gate
+```
+
+We advise this package to be installed as a dev dependency. You can install it with `npm install @biotope/quality-gate -D`
+and you can read more about it in our [github repo](https://github.com/biotope/biotope-quality-gate).

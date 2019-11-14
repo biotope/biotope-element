@@ -15,6 +15,7 @@
     ],
     "Misc": [
       "peers",
+      "integration",
       "migration"
     ]
   }

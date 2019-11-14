@@ -142,6 +142,60 @@ The slot can be put anywhere - as part of the root of your component, inside som
 inside other components (like the `my-fancy-span` component). In the latter case, it will then
 become the slot for that component and `my-fancy-slot` can then re-use the `slot` element itself!
 
+## Named slots
+If you need to pass several "sections" of content to your component and you want the component to
+organize them, you can do that by naming your `slot` elements.
+
+If your component supports slot names:
+
+```javascript
+// render function
+return this.html`
+  First name: <slot name="first"></slot>
+  Last name: <slot name="last"></slot>
+```
+
+By sending it some named content like so:
+
+```html
+<my-button>
+  <span slot="first">John</span>
+  <span slot="last">Doe</span>
+</my-button>
+```
+
+Then your component would output the following:
+
+```html
+<my-button>
+  First name: <span slot="first">John</span>
+  Last name: <span slot="last">Doe</span>
+</my-button>
+```
+
+Additionally, you can add some default values that will be shown if/while no slot of that name is
+available. Here's an example:
+
+```javascript
+// render function
+return this.html`
+  <div>
+    First name: <slot name="first">none</slot>
+    Last name: <slot name="last">none</slot>
+  </div>
+```
+
+This would out put the following HTML if no slot with "first" and "last" names are provided:
+
+```html
+<my-button>
+  First name: <slot slot="first">none</span>
+  Last name: <slot slot="last">none</span>
+</my-button>
+```
+
+> __📝 Note:__ This default functionality is not available if the slot is not named.
+
 ## Removing the shadow DOM
 If for some reason you don't want to use the shadow DOM and want the component to directly output
 the result of the `render` function to the `innerHTML`, the you can simply override the constructor

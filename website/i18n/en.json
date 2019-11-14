@@ -17,6 +17,9 @@
       "index": {
         "title": "Introduction"
       },
+      "integration": {
+        "title": "IDE Integration"
+      },
       "lifecycle": {
         "title": "Lifecycle Hooks"
       },
