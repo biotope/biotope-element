@@ -88,7 +88,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
   const originalRendered = context.prototype.rendered;
 
-  context.prototype.disconnectedCallback = function (): void {
+  context.prototype.rendered = function (): void {
     const instance = (this as ComponentInstance);
     originalRendered.bind(instance)();
     instance.emit('rendered');
