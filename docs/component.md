@@ -5,7 +5,7 @@ title: Component
 
 We trust in the web.
 
-`biotope-element` is an extension of a vanilla a HTMLElement with some nice features on top. So
+`biotope-element` is an extension of a vanilla HTMLElement with some nice features on top. So
 everything you build using `biotope-element` is a component. Anything else you need can be grabbed
 from other libraries.
 
@@ -94,8 +94,8 @@ and not when calling the `register` function. This will also cause your componen
 ### Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
 you need to render a non-HTML string, then you can simply interpolate it inside the template string
-that you pass to the `this.html` function. You can even use regular Javascript - inline `if`s are
-your friends ;)
+that you pass to the `this.html` function. You can even use regular Javascript - inline conditions
+are your friends ;)
 
 Here's an example:
 
@@ -195,14 +195,14 @@ This is the main way of passing information to any component.
 
 Every component has its own attributes. If you have any experience with adding for example
 `class`es, `id`s, `src`s or `data-*` attributes on regular HTMLElements, then you already know how
-to add/modify/remove attributes on `biotope-element`s.
+to add/modify/remove attributes in`biotope-element`.
 
 To add or modify an attribute to a `biotope-element` component, you can simply do:
 
 ```html
 <my-button></my-button>
 <script>
-  const myElement = document.getElementsByTagName('my-button');
+  const myElement = document.querySelector('my-button');
   myElement.setAttribute('example-attribute', 'Hello Foo World');
 </script>
 ```
@@ -212,12 +212,12 @@ Which will result in:
 ```html
 <my-button example-attribute="Hello Foo World"></my-button>
 <script>
-  const myElement = document.getElementsByTagName('my-button');
+  const myElement = document.querySelector('my-button');
   myElement.setAttribute('example-attribute', 'Hello Foo World');
 </script>
 ```
 
-Additionally, you can use a shortened notation that we provide in `biotope-element`s.
+Additionally, you can use a short notation that we provide in `biotope-element`.
 
 ```javascript
 myElement.setAttribute('example-attribute', 'Hello Foo World');
@@ -259,7 +259,7 @@ to our components to simplify and streamline this process. This means that, prop
 picking and parsing of all the attributes of the component. However, this is only efficient if the
 component knows which attributes to watch and which ones to ignore.
 
-A prop change will always trigger a new render. Consider this next example component, with a "greet"
+A prop change will always trigger a new render. Consider this next example component, with a `greet`
 attribute. We can customize the greeting message the component outputs by sending it through that
 same attribute and accessing it in the prop.
 
