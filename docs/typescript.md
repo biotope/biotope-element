@@ -1,13 +1,13 @@
 ---
 id: typescript
-title: Typescript
+title: TypeScript
 ---
 
-We ❤️ Typescript.
+We ❤️ TypeScript.
 
 So much so that the entirety of the `biotope-element` codebase is built using typescript only.
 
-Given that fact, every example you see in this documentation is easily portable to Typescript as we
+Given that fact, every example you see in this documentation is easily portable to TypeScript as we
 export all the types that you might need to develop your codebase without using wildcard types.
 Additionally, we have also established clear and predictable member-access for all properties and
 functions `biotope-element` provides.
@@ -22,7 +22,7 @@ This first example is a child component (to be used by the parent component):
 // my-button.ts
 import Component, { HTMLFragment, PropValue } from '@biotope/element';
 
-export type MuButtonEventPressed = string;
+export type MyButtonEventPressed = string;
 
 export interface MyButtonProps {
   text: string;
@@ -40,11 +40,11 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
   ];
 
   protected readonly defaultProps: MyButtonProps = {
-    text: '';
+    text: '',
   };
 
   protected readonly defaultState: MyButtonState = {
-    counter: 0;
+    counter: 0,
   };
 
   public connectedCallback(): void {
@@ -71,7 +71,7 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
   }
 
   private handleClick(): void {
-    this.emit<MuButtonEventPressed>('pressed', 'Some secret value');
+    this.emit<MyButtonEventPressed>('pressed', 'Some secret value');
   }
 }
 
@@ -83,7 +83,7 @@ This is the parent component:
 ```typescript
 // my-form.ts
 import Component, { createRef, HTMLFragment } from '@biotope/element';
-import { MyButton, MuButtonEventPressed } from './my-button';
+import { MyButton, MyButtonEventPressed } from './my-button';
 
 export class MyForm extends Component {
   public static componentName = 'my-form';
@@ -95,7 +95,7 @@ export class MyForm extends Component {
   private refs = {
     myButton: createRef<MyButton>(),
     input: createRefCallback<HTMLInputElement>(
-      () => this.shadowRoot.querySelector('my-fancy-class'),
+      () => this.shadowRoot.querySelector('.my-fancy-class'),
     ),
   };
 
@@ -111,7 +111,7 @@ export class MyForm extends Component {
     `;
   }
 
-  private handlePress({ detail }: CustomEvent<MuButtonEventPressed>): void {
+  private handlePress({ detail }: CustomEvent<MyButtonEventPressed>): void {
     // do something with the string "detail"
   }
 }

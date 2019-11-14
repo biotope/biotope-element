@@ -6,13 +6,13 @@
 `biotope-element` is a library to create Web Components in a simple way, taking advantage of simple
 yet powerful concepts from other frontend libraries to empower you, the developer, and your clients'
 needs - be them integration with popular CMSs or developing amazing design-systems to be used
-anywere.
+anywhere.
 
-`biotope-element` was developed using mostly vanilla web technologies and with the intention of
-being used for component development and not page assembly. This means we dedicate ourselves to
-making sure that page assembly libraries like React, Vue or Angular have the best possible
-experience when using our components. This also means that every piece of knowledge you have about
-HTMLElements is 100% valid and applicable when working with `biotope-element`.
+`biotope-element` uses mostly vanilla web technologies and is built with the intention of being used
+for component development and not page assembly. This means we dedicate ourselves to making sure
+that page assembly libraries like React, Vue or Angular have the best possible experience when using
+our components. This also means that every piece of knowledge you have about HTMLElements is
+applicable when working with `biotope-element`.
 
 ## Installation
 You can install the biotope element in your project using npm:
@@ -72,17 +72,20 @@ This will result in the following html:
 </my-button>
 ```
 
-Note: It's irrelevant where the `script` is placed. But remember that the component will only start
+> __📝 Note:__ It's irrelevant where the `script` is placed. But remember that the component will only start
 to render after the `script` is parsed and the component is registered.
 
 ## Compatibility and Polyfills
 Natively, Web Components are not supported by all browsers - this includes `biotope-element`. You
 can check out a list of compatible browsers using [caniuse](https://caniuse.com/#search=Custom%20Elements%20v1).
 
-To get it to work almost all non-dead browsers, you can use [these polyfills](https://github.com/webcomponents/polyfills).
+To get it to work on almost all non-dead browsers, you can use [these polyfills](https://github.com/webcomponents/polyfills).
 You can also checkout their [npm package](https://www.npmjs.com/package/@webcomponents/webcomponentsjs)
 or you can simply put a script pointing to [unpkg](https://unpkg.com/@webcomponents/webcomponentsjs@2.3.0/webcomponents-loader.js)
 which will load only the necessary polyfills.
+
+Remember to make sure that the polyfill is fully loaded before attempting to load any component with
+a `script` element.
 
 ## Documentation
 You can find the documentation [here](https://element.biotope.sh).

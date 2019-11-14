@@ -185,7 +185,7 @@ return this.html`
   </div>
 ```
 
-This would out put the following HTML if no slot with "first" and "last" names are provided:
+This would output the following HTML if no slot with "first" and "last" names are provided:
 
 ```html
 <my-button>
@@ -198,7 +198,7 @@ This would out put the following HTML if no slot with "first" and "last" names a
 
 ## Removing the shadow DOM
 If for some reason you don't want to use the shadow DOM and want the component to directly output
-the result of the `render` function to the `innerHTML`, the you can simply override the constructor
+the result of the `render` function to the `innerHTML`, then you can simply override the constructor
 like so:
 
 ```javascript
@@ -219,9 +219,6 @@ class MyButton extends Component {
 }
 
 MyButton.componentName = 'my-button';
-MyButton.dependencies = [
-  MyFancySpan,
-];
 MyButton.register();
 ```
 
@@ -229,4 +226,4 @@ In this scenario, if you output the content of `innerHTML` of that component, in
 string, you will get the content of the `render` function.
 
 This is not an ideal scenario due to how slotting and style scoping work in Web Components and
-should be used only when you are absolutely sure what you're doing.
+should be used only when you are absolutely sure of what you're doing.

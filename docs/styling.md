@@ -5,8 +5,7 @@ title: Styling
 
 Web components use a shadow DOM to write their HTML. The shadow DOM has some interesting features
 that make it very different from writing to an element using `innerHTML`. Styling-wise, the shadow
-DOM scopes the style, so that styles from the page does not leak into the component and style and
-vice-versa.
+DOM scopes the style, so that the page's style does not leak into the component and vice-versa.
 
 However, applying styles to any HTMLElement is just like applying styles to any `biotope-element`
 component. You basically have two approaches: the `style` element and inline styling - with the same
@@ -35,21 +34,27 @@ return this.html`
     Hello World 🐤
   </div>
   <style>
-    color: red;
+    div {
+      color: red;
+    }
   </style>
 `;
 ```
 
 ### createStyle function
 We provide you with a pretty cool function to do most of this automatically - the `createStyle`
-function. It can take either take a string (or an object with a `toString` function) and convert it
-into a `style` element that you can use directly in your component.
+function. It can take a string (or an object with a `toString` function) and convert it into a `style`
+element that you can use directly in your component.
 
 Here is an example:
 
 ```javascript
 // "style" variable
-const style = 'color: red;';
+const style = `
+  div {
+    color: red;
+  }
+`;
 
 // render function
 return this.html`
@@ -71,7 +76,11 @@ object that is "toStringable". This next example is equal to the one above.
 const style = {
   // doesn't mater what's inside the object
 };
-style.toString = () => 'color: red;';
+style.toString = () => `
+  div {
+    color: red;
+  }
+`;
 
 // render function
 return this.html`
@@ -83,7 +92,7 @@ return this.html`
 ```
 
 This is extremely relevant and useful when you're using webpack or other build tools to load styles
-into your Javascript files. With this function, `biotope-element` will be able to stringify whatever
+into your JavaScript files. With this function, `biotope-element` will be able to stringify whatever
 a loader throws at you and print your CSS seamlessly.
 
 > __📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
@@ -92,8 +101,8 @@ import Component, { createStyle } from '@biotope/element';
 ```
 
 ### Dynamic styles
-Since a component is fully written in Javascript, it can be very tempting to just interpolate inside
-the `style` element and add in your Javascript variable to the style. However, due to how the Web
+Since a component is fully written in JavaScript, it can be very tempting to just interpolate inside
+the `style` element and add in your JavaScript variable to the style. However, due to how the Web
 Components polyfill works, this is a very bad practice as the modified style will get applied to the
 entire page. This means that any component-specific state-dependant modification can be applied to
 all components of a page.
@@ -134,7 +143,7 @@ return this.html`
 `;
 ```
 
-In the same manner of css-in-js, and in order to have an easy dev experience in Javascript, any
+In the same manner of css-in-js, and in order to have an easy dev experience in JavaScript, any
 kebab-cased CSS properties are available as camelCase, like so:
 
 ```javascript
@@ -168,7 +177,7 @@ Here is how you can use it in a component named "my-button":
 > __📝 Note:__ The parameter you pass to the host mixin has to match the `componentName` you set in
 the component, otherwise IE11 will not have any styles set.
 
-This mixin is just an example however - you can chose to use it, ignore it, modify it or port it to
+This mixin is just an example however - you can choose to use it, ignore it, modify it or port it to
 another language very easily. The mixin will produce the following code:
 
 ```css
@@ -181,7 +190,7 @@ my-button {
 }
 ```
 
-The `:host` fule is there for modern browsers and the `my-button` rule is there mainly for IE11. The
+The `:host` rule is there for modern browsers and the `my-button` rule is there mainly for IE11. The
 reason why the code has to be repeated has to do with how browsers read and apply CSS rules. If IE11
 encounters the following example, it will crash upon reading the `:host` selector and will not apply
 any of the rules we set.

@@ -14,19 +14,19 @@ on their sections.
 ## Hooks
 When registering and rendering a component for the first time, you can expect the following hook
 order:
-  1. constructor
-  2. connectedCallback
-  3. attributeChangedCallback (if any attributes are present)
-  4. render
-  5. rendered
+  1. `constructor`
+  2. `connectedCallback`
+  3. `attributeChangedCallback` (if any attributes are present)
+  4. `render`
+  5. `rendered`
 
 When a component is rendered and idle on the page and one of its attributes changes, these hooks are
 called in this order:
-  1. attributeChangedCallback
-  2. render
-  3. rendered
+  1. `attributeChangedCallback`
+  2. `render`
+  3. `rendered`
 
-When the component is removed from the page, only the `disconnectedCallback` hooks gets triggered.
+When the component is removed from the page, only the `disconnectedCallback` hook gets triggered.
 
 Below we provide a simple explanation and simple examples of how all of these hooks work, when they
 are called and what you should be doing on each one. This however does not replace any Web Component
@@ -35,10 +35,10 @@ hook documentation.
 ### constructor
 Simple enough to understand - just a class constructor.
 
-This is the point of entry point for the creation of the instance of your component. Here are some
-examples of things you can/should do in this function:
-  - bind functions to the `this` context;
-  - apply any needed function debouncing;
+This is the entry point for the creation of the instance of your component. Here are some examples
+of things you can/should do in this function:
+  - bind functions to the `this` context
+  - apply any needed function debouncing
   - initialize some service you need (tracking for example)
   - set `defaultProps` and/or `defaultState`
 
@@ -55,7 +55,7 @@ This is where you can typically:
 In `biotope-element`however, this order is switched for render optimization purposes.
 
 ### attributeChangedCallback
-This hooks is called when an attribute has changed on the component. It can trigger a new render if
+This hook is called when an attribute has changed on the component. It can trigger a new render if
 it determines that the props need to be changed. If they don't, no new render will be triggered.
 
 You can use this function for 2 main purposes. Here is an example:
@@ -105,8 +105,8 @@ called twice.
 
 This means that, in this hook, you can:
   - query the newly created element for anything you want
-  - add some attributes that are can only be added after a DOM element is rendered (like the
-`readonly` attribute on the native `input` element)
+  - add some attributes that can only be added after a DOM element is rendered (like the `readonly` 
+attribute on the native `input` element)
   - add some custom event listeners to the newly created elements
 
 ### disconnectedCallback
@@ -136,7 +136,7 @@ export class MyButton extends Component {
     console.log('third', name);
   }
 
-  render(): HTMLFragment {
+  render() {
     console.log('fourth');
     return this.html`
       …

@@ -8,7 +8,7 @@ title: Migration
 ### `wire` function removal and `html` function update
 
 TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
-needs it's return value to be the result of `this.html`, otherwise nothing will get rendered.
+needs to return the result of `this.html`, otherwise nothing will get rendered.
 
 v3 code:
 ```javascript
@@ -149,15 +149,15 @@ class MyComponent extends Component {
 }
 ```
 
-### Member-access in Typescript
+### Member-access in TypeScript
 
-Some class properties have changed their member-access.
+Some class properties have changed their member-access. `observedAttributes` is now `private` and
+is no longer accessible.
 
 Here is a list of changes:
 ```javascript
 class MyComponent extends Component {
   public static attributes;
-  private static observedAttributes;
 
   public props;
   protected state;
@@ -168,8 +168,8 @@ class MyComponent extends Component {
 
 ### Automatic types
 
-TLDR: no more converting strings to js types - just add a `type` property to each attribute (manual
-converters still work).
+TLDR: no more converting strings to JavaScript types - just add a `type` property to each attribute
+(manual converters still work).
 
 v3 code:
 ```javascript

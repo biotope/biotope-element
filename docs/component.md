@@ -94,7 +94,7 @@ and not when calling the `register` function. This will also cause your componen
 ### Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
 you need to render a non-HTML string, then you can simply interpolate it inside the template string
-that you pass to the `this.html` function. You can even use regular Javascript - inline conditions
+that you pass to the `this.html` function. You can even use regular JavaScript - inline conditions
 are your friends ;)
 
 Here's an example:
@@ -229,7 +229,7 @@ myElement['example-attribute'] = 'Hello Foo World';
 
 All three of these instructions will result in the same HTML.
 
-Likewise, to remove attributes, you can use native Javascript:
+Likewise, to remove attributes, you can use native JavaScript:
 
 ```html
 <my-button example-attribute="Hello Foo World"></my-button>

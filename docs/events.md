@@ -4,7 +4,7 @@ title: Events
 ---
 
 Events in HTML are used for communication between your components and the outside world. `biotope-element`
-uses the native CustomEvent implementation, so only pure Javascript is used.
+uses the native CustomEvent implementation, so only pure JavaScript is used.
 
 Below you'll also find some guidelines for using CustomElements so that you have the best possible
 experience developing and maintaining components built with `biotope-element`.
@@ -122,7 +122,7 @@ handlePress({ detail }) {
 ```
 
 ## Naming
-To prevent typos in your events, and because magic number and magic strings aren't god practice
+To prevent typos in your events, and because magic number and magic strings aren't good practice
 altogether, we advise you to keep your event names in an object that can potentially be exported.
 
 ```javascript

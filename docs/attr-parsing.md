@@ -4,8 +4,8 @@ title: Attribute Parsing
 ---
 
 In regular HTMLElements, you can set attributes like `class`, `id`, `title`, `lang`, … These
-attributes are all strings, as you might discover when trying to set one of them to a Javascript
-object but you ending up with something like `class="[object Object]"`.
+attributes are all strings, as you might discover when trying to set one of them to a JavaScript
+object and you end up with something like `class="[object Object]"`.
 
 In Web Components, this is no different. However, `biotope-element` gives you the option to parse
 these string values to any other type of object you want. This is achieved through the use of
@@ -31,8 +31,9 @@ MyButton.attributes = [
 ];
 ```
 
-This will automatically try to force the value it receives into a javascript boolean type - it does
-this according to the HTML5 spec so that all these conversions stay as true to the spec as possible.
+This will automatically try to force the value it receives into a JavaScript `boolean` type - it
+does this according to the HTML5 spec so that all these conversions stay as true to the spec as
+possible.
 
 The list of possible types is the following:
   - `string` (default when `type` is omitted)
@@ -189,14 +190,15 @@ return this.html`
     text=${'Hello World'}
     another-text="Hello World too"
     example-array=${myArray}
-    another-attribute=${JSON.stringify(myArray)}
+    another-array=${JSON.stringify(myArray)}
   ></my-button>
 `;
 ```
 
 If we now consider that the child treats `text` and `another-text` both as strings `example-array`
-and `another-array` both as of type "array", then we can safely deduce that the attribute `another-array`
-will definitely take longer to parse due to being converted to/from string into an array.
+and `another-array` both as of type `array`, then we can safely deduce that the attribute `another-array`
+will definitely take longer to parse than `example-array` due to being converted from/to `string`
+and only then into an `array` (inside the `my-button`).
 
 This will however result in the attribute `example-array` not being printed to the HTML. The DOM
 would look something like this:
@@ -206,10 +208,10 @@ would look something like this:
   <my-button
     text="Hello World"
     another-text="Hello World too"
-    another-attribute="[1,2,3,4]"
+    another-array="[1,2,3,4]"
   ></my-button>
 </my-form>
 ```
 
-This is especially important when passing functions to a child element since Javascript functions do
-not retain their context when being converter to/from a string.
+This is especially important when passing functions to a child element since JavaScript functions do
+not retain their context when being converter to/from a `string`.

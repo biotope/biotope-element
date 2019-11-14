@@ -7,11 +7,11 @@ title: References
 If you have any knowledge of how references work in libraries like React, then you'll feel right at
 home.
 
-References are basically objects that represent DOM elements in Javascript. It's like doing a `document.getElementById(…)`
+References are basically objects that represent DOM elements in JavaScript. It's like doing a `document.getElementById(…)`
 on an element that has an `id` attribute and storing the return value in a variable - and then
 every time that element is rewritten, the variable pointing to it gets updated.
 
-Usually, and due to how Javacript memory allocation and pointers work, a reference is usually an
+Usually, and due to how JavaScript memory allocation and pointers work, a reference is usually an
 object that looks like this:
 
 ```javascript
@@ -47,7 +47,7 @@ class MyInput extends Component {
   constructor() {
     super();
     this.refs = {
-      input: createRef();
+      input: createRef(),
     };
   }
 
@@ -88,14 +88,14 @@ rendered() {
 
 ## createRefCallback
 You have at least two ways of fetching DOM elements inside `biotope-element`s so far: references and
-simple Javascript selectors (like `getElementBy…` and `querySelector` functions). And considering
+simple JavaScript selectors (like `getElementBy…` and `querySelector` functions). And considering
 the structure we're advising with the single `refs` object, then, if you need to actually use both
 methods, then you would end up with two types of reference checks:
 
 ```javascript
 this.refs = {
-  input: createRef();
-  secondInput: () => this.querySelector(…);
+  input: createRef(),
+  secondInput: () => this.querySelector(…),
 };
 
 // Two ways of accessing references - not good!
@@ -109,8 +109,8 @@ callback that you pass it.
 
 ```javascript
 this.refs = {
-  input: createRef();
-  secondInput: createRefCallback(() => this.querySelector(…));
+  input: createRef(),
+  secondInput: createRefCallback(() => this.querySelector(…)),
 };
 
 // One way of accessing references - very good!
