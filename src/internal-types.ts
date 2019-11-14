@@ -20,6 +20,7 @@ export interface ComponentPrototype extends Function {
   html: Renderer<HTMLFragment>;
   created: () => void;
   connectedCallback: () => void;
+  disconnectedCallback: () => void;
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
   render: RenderFunction;
   rendered: () => void;

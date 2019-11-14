@@ -67,19 +67,39 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
     instance.__created = true;
     instance.render();
+    instance.emit('connected');
   };
 
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
 
   context.prototype.attributeChangedCallback = function (...args): void {
     const instance = (this as ComponentInstance);
-    const callFunction = (): void => originalAttributeChangedCallback.bind(instance)(...args);
+    const callFunction = (): void => {
+      originalAttributeChangedCallback.bind(instance)(...args);
+      instance.emit('attributechanged');
+    };
 
     if (instance.__created) {
       callFunction();
     } else {
       instance.__attributeChangedCallbackStack.unshift(callFunction);
     }
+  };
+
+  const originalRendered = context.prototype.rendered;
+
+  context.prototype.disconnectedCallback = function (): void {
+    const instance = (this as ComponentInstance);
+    originalRendered.bind(instance)();
+    instance.emit('rendered');
+  };
+
+  const originalDisconnectedCallback = context.prototype.disconnectedCallback;
+
+  context.prototype.disconnectedCallback = function (): void {
+    const instance = (this as ComponentInstance);
+    originalDisconnectedCallback.bind(instance)();
+    instance.emit('disconnected');
   };
 
   customElements.define(context.componentName, context);
