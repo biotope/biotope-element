@@ -158,12 +158,15 @@ Here is how you can use it in a component named "my-button":
 
 ```scss
 /* This is just a symbolic import to show you where the file is */
-@import '@biotope/element/lib/host.mixin';
+@import '@biotope/element/lib/host.mixin.scss';
 
 @include host(my-button) {
   /* my component element CSS */
 }
 ```
+
+> __📝 Note:__ The parameter you pass to the host mixin has to match the `componentName` you set in
+the component, otherwise IE11 will not have any styles set.
 
 This mixin is just an example however - you can chose to use it, ignore it, modify it or port it to
 another language very easily. The mixin will produce the following code:
