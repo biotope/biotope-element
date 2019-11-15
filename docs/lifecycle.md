@@ -16,7 +16,7 @@ When registering and rendering a component for the first time, you can expect th
 order:
   1. `constructor`
   2. `connectedCallback`
-  3. `attributeChangedCallback` (if any attributes are present)
+  3. `attributeChangedCallback` (once per attribute)
   4. `render`
   5. `rendered`
 
@@ -50,6 +50,8 @@ This is where you can typically:
   - query the DOM (upwards or downwards)
   - add event listeners to the component itself
   - read/write to your slot (`innerHTML`) - if need be…
+
+When this hook finishes, it emits a non-bubbling `connected` event with no `detail`.
 
 > __⚠️ Important:__ In vanilla Web Components, this hook is called only **after** `attributeChangedCallback`.
 In `biotope-element`however, this order is switched for render optimization purposes.
@@ -86,6 +88,8 @@ This is the only hook that requires you to call the `super` function in order to
 Remember to always call it, otherwise no props will get changed, unless you do it manually - we
 don't advise it.
 
+When this hook finishes, it emits a non-bubbling `attributechanged` event with no `detail`.
+
 ### render
 This is the first hook provided by `biotope-element`. It's responsible for returning the HTML that
 results from the "variables" of the component (i.e. props, state, ...).
@@ -109,12 +113,19 @@ This means that, in this hook, you can:
 attribute on the native `input` element)
   - add some custom event listeners to the newly created elements
 
+This hook emits a non-bubbling `rendered` event with no `detail` when both of the following
+conditions are met:
+  - the hook has finished
+  - all children of this component are fully rendered and their DOM is already updated.
+
 ### disconnectedCallback
 The counterpart of the `connectedCallback` hook. This hook gets called whenever a component leaves
 the DOM. Just like `connectedCallback`, this hook will be called again if the component gets
 attached and again detached from the DOM.
 
 This hook is ideal for any cleanup operations you may need.
+
+When this hook finishes, it emits a non-bubbling `disconnected` event with no `detail`.
 
 ## Examples
 ```javascript

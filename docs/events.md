@@ -63,17 +63,30 @@ this.emit('pressed', 'Super secret value');
 
 Now the parent can read that value and get more info about the event.
 
-### Scoping the event
-The third argument of the `emit` function is a boolean that can scope the event being sent by
-appending the component name to the event name.
+### Bubbling the event
+By default, when using the `emit` function, any emitted event will be bubbled. With the third
+argument of the `emit` function, we can tell the event to disable event bubbling. This means that if
+a truthy value is passed as a third argument, any parent component will not receive the event.
 
-The code below will send an event named `my-button-pressed` instead of just `pressed`. This can be
-useful in situations where you are sure to have a lot of similar event being fired by different
-components.
+Consider that the `my-button` component sends a `pressed` event with bubbling disabled.
 
-```javascript
-this.emit('pressed', 'Super secret value', true);
+```html
+<div>
+  <my-form>
+    <my-button></my-button>
+  </my-form>
+</div>
+
+<script>
+  const createListener = (name) => () => console.log(name);
+
+  document.querySelector('my-button').addEventListener('pressed', createListener('my-button'));
+  document.querySelector('my-form').addEventListener('pressed', createListener('my-form'));
+  document.querySelector('div').addEventListener('pressed', createListener('div'));
+</script>
 ```
+
+In the above scenario, only `my-button` will be printed to the console.
 
 ## Listening
 To listen to these custom events, you can just pass a function to an attribute with the same name as

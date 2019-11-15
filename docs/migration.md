@@ -5,8 +5,33 @@ title: Migration
 
 ## Migrating from v3 to v4
 
-### `wire` function removal and `html` function update
+### emit function
+TLDR: `emit` has a new API. The third argument no longer adds a prefix to the event name. It's now a
+`boolean` that represents whether the event should not bubble.
 
+> __⚠️ Important:__ This is a **silent breaking change**! Make sure you update your `emit` calls!
+
+v3 code:
+```javascript
+// 1) Do this to send a prefixed event with no "detail"
+this.emit('pressed', undefined, true);
+
+// 2) Do this to send a non-bubbling event with no "detail"
+this.dispatchEvent(new CustomEvent('pressed', {
+  bubbles: false,
+}));
+```
+
+v4 code:
+```javascript
+// 1) Do this to send a prefixed event with no "detail"
+this.emit('my-button-pressed');
+
+// 2) Do this to send a non-bubbling event with no "detail"
+this.emit('pressed', undefined, true);
+```
+
+### `wire` function removal and `html` function update
 TLDR: `wire` function is gone - you can use `html` for everything now. The `render` function now
 needs to return the result of `this.html`, otherwise nothing will get rendered.
 
@@ -51,7 +76,6 @@ class MyComponent extends Component {
 ```
 
 ### `onPropsChanged` and `created` hooks removal
-
 TLDR: `onPropsChanged` and `created` hooks were removed as they were redundant - you can use
 `attributeChangedCallback` and `connectedCallback` to do the same thing, respectively.
 
@@ -85,7 +109,6 @@ class MyComponent extends Component {
 ```
 
 ### Bypassing attribute-to-prop conversion is not possible
-
 TLDR: You can no longer set a `props` attribute when creating a component to pass all attributes.
 
 v3 code:
@@ -103,12 +126,10 @@ v4 code:
 ```
 
 ### `basedOn` feature removal
-
 You can no longer use the `baseOn` feature. Please build the component you want using the `render`
 function.
 
 ### `defaultProps` and `defaultState`
-
 TLDR: You can now define `defaultProps` and `defaultState` as regular variables, instead of having
 to do it in a getter.
 
@@ -150,7 +171,6 @@ class MyComponent extends Component {
 ```
 
 ### Member-access in TypeScript
-
 Some class properties have changed their member-access. `observedAttributes` is now `private` and
 is no longer accessible.
 
@@ -167,7 +187,6 @@ class MyComponent extends Component {
 ```
 
 ### Automatic types
-
 TLDR: no more converting strings to JavaScript types - just add a `type` property to each attribute
 (manual converters still work).
 
@@ -210,7 +229,6 @@ MyComponent.attributes = [
 ```
 
 ### `rendered` hook and the `setTimeout` usage
-
 This was never a good practice to begin with and there were alternatives for almost every case, but
 now you have a way of doing this that is clean - the `rendered` hook and `ref`s (no `setTimeout`s!).
 
