@@ -200,8 +200,10 @@ and `another-array` both as of type `array`, then we can safely deduce that the 
 will definitely take longer to parse than `example-array` due to being converted from/to `string`
 and only then into an `array` (inside the `my-button`).
 
-This will however result in the attribute `example-array` not being printed to the HTML. The DOM
-would look something like this:
+The attributes of a DOM node can only be of type string. This means that in the example above, when
+we explicitly pass `example-array` as an `array` instead of a `string`, the attribute cannot be
+correctly set on the DOM. In this scenario, `biotope-element` will not print it to the DOM and the
+resulting HTML would look like this:
 
 ```html
 <my-form>
@@ -213,5 +215,6 @@ would look something like this:
 </my-form>
 ```
 
-This is especially important when passing functions to a child element since JavaScript functions do
-not retain their context when being converter to/from a `string`.
+This is especially important when considering SEO and when passing functions to a child element as
+an attribute (since JavaScript functions do not retain their context when being converter to/from a
+`string`).
