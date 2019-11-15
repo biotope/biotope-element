@@ -89,5 +89,5 @@ You can also checkout their [npm package](https://www.npmjs.com/package/@webcomp
 or you can simply put a script pointing to [unpkg](https://unpkg.com/@webcomponents/webcomponentsjs@2.3.0/webcomponents-loader.js)
 which will load only the necessary polyfills.
 
-Remember to make sure that the polyfill is fully loaded before attempting to load any component with
-a `script` element.
+> __⚠️ Important:__ Remember to make sure that the polyfill is fully loaded before attempting to
+register any component. This is done via the `WebComponentsReady` event or by a blocking script tag.
