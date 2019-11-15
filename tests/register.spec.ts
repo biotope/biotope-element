@@ -28,7 +28,9 @@ describe('#register', (): void => {
       attributes: ['first', 'and-second'],
       prototype: {
         props: { first: 1, andSecond: 2 },
+        emit: mockFunction,
         connectedCallback: mockFunction,
+        disconnectedCallback: mockFunction,
         attributeChangedCallback: mockFunction,
         render: mockFunction,
         setAttribute: mockFunction,
@@ -85,6 +87,8 @@ describe('#register', (): void => {
 
             expect(((mockDependency as ComponentType).register as jest.Mock).mock.calls)
               .toHaveLength(3);
+
+            expect(mockFunction.mock.calls[4]).toEqual(['connected', undefined, true]);
           });
 
           it('attributeChangedCallback is called directly when no callback stacks exist', (): void => {
@@ -94,6 +98,16 @@ describe('#register', (): void => {
 
             expect(((mockDependency as ComponentType).register as jest.Mock).mock.calls)
               .toHaveLength(2);
+          });
+
+          it('disconnectedCallback is overwritten to emit event', (): void => {
+            // eslint-disable-next-line no-underscore-dangle
+            (mockComponentClass as ComponentInstance).prototype.__initCallStack = [];
+            (mockComponentClass as ComponentType).prototype.disconnectedCallback();
+
+            expect(((mockDependency as ComponentType).register as jest.Mock).mock.calls)
+              .toHaveLength(2);
+            expect(mockFunction.mock.calls[1]).toEqual(['disconnected', undefined, true]);
           });
 
           it('prop getters were set', () => {
@@ -107,8 +121,9 @@ describe('#register', (): void => {
             (mockComponentClass as ComponentInstance).prototype.__created = true;
             mockComponentClass.prototype.first = 3;
 
-            expect(mockFunction.mock.calls).toHaveLength(1);
+            expect(mockFunction.mock.calls).toHaveLength(2);
             expect(mockFunction.mock.calls[0]).toEqual(['first', 1, 3]);
+            expect(mockFunction.mock.calls[1]).toEqual(['attributechanged', undefined, true]);
           });
 
           it('setting a prop to a falsy value removes the attribute', () => {
@@ -119,14 +134,17 @@ describe('#register', (): void => {
             mockComponentClass.prototype.first = undefined;
             mockComponentClass.prototype.first = 'false';
 
-            expect(mockFunction.mock.calls).toHaveLength(8);
-            [0, 2, 4, 6].forEach((index) => {
+            expect(mockFunction.mock.calls).toHaveLength(12);
+            [0, 3, 6, 9].forEach((index) => {
               expect(mockFunction.mock.calls[index]).toEqual(['first']);
             });
             expect(mockFunction.mock.calls[1]).toEqual(['first', 1, false]);
-            expect(mockFunction.mock.calls[3]).toEqual(['first', 1, null]);
-            expect(mockFunction.mock.calls[5]).toEqual(['first', 1, undefined]);
-            expect(mockFunction.mock.calls[7]).toEqual(['first', 1, 'false']);
+            expect(mockFunction.mock.calls[4]).toEqual(['first', 1, null]);
+            expect(mockFunction.mock.calls[7]).toEqual(['first', 1, undefined]);
+            expect(mockFunction.mock.calls[10]).toEqual(['first', 1, 'false']);
+            [2, 5, 8, 11].forEach((index) => {
+              expect(mockFunction.mock.calls[index]).toEqual(['attributechanged', undefined, true]);
+            });
           });
 
           it('setting a prop to a string value sets the attribute in the DOM', () => {
@@ -136,13 +154,16 @@ describe('#register', (): void => {
             mockComponentClass.prototype.first = 'value';
             mockComponentClass.prototype.first = 'true';
 
-            expect(mockFunction.mock.calls).toHaveLength(6);
+            expect(mockFunction.mock.calls).toHaveLength(9);
             expect(mockFunction.mock.calls[0]).toEqual(['first', '']);
             expect(mockFunction.mock.calls[1]).toEqual(['first', 1, '']);
-            expect(mockFunction.mock.calls[2]).toEqual(['first', 'value']);
-            expect(mockFunction.mock.calls[3]).toEqual(['first', 1, 'value']);
-            expect(mockFunction.mock.calls[4]).toEqual(['first', 'true']);
-            expect(mockFunction.mock.calls[5]).toEqual(['first', 1, 'true']);
+            expect(mockFunction.mock.calls[3]).toEqual(['first', 'value']);
+            expect(mockFunction.mock.calls[4]).toEqual(['first', 1, 'value']);
+            expect(mockFunction.mock.calls[6]).toEqual(['first', 'true']);
+            expect(mockFunction.mock.calls[7]).toEqual(['first', 1, 'true']);
+            [2, 5, 8].forEach((index) => {
+              expect(mockFunction.mock.calls[index]).toEqual(['attributechanged', undefined, true]);
+            });
           });
 
           it('calls the customElements.define method', (): void => {
