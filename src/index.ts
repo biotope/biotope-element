@@ -3,6 +3,7 @@ import { createRender, createPartial, html } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
+import { render, rendered } from './create-renders';
 import { Attribute, PropValue, HTMLFragment } from './types';
 import { Renderer } from './internal-types';
 
@@ -61,6 +62,8 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __created = false;
 
+  private __rendered = false;
+
   private __attributeChangedCallbackStack: (() => void)[] = [];
 
   public static register(silent = true): boolean {
@@ -75,9 +78,14 @@ export default abstract class Component<TProps = object, TState = object> extend
       this.attachShadow({ mode: 'open' });
     }
 
-    const postFunction = (): void => this.rendered();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.render = createRender(this as any, this.render.bind(this), postFunction);
+    const originalRender = this.render.bind(this);
+    this.render = createRender(
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      this as any,
+      () => render(this as any, originalRender),
+      () => rendered(this as any),
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+    );
   }
 
   /* istanbul ignore next */
@@ -101,9 +109,9 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public rendered(): void {}
 
-  protected emit<TEvent>(name: string, detail?: TEvent, addPrefix = false): boolean {
+  protected emit<TEvent>(name: string, detail?: TEvent, singleEmit = false): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return emit(this as any, name, detail, addPrefix);
+    return emit(this as any, name, detail, singleEmit);
   }
 
   protected createStyle = createStyle;
