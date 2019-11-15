@@ -5,7 +5,7 @@ title: Migration
 
 ## Migrating from v3 to v4
 
-### emit function
+### `emit` third argument changed
 TLDR: `emit` has a new API. The third argument no longer adds a prefix to the event name. It's now a
 `boolean` that represents whether the event should not bubble.
 
@@ -13,10 +13,10 @@ TLDR: `emit` has a new API. The third argument no longer adds a prefix to the ev
 
 v3 code:
 ```javascript
-// 1) Do this to send a prefixed event with no "detail"
+// 1) Sending a prefixed event with no "detail"
 this.emit('pressed', undefined, true);
 
-// 2) Do this to send a non-bubbling event with no "detail"
+// 2) Sending a non-bubbling event with no "detail"
 this.dispatchEvent(new CustomEvent('pressed', {
   bubbles: false,
 }));
@@ -24,10 +24,10 @@ this.dispatchEvent(new CustomEvent('pressed', {
 
 v4 code:
 ```javascript
-// 1) Do this to send a prefixed event with no "detail"
+// 1) Sending a prefixed event with no "detail"
 this.emit('my-button-pressed');
 
-// 2) Do this to send a non-bubbling event with no "detail"
+// 2) Sending a non-bubbling event with no "detail"
 this.emit('pressed', undefined, true);
 ```
 
