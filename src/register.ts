@@ -67,7 +67,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
 
     instance.__created = true;
     instance.render();
-    instance.emit('connected');
+    instance.emit('connected', undefined, true);
   };
 
   const originalAttributeChangedCallback = context.prototype.attributeChangedCallback;
@@ -76,7 +76,7 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     const instance = (this as ComponentInstance);
     const callFunction = (): void => {
       originalAttributeChangedCallback.bind(instance)(...args);
-      instance.emit('attributechanged');
+      instance.emit('attributechanged', undefined, true);
     };
 
     if (instance.__created) {
@@ -86,20 +86,12 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
     }
   };
 
-  const originalRendered = context.prototype.rendered;
-
-  context.prototype.rendered = function (): void {
-    const instance = (this as ComponentInstance);
-    originalRendered.bind(instance)();
-    instance.emit('rendered');
-  };
-
   const originalDisconnectedCallback = context.prototype.disconnectedCallback;
 
   context.prototype.disconnectedCallback = function (): void {
     const instance = (this as ComponentInstance);
     originalDisconnectedCallback.bind(instance)();
-    instance.emit('disconnected');
+    instance.emit('disconnected', undefined, true);
   };
 
   customElements.define(context.componentName, context);

@@ -24,7 +24,7 @@ export interface ComponentPrototype extends Function {
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
   render: RenderFunction;
   rendered: () => void;
-  emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;
+  emit: <TEvent>(name: string, detail?: TEvent, singleEmit?: boolean) => boolean;
   createStyle: (styleContent: HTMLElementContent) => HTMLFragment;
   setState: (state: object | ((state: object) => object)) => void;
 }
@@ -41,5 +41,6 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentState: object;
   __html: Renderer<HTMLFragment>;
   __created: boolean;
+  __rendered: boolean;
   __attributeChangedCallbackStack: (() => void)[];
 }
