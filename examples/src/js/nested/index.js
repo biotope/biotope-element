@@ -2,6 +2,10 @@ import Component from '@biotope/element';
 import { ExampleChild } from './child';
 
 export class ExampleParent extends Component {
+  constructor() {
+    super(false);
+  }
+
   render() {
     return this.html`
       <div>
@@ -11,6 +15,12 @@ export class ExampleParent extends Component {
         />
       </div>
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  rendered() {
+    // eslint-disable-next-line no-console
+    console.log('PARENT: elements are in the DOM');
   }
 }
 

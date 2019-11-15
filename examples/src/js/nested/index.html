@@ -13,4 +13,10 @@
     <example-parent text="Web components rock!!"></example-parent>
   </body>
 
+  <script>
+    document.querySelector('example-parent').addEventListener('rendered', function() {
+      console.log('done rendering');
+    });
+  </script>
+
 </html>

@@ -13,10 +13,20 @@ export class ExampleChild extends Component<ExampleChildProps> {
     'another-text',
   ];
 
+  public constructor() {
+    super(false);
+  }
+
   public render(): HTMLFragment {
     return this.html`
       <p>parent prop: ${this.props.text}</p>
       <p>my prop: ${this.props.anotherText}</p>
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public rendered(): void {
+    // eslint-disable-next-line no-console
+    console.log('CHILD: elements are in the DOM');
   }
 }
