@@ -3,10 +3,10 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "TODO",
+    "tagline": "Web Components made simple, for any evergreen browser and IE11",
     "docs": {
-      "advanced": {
-        "title": "Advanced"
+      "attr-parsing": {
+        "title": "Attribute Parsing"
       },
       "component": {
         "title": "Component"
@@ -14,8 +14,11 @@
       "events": {
         "title": "Events"
       },
-      "data": {
-        "title": "Data Channels"
+      "index": {
+        "title": "Introduction"
+      },
+      "integration": {
+        "title": "IDE Integration"
       },
       "lifecycle": {
         "title": "Lifecycle Hooks"
@@ -23,17 +26,20 @@
       "migration": {
         "title": "Migration"
       },
-      "index": {
-        "title": "Quick Start"
+      "nesting": {
+        "title": "Nesting"
       },
-      "README": {
-        "title": "README"
+      "peers": {
+        "title": "Peer Packages"
+      },
+      "references": {
+        "title": "References"
       },
       "styling": {
         "title": "Styling"
       },
-      "usedWith": {
-        "title": "Used with..."
+      "typescript": {
+        "title": "TypeScript"
       },
       "version-3.2.0/version-3.2.0-advanced": {
         "title": "Advanced"
@@ -68,6 +74,9 @@
       "Blog": "Blog"
     },
     "categories": {
+      "Getting Started": "Getting Started",
+      "Advanced": "Advanced",
+      "Misc": "Misc",
       "Getting started": "Getting started",
       "Component Development": "Component Development",
       "Integration": "Integration"

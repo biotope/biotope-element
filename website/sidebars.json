@@ -1,17 +1,21 @@
 {
   "docs": {
-    "Getting started": [
+    "Getting Started": [
       "index",
-      "component"
-    ],
-    "Component Development": [
+      "component",
       "styling",
-      "lifecycleHooks",
-      "events",
-      "data"
+      "nesting"
     ],
-    "Integration": [
-      "usedWith",
+    "Advanced": [
+      "lifecycle",
+      "attr-parsing",
+      "events",
+      "references",
+      "typescript"
+    ],
+    "Misc": [
+      "peers",
+      "integration",
       "migration"
     ]
   }

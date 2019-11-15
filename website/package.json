@@ -2,13 +2,14 @@
   "scripts": {
     "examples": "docusaurus-examples",
     "start": "docusaurus-start",
-    "build": "docusaurus-build",
+    "build": "docusaurus-build; cpy ./pages/en/index.html ./build/element",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "version": "docusaurus-version",
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {
-    "docusaurus": "^1.13.0"
+    "cpy-cli": "^2.0.0",
+    "docusaurus": "^1.14.0"
   }
 }

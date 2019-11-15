@@ -1,7 +1,7 @@
-# Biotope Element
-
-[![Build Status](https://travis-ci.org/biotope/biotope-element.svg?branch=master)](https://travis-ci.org/biotope/biotope-element)
-[![codecov](https://codecov.io/gh/biotope/biotope-element/branch/master/graph/badge.svg)](https://codecov.io/gh/biotope/biotope-element)
+---
+id: index
+title: Introduction
+---
 
 `biotope-element` is a library to create Web Components in a simple way, taking advantage of simple
 yet powerful concepts from other frontend libraries to empower you, the developer, and your clients'
@@ -13,6 +13,11 @@ for component development and not page assembly. This means we dedicate ourselve
 that page assembly libraries like React, Vue or Angular have the best possible experience when using
 our components. This also means that every piece of knowledge you have about HTMLElements is
 applicable when working with `biotope-element`.
+
+This documentation shows you how `biotope-element` works and how to create components using it. It
+also assumes that you have no knowledge of what a Web Component is, which means we will explain some
+Web Component concepts as we go along but not all and certainly not to an unnecessary depth. You can
+read more about Web Components [here](https://www.webcomponents.org/introduction).
 
 ## Installation
 You can install the biotope element in your project using npm:
@@ -33,7 +38,7 @@ After that, import it in your components like so:
 import Component from '@biotope/element';
 ```
 
-## Using biotope-element
+## Your first component
 To use `biotope-element`, you have to extend it with your custom class.
 
 After defining your class, you have to call the `register` function. This function comes with
@@ -86,9 +91,3 @@ which will load only the necessary polyfills.
 
 > __⚠️ Important:__ Remember to make sure that the polyfill is fully loaded before attempting to
 register any component. This is done via the `WebComponentsReady` event or by a blocking script tag.
-
-## Documentation
-You can find the documentation [here](https://element.biotope.sh).
-
-In order to contribute to the documentation you can start a local server with `npm start` and then
-start editing the files in `docs`.

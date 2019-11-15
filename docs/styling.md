@@ -3,126 +3,202 @@ id: styling
 title: Styling
 ---
 
-## Adding styles
-As every component uses Shadow DOM by default, you have to put the styles inside the shadow root.
-You can either import your css from an external file (recommended way for bio-element). In this case
-your imported style has to be a string with the css inside:
+Web components use a shadow DOM to write their HTML. The shadow DOM has some interesting features
+that make it very different from writing to an element using `innerHTML`. Styling-wise, the shadow
+DOM scopes the style, so that the page's style does not leak into the component and vice-versa.
+
+However, applying styles to any HTMLElement is just like applying styles to any `biotope-element`
+component. You basically have two approaches: the `style` element and inline styling - with the same
+advantages and disadvantages as normal HTMLElements.
+
+> __⚠️ Important:__ When adding styles to IE11 specifically, the browser will sometimes not fully
+render the style you applied to your component even though your CSS is fully loaded onto the page.
+This is easily solved by moving your CSS to the bottom of the component (like in all our examples).
+
+> __⚠️ Important:__ Style-scoping only works in browsers that require the Web Component polyfill.
+Writing styles for these components is like writing styles for the entire page. So use unique class
+names (for example [BEM](http://getbem.com)) or a build system that renames your classes to keep
+your codebase maintainable and sane.
+
+> __⚠️ Important:__ Class names that are equal to your component name should also be avoided as the
+Web Components polyfill also creates this class as part of the polyfilling process.
+
+## Style element
+Writing a `style` element to a `biotope-element` component is just as simple as writing another
+`div`, like we've shown you before. Here's a simple example:
 
 ```javascript
-import Component from '@biotope/element';
-import style from './styles.css';
-
-class MyButton extends Component {
-  render() {
-    return this.html`
-      Hello World 🐤
-      ${this.createStyle(style)}
-    `;
-  }
-}
-
-MyButton.componentName = 'my-button';
-
-MyButton.register();
+// render function
+return this.html`
+  <div>
+    Hello World 🐤
+  </div>
+  <style>
+    div {
+      color: red;
+    }
+  </style>
+`;
 ```
 
-or use inline styles:
+### createStyle function
+We provide you with a pretty cool function to do most of this automatically - the `createStyle`
+function. It can take a string (or an object with a `toString` function) and convert it into a `style`
+element that you can use directly in your component.
+
+Here is an example:
 
 ```javascript
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  render() {
-    return this.html`
-      Hello World 🐤
-      <style>
-        :host {
-          background-color: orange;
-        }
-      </style>
-    `;
+// "style" variable
+const style = `
+  div {
+    color: red;
   }
-}
+`;
 
-MyButton.componentName = 'my-button';
-MyButton.register();
+// render function
+return this.html`
+  <div>
+    Hello World 🐤
+  </div>
+  ${this.createStyle(style)}
+`;
 ```
 
-Note: We also provide the `this.createStyle` function out of the box should you need it, like so:
+This will produce the same result as the previous example.
+
+Additionally, as we mentioned before, this will also work if you give the `createStyle` function an
+object that is "toStringable". This next example is equal to the one above.
+
+```javascript
+// "style" variable coming from a loader
+// imported with, for example: import style from './styles.css';
+const style = {
+  // doesn't mater what's inside the object
+};
+style.toString = () => `
+  div {
+    color: red;
+  }
+`;
+
+// render function
+return this.html`
+  <div>
+    Hello World 🐤
+  </div>
+  ${this.createStyle(style)}
+`;
+```
+
+This is extremely relevant and useful when you're using webpack or other build tools to load styles
+into your JavaScript files. With this function, `biotope-element` will be able to stringify whatever
+a loader throws at you and print your CSS seamlessly.
+
+> __📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
 ```javascript
 import Component, { createStyle } from '@biotope/element';
 ```
 
-!> __Important ⚠️:__ Notice we're adding the styles to the bottom of the element, after our content.
-This is intentional, as IE11 will sometimes not fully render the style you applied to your component
-if the style is added before the content of your component.
+### Dynamic styles
+Since a component is fully written in JavaScript, it can be very tempting to just interpolate inside
+the `style` element and add in your JavaScript variable to the style. However, due to how the Web
+Components polyfill works, this is a very bad practice as the modified style will get applied to the
+entire page. This means that any component-specific state-dependant modification can be applied to
+all components of a page.
 
-!> __Important ⚠️:__ Style-Scoping only works in browsers that support Shadow DOM. Browsers like
-IE11/Edge until V18 inherit styles as used everywhere else. So use unique class names and techniques
-like [BEM](http://getbem.com)to keep everything sane.
+To avoid this, either use a second class to add/modify some properties on a specific element or
+use inline styles (shown in the next section).
 
-!> __Important ⚠️:__ If you come across that issue, that your styles are displayed as text. Most
-likely you use a class-name that is the same as your component name. Together with the polyfill, the
-style tag itself get styled which causes the issue in IE11/Edge v18 and below.
-
-## Dynamic styles
-If your styles are dynamic and depending on some values in the javascript context, just use inline
-styles in your template string. ⚠️ We recommend using javascript values as little as possible and
-keep CSS static. Use a precompiler like SASS or CSS Variables instead.
+Here is an example of adding a modifier class using the `classnames` package.
 
 ```javascript
-import Component from '@biotope/element';
+import classnames from 'classnames';
+…
 
-class MyButton extends Component {
-  color: 'orange';
-
-  render() {
-    return this.html`
-      Hello World 🐤
-      <style>
-        :host {
-          background-color: ${this.color};
-        }
-      </style>
-    `;
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.register();
+// render function
+const mainClasses = classnames('myMainClass', {
+  'myMainClass--modifier': someValue,
+});
+return this.html`
+  <div class=${mainClasses}>
+    Hello World 🐤
+  </div>
+`;
 ```
 
-## Styling slots
-If you want to style slotted content, you can so by using the `::slotted` pseudoselector. For a
-guideline, have a look [here](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted). Please
-note(!) only
-[simple selectors, pseudo classes and pseudo elements](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
-can be used in the slotted pseudoselector:
+## Inline styles
+Whether you're a fan of css-in-js or not, `biotope-element` provides you a way to inline CSS in an
+easy and maintainable way, just like css-in-js. Just send an object to the HTMLElement inside the
+`style` property.
+
+If we take the previous styling example, here is an example of how inline CSS can be done:
+
+```javascript
+// render function
+return this.html`
+  <div style=${{ color: 'red' }}>
+    Hello World 🐤
+  </div>
+`;
+```
+
+In the same manner of css-in-js, and in order to have an easy dev experience in JavaScript, any
+kebab-cased CSS properties are available as camelCase, like so:
+
+```javascript
+// render function
+return this.html`
+  <div style=${{ marginTop: '10px' }}>
+    Hello World 🐤
+  </div>
+`;
+```
+
+## The host SCSS mixin
+Web Components are very special in terms of what and how you can use CSS. One of the special
+selectors available for Web Components is the `:host` selector. This selector is very useful when
+writing CSS for your component as it can select the component itself.
+
+Unfortunately, on browsers that require the Web Component polyfills, this selector is not available.
+We provide you with a `host` scss mixin that tries to counter this problem.
+
+Here is how you can use it in a component named "my-button":
+
+```scss
+/* This is just a symbolic import to show you where the file is */
+@import '@biotope/element/lib/host.mixin.scss';
+
+@include host(my-button) {
+  /* my component element CSS */
+}
+```
+
+> __📝 Note:__ The parameter you pass to the host mixin has to match the `componentName` you set in
+the component, otherwise IE11 will not have any styles set.
+
+This mixin is just an example however - you can choose to use it, ignore it, modify it or port it to
+another language very easily. The mixin will produce the following code:
 
 ```css
-::slotted(span) {
-  /* this will work */
-  border: 1px solid black;
+:host {
+  /* my component element CSS */
 }
 
-::slotted(span::before) {
-  /* this will work too */
-  border: 1px solid black;
-}
-
-::slotted(span + input) {
-  /* this will not work */
-  border: 1px solid black;
+my-button {
+  /* my component element CSS */
 }
 ```
 
-> __Note 📝:__ Slotted styles are not supported in IE11/Edge V18 and below. So for these browsers
-you need to use normal child selectors, as there is no slotting. `custom-element > span` will work
-for a slotted span.
+The `:host` rule is there for modern browsers and the `my-button` rule is there mainly for IE11. The
+reason why the code has to be repeated has to do with how browsers read and apply CSS rules. If IE11
+encounters the following example, it will crash upon reading the `:host` selector and will not apply
+any of the rules we set.
 
-## Style guidelines
-You might have already heard of BEM. If not, take a look [here](http://getbem.com/introduction/)  
-You want to use BEM inside your more components styles. This way you will keep an overview.  
-In simple ones, you may even omit class names at all. I.e. a simple button component might not even
-need a class, if it just renders a button tag. This can simply be styled as
-`generic-button > button` as there will be no other button inside.
+```css
+/* This breaks IE11 */
+:host,
+my-button {
+  /* my component element CSS */
+}
+```

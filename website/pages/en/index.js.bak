@@ -1,4 +1,10 @@
 /**
+ * TODO: Add proper landing page
+ * then, remove "index.html" and rename this file to "index.js"
+ * finally, remove the cpy command from "npm run build" script
+ */
+
+/**
  * Copyright (c) 2017-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
