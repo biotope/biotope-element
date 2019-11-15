@@ -1,5 +1,5 @@
 import {
-  Attribute, TypedAttribute, ConvertableAttribute, PropValue,
+  Attribute, TypedAttribute, ConvertibleAttribute, PropValue,
 } from './types';
 import {
   toBoolean, toNumber, toArray, toObject, toFunction, toString,
@@ -14,8 +14,8 @@ export const attributeValue = (attribute: string | Attribute, value?: PropValue)
     return value;
   }
 
-  if (typeof (attribute as ConvertableAttribute).converter === 'function') {
-    return (attribute as ConvertableAttribute).converter(value);
+  if (typeof (attribute as ConvertibleAttribute).converter === 'function') {
+    return (attribute as ConvertibleAttribute).converter(value);
   }
 
   switch ((attribute as TypedAttribute).type || 'string') {

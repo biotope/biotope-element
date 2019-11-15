@@ -5,7 +5,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
 
-export type RenderFuntion = () => HTMLFragment;
+export type RenderFunction = () => HTMLFragment;
 
 export interface ComponentType extends Function {
   componentName: string;
@@ -20,11 +20,12 @@ export interface ComponentPrototype extends Function {
   html: Renderer<HTMLFragment>;
   created: () => void;
   connectedCallback: () => void;
+  disconnectedCallback: () => void;
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
-  render: RenderFuntion;
+  render: RenderFunction;
   rendered: () => void;
-  emit: <TEvent>(name: string, detail?: TEvent, addPrefix?: boolean) => boolean;
-  createStyle: (styleContent: HTMLElementContent) => HTMLStyleElement;
+  emit: <TEvent>(name: string, detail?: TEvent, singleEmit?: boolean) => boolean;
+  createStyle: (styleContent: HTMLElementContent) => HTMLFragment;
   setState: (state: object | ((state: object) => object)) => void;
 }
 
@@ -40,5 +41,6 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentState: object;
   __html: Renderer<HTMLFragment>;
   __created: boolean;
+  __rendered: boolean;
   __attributeChangedCallbackStack: (() => void)[];
 }

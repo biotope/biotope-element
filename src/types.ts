@@ -10,11 +10,11 @@ export interface TypedAttribute extends SimpleAttribute {
   type: 'string' | 'boolean' | 'number' | 'array' | 'object' | 'function';
 }
 
-export interface ConvertableAttribute extends SimpleAttribute {
+export interface ConvertibleAttribute extends SimpleAttribute {
   converter: (prop?: PropValue) => PropValue;
 }
 
-export type Attribute = SimpleAttribute | TypedAttribute | ConvertableAttribute;
+export type Attribute = SimpleAttribute | TypedAttribute | ConvertibleAttribute;
 
 export type HTMLElementContent = string | { toString: () => string };
 

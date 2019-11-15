@@ -33,6 +33,10 @@ describe('#emit', () => {
       it('emits a custom event without detail', () => {
         expect(customEvent.detail).toBeUndefined();
       });
+
+      it('emits a custom event that bubbles', () => {
+        expect(customEvent.bubbles).toBe(true);
+      });
     });
 
     describe('is given', () => {
@@ -49,10 +53,14 @@ describe('#emit', () => {
       it('emits a custom event with bubbles', () => {
         expect(customEvent.bubbles).toBeTruthy();
       });
+
+      it('emits a custom event that bubbles', () => {
+        expect(customEvent.bubbles).toBe(true);
+      });
     });
   });
 
-  describe('addPrefix is true', () => {
+  describe('singleEmit is true', () => {
     let customEvent: CustomEvent;
 
     beforeEach(() => {
@@ -62,12 +70,15 @@ describe('#emit', () => {
     });
 
     it('emits a custom event with a prefixed name', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(customEvent.type).toBe(`${(element.constructor as any).componentName}-mock-name`);
+      expect(customEvent.type).toBe('mock-name');
     });
 
     it('emits a custom event with detail', () => {
       expect(customEvent.detail).toBe('mock-detail');
+    });
+
+    it('emits a custom event that does not bubble', () => {
+      expect(customEvent.bubbles).toBe(false);
     });
   });
 });

@@ -14,6 +14,10 @@ export class ExampleParent extends Component<ExampleParentProps> {
     ExampleChild as typeof Component,
   ];
 
+  public constructor() {
+    super(false);
+  }
+
   public render(): HTMLFragment {
     return this.html`
       <div>
@@ -23,6 +27,12 @@ export class ExampleParent extends Component<ExampleParentProps> {
         />
       </div>
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public rendered(): void {
+    // eslint-disable-next-line no-console
+    console.log('PARENT: elements are in the DOM');
   }
 }
 
