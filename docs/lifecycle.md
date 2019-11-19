@@ -32,6 +32,24 @@ Below we provide a simple explanation and simple examples of how all of these ho
 are called and what you should be doing on each one. This however does not replace any Web Component
 hook documentation.
 
+> __⚠️ Important:__ You need to create all the hooks when you define your class so that they are
+already available when you call the `register` function. This means you **cannot** do:
+```javascript
+const connected = () => { /*…*/ };
+const render = () => { /*…*/ };
+
+class MyButton extends Component {
+  // This does not work!
+  connectedCallback = connected;
+  // This does not work either!
+  render = render;
+}
+```
+
+> In this case, the `render` and `connectedCallback` hooks will only be set during the constructor,
+and will not be available when calling the `register` function. This applies to all the hooks
+described in this page!
+
 ### constructor
 Simple enough to understand - just a class constructor.
 

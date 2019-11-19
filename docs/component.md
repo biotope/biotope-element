@@ -85,26 +85,6 @@ following:
 </my-button>
 ```
 
-> __⚠️ Important:__ You need to create the `render` function when you define your class so that it is
-already available during the component registration phase. This means you **cannot** simply do:
-
-```javascript
-// my-button.js
-import Component from '@biotope/element';
-import { template } from './template';
-
-class MyButton extends Component {
-  // this won't work
-  render = template
-}
-
-MyButton.componentName = 'my-button';
-MyButton.register();
-```
-
-If you implement the example above, the `render` function will only be set during the constructor,
-and not when calling the `register` function. This will also cause your component to render nothing.
-
 ### Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
 you need to render a non-HTML string, then you can simply interpolate it inside the template string
