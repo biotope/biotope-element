@@ -256,5 +256,3 @@ class MyComponent extends Component {
   }
 }
 ```
-
-## Adding biotope-element to a biotope project
