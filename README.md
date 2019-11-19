@@ -33,7 +33,7 @@ After that, import it in your components like so:
 import Component from '@biotope/element';
 ```
 
-## Using biotope-element
+## Your first component
 To use `biotope-element`, you have to extend it with your custom class.
 
 After defining your class, you have to call the `register` function. Here's a minimal example of a
