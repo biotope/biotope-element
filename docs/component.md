@@ -32,6 +32,20 @@ MyButton.componentName = 'my-button';
 MyButton.register();
 ```
 
+The `register` function teaches the browser how to build your component and is responsible for
+adding a bunch of functionality that needs to be available at the time of instantiation. It can also
+take an argument to output registration warnings to the console, like so:
+
+```javascript
+// Here, no warnings are logged
+MyButton.register(true);
+
+// Here, we're going to try to register the component again
+MyButton.register(true);
+// Which will cause this warning to be output to the console:
+// > Warn: Attempt to re-register component "my-button". Skipping…
+```
+
 ## Rendering
 The `render` function was designed to complement the concept of Web Components and take it to the
 next level. It provides you with a simple and intuitive way to render information inside the
