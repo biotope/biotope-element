@@ -34,6 +34,7 @@ hook documentation.
 
 > __⚠️ Important:__ You need to create all the hooks when you define your class so that they are
 already available when you call the `register` function. This means you **cannot** do:
+
 ```javascript
 const connected = () => { /*…*/ };
 const render = () => { /*…*/ };
@@ -47,7 +48,7 @@ class MyButton extends Component {
 ```
 
 > In this case, the `render` and `connectedCallback` hooks will only be set during the constructor,
-and will not be available when calling the `register` function. This applies to all the hooks
+and will not be available when the `register` function is called. This applies to all the hooks
 described in this page!
 
 ### constructor
