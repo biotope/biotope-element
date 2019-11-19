@@ -66,9 +66,9 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __attributeChangedCallbackStack: (() => void)[] = [];
 
-  public static register(silent = true): boolean {
+  public static register(outputToConsole = false): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return register(this as any, silent);
+    return register(this as any, outputToConsole);
   }
 
   public constructor(useShadow = true) {

@@ -5,12 +5,12 @@ import { kebabToCamel } from './case-converters';
 import { ComponentInstance, ComponentType } from './internal-types';
 import { PropValue } from './types';
 
-export const register = (context: ComponentType, silent: boolean): boolean => {
+export const register = (context: ComponentType, outputToConsole: boolean): boolean => {
   /* eslint-disable no-param-reassign,no-underscore-dangle,func-names */
   const dashedName = getComponentName(context);
 
   if (!context.componentName) {
-    if (!silent) {
+    if (outputToConsole) {
       // eslint-disable-next-line no-console
       console.warn(`Static property "componentName" missing. Setting it to "${dashedName}"…`);
     }
@@ -18,14 +18,14 @@ export const register = (context: ComponentType, silent: boolean): boolean => {
   }
 
   if (isRegistered(context.componentName)) {
-    if (!silent) {
+    if (outputToConsole) {
       // eslint-disable-next-line no-console
       console.warn(`Attempt to re-register component "${context.componentName}". Skipping…`);
     }
     return false;
   }
 
-  context.dependencies.forEach((component): boolean => component.register(silent));
+  context.dependencies.forEach((component): boolean => component.register(outputToConsole));
 
   const allAttributes = (context.attributes && context.attributes.length ? context.attributes : [])
     .filter((attribute) => attribute);
