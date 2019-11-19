@@ -33,12 +33,11 @@ After that, import it in your components like so:
 import Component from '@biotope/element';
 ```
 
-## Using biotope-element
+## Your first component
 To use `biotope-element`, you have to extend it with your custom class.
 
-After defining your class, you have to call the `register` function. This function comes with
-`biotope-element` and teaches the browser how to build your component. Here's a minimal example of
-a working component:
+After defining your class, you have to call the `register` function. Here's a minimal example of a
+working component:
 
 ```javascript
 // my-button.js
