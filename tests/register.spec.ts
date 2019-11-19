@@ -46,7 +46,7 @@ describe('#register', (): void => {
     customElements.define = originalCustomElementsDefine;
   });
 
-  describe('silent is false', (): void => {
+  describe('outputToConsole is true', (): void => {
     let originalConsoleWarn: typeof console.warn;
 
     beforeEach((): void => {
@@ -59,7 +59,7 @@ describe('#register', (): void => {
 
       mockComponentClass.name = mockComponentClass.componentName;
       mockComponentClass.componentName = '';
-      result = register(mockComponentClass, false);
+      result = register(mockComponentClass, true);
     });
 
     afterEach((): void => {
@@ -73,12 +73,12 @@ describe('#register', (): void => {
     });
   });
 
-  describe('silent is true', (): void => {
+  describe('outputToConsole is false', (): void => {
     describe('componentName exists', (): void => {
       describe('not registered', (): void => {
         describe('component has attributes', () => {
           beforeEach((): void => {
-            result = register(mockComponentClass, true);
+            result = register(mockComponentClass, false);
           });
 
           it('calls the dependencies\' register and calls all stacked callbacks', (): void => {
@@ -182,7 +182,7 @@ describe('#register', (): void => {
         describe('component has no attributes', () => {
           beforeEach((): void => {
             mockComponentClass.attributes = [];
-            result = register(mockComponentClass, true);
+            result = register(mockComponentClass, false);
           });
 
           it('calls the dependencies\' register', (): void => {
@@ -195,7 +195,7 @@ describe('#register', (): void => {
         beforeEach((): void => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           document.createElement = jest.fn((): any => ({ constructor: null }));
-          result = register(mockComponentClass, true);
+          result = register(mockComponentClass, false);
         });
 
         it('does not call the dependencies\' register', (): void => {
@@ -216,7 +216,7 @@ describe('#register', (): void => {
       beforeEach((): void => {
         mockComponentClass.name = mockComponentClass.componentName;
         mockComponentClass.componentName = '';
-        result = register(mockComponentClass, true);
+        result = register(mockComponentClass, false);
       });
 
       it('sets the componentName', (): void => {
