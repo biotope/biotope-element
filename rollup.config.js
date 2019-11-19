@@ -3,9 +3,30 @@ import commonjs from 'rollup-plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import progress from 'rollup-plugin-progress';
 import visualizer from 'rollup-plugin-visualizer';
+import babel from 'rollup-plugin-babel';
+import { uglify } from 'rollup-plugin-uglify';
 
 // eslint-disable-next-line import/no-default-export
 export default [
+  {
+    input: 'src/index.ts',
+    context: 'null',
+    moduleContext: 'null',
+    output: {
+      name: 'index.esm',
+      file: 'lib/esm/index.js',
+      format: 'esm',
+    },
+    plugins: [
+      progress(),
+      resolve(),
+      commonjs(),
+      typescript({
+        tsconfig: './tsconfig.json',
+        clean: true,
+      }),
+    ],
+  },
   {
     input: 'src/index.ts',
     context: 'null',
@@ -27,22 +48,29 @@ export default [
     ],
   },
   {
-    input: 'src/index.ts',
+    input: 'src/min.ts',
     context: 'null',
     moduleContext: 'null',
     output: {
-      name: 'index.esm',
-      file: 'lib/esm/index.js',
-      format: 'esm',
+      name: 'index.cjs',
+      file: 'lib/biotope-element.min.js',
+      format: 'iife',
     },
     plugins: [
       progress(),
       resolve(),
       commonjs(),
       typescript({
-        tsconfig: './tsconfig.json',
+        tsconfig: './tsconfig.min.json',
         clean: true,
       }),
+      babel({
+        babelrc: false,
+        extensions: ['.js', '.ts'],
+        presets: ['@babel/preset-env'],
+      }),
+      uglify(),
+      visualizer(),
     ],
   },
 ];
