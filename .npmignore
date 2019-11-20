@@ -16,6 +16,7 @@
 !/.stylelintrc
 /*.js
 /*.yml
+/tsconfig.min.json
 
 ## Website and old docs
 /website
