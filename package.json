@@ -7,9 +7,10 @@
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "scripts": {
+    "fixdomtagger": "node domtagger-fix.js",
     "start": "npm run docs",
     "prepublishOnly": "npm run build",
-    "build": "cpy src/*.scss lib && rollup -c",
+    "build": "npm run fixdomtagger && cpy src/*.scss lib && rollup -c",
     "watch": "cpy src/*.scss lib && rollup -c -w",
     "release": "np",
     "docs": "cd website && npm start",
