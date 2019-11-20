@@ -33,6 +33,9 @@ After that, import it in your components like so:
 import Component from '@biotope/element';
 ```
 
+Alternatively you can use unpkg to insert `biotope-element` into your HTML for quick testing through
+our minified ES5 file available [here](https://unpkg.com/@biotope/element/lib/biotope-element.min.js).
+
 ## Your first component
 To use `biotope-element`, you have to extend it with your custom class.
 
