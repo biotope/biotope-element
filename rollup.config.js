@@ -25,6 +25,7 @@ export default [
         tsconfig: './tsconfig.json',
         clean: true,
       }),
+      visualizer(),
     ],
   },
   {
@@ -52,7 +53,7 @@ export default [
     context: 'null',
     moduleContext: 'null',
     output: {
-      name: 'index.cjs',
+      name: 'index.min',
       file: 'lib/biotope-element.min.js',
       format: 'iife',
     },
