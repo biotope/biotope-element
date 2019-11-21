@@ -9,6 +9,9 @@ features will be available on the package itself so the regular use of the packa
 If you want to give us feedback on these experiments, please do so on our issues on github. Each
 experiment below will have it linked at the bottom.
 
+> __📝 Note:__ Each experiment may or may not require the latest version of the package and may or
+may not have breaking changes. This information will be available per experiment.
+
 > __⚠️ Important:__ We will do our best to keep these versions as stable as possible, but they are
 still not recommended to be used in a production system as their API, availability and location may
 change - which will most likely cause your build to stop working without warning.
@@ -63,3 +66,6 @@ specifically in folders `templating` and `separation-of-concerns` (available for
 TypeScript).
 
 Link for github discussion: [Experiment: Templates](https://github.com/biotope/biotope-element/issues/232)
+
+> __📝 Note:__ This experiment requires at least version `4.0.0` of `biotope-element` and has no
+breaking changes to the package.
