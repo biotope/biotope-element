@@ -101,8 +101,9 @@ export default abstract class Component<TProps = object, TState = object> extend
     return attributeChangedCallback(this as any, name, previous, current);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public render(): HTMLFragment {
-    return this.html``;
+    return null;
   }
 
   /* istanbul ignore next */
