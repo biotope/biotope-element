@@ -13,3 +13,50 @@ experiment below will have it linked at the bottom.
 still not recommended to be used in a production system as their API, availability and location may
 change - which will most likely cause your build to stop working without warning.
 
+## Templates
+When you use `biotope-element`, you'll notice that our HTML looks like HTML but is in fact just a
+template string with some variables thrown in. In the spirit of the "separation of concerns", we
+have decided to experiment with a simple HTML-to-template-string parser.
+
+We have decided to use the `ejs` file format in the next example as most editors will color-code
+your code correctly. But can import any file, as long as you do it via a string:
+
+Example usage:
+```javascript
+// my-button.js
+import template from './my-button.ejs';
+
+class MyButton extends Component {
+  constructor() {
+    super();
+    // "template" is a simple string
+    this.template = template;
+  }
+  // No need for a render function!
+}
+MyButton.attributes = ['greet'];
+MyButton.register();
+```
+```html
+<!-- my-button.ejs -->
+<button><% this.props.greet %></button>
+```
+
+This will result in:
+
+```html
+<my-button greet="Hello World!">
+  <button>Hello World!</button>
+</my-button>
+```
+
+You can install it directly via our repo with `npm install biotope/biotope-element#templates` or by
+modifying your package json like so:
+```json
+"@biotope/element": "biotope/biotope-element#templates"
+```
+
+You can find more examples under the `examples` folder of the `templates` branch on our repo (which
+should be in your `node_modules/@biotope/element` folder if you've installed this version).
+
+Link for github discussion: [Experiment: Templates](https://github.com/biotope/biotope-element/issues/232)
