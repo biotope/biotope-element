@@ -102,7 +102,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   public render(): HTMLFragment {
-    return this.html``;
+    return null;
   }
 
   /* istanbul ignore next */
