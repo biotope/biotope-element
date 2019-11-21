@@ -6,8 +6,8 @@ title: Experimental
 This is a list of new `biotope-element` features we have decided to experiment with. None of these
 features will be available on the package itself so the regular use of the package is not affected.
 
-If you want to give us feedback on these experiments, please do so on our issues on github. Each
-experiment below will have it linked at the bottom.
+If you want to give us feedback on these experiments, please do so on our issues on GitHub. Each
+experiment below will have the issue linked at the bottom.
 
 > __📝 Note:__ Each experiment may or may not require the latest version of the package and may or
 may not have breaking changes. This information will be available per experiment.
@@ -65,7 +65,7 @@ should be in your `node_modules/@biotope/element` folder if you've installed thi
 specifically in folders `templating` and `separation-of-concerns` (available for both JavaScript and
 TypeScript).
 
-Link for github discussion: [Experiment: Templates](https://github.com/biotope/biotope-element/issues/232)
+Link for GitHub discussion: [Experiment: Templates](https://github.com/biotope/biotope-element/issues/232)
 
 > __📝 Note:__ This experiment requires at least version `4.0.0` of `biotope-element` and has no
 breaking changes to the package.
