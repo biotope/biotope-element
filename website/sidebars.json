@@ -16,7 +16,8 @@
     "Misc": [
       "peers",
       "integration",
-      "migration"
+      "migration",
+      "experimental"
     ]
   }
 }
