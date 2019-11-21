@@ -56,13 +56,24 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   protected readonly defaultState: TState;
 
-  protected styles: HTMLElementContent;
+  protected get styles(): HTMLElementContent {
+    // eslint-disable-next-line no-underscore-dangle
+    return this.__styles;
+  }
+
+  protected set styles(value: HTMLElementContent) {
+    // eslint-disable-next-line no-underscore-dangle
+    this.__styles = value;
+    this.render();
+  }
 
   private __currentProps: TProps;
 
   private __currentState: TState;
 
   private __html: Renderer<HTMLFragment>;
+
+  private __styles: HTMLElementContent;
 
   private __created = false;
 
