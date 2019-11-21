@@ -4,7 +4,7 @@ title: Experimental
 ---
 
 This is a list of new `biotope-element` features we have decided to experiment with. None of these
-features are guaranteed to be available on the package itself.
+features will be available on the package itself so the regular use of the package is not affected.
 
 If you want to give us feedback on these experiments, please do so on our issues on github. Each
 experiment below will have it linked at the bottom.
@@ -19,11 +19,12 @@ template string with some variables thrown in. In the spirit of the "separation 
 have decided to experiment with a simple HTML-to-template-string parser.
 
 We have decided to use the `ejs` file format in the next example as most editors will color-code
-your code correctly. But can import any file, as long as you do it via a string:
+your code correctly. But you can import any file, as long as you do it via a string:
 
 Example usage:
 ```javascript
 // my-button.js
+import Component from '@biotope/element';
 import template from './my-button.ejs';
 
 class MyButton extends Component {
@@ -57,6 +58,8 @@ modifying your package json like so:
 ```
 
 You can find more examples under the `examples` folder of the `templates` branch on our repo (which
-should be in your `node_modules/@biotope/element` folder if you've installed this version).
+should be in your `node_modules/@biotope/element` folder if you've installed this version) -
+specifically in folders `templating` and `separation-of-concerns` (available for both JavaScript and
+TypeScript).
 
 Link for github discussion: [Experiment: Templates](https://github.com/biotope/biotope-element/issues/232)
