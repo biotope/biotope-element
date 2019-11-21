@@ -4,7 +4,9 @@ import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
 import { render, rendered } from './create-renders';
-import { Attribute, PropValue, HTMLFragment } from './types';
+import {
+  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+} from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
@@ -53,6 +55,8 @@ export default abstract class Component<TProps = object, TState = object> extend
   protected readonly defaultProps: TProps;
 
   protected readonly defaultState: TState;
+
+  protected styles: HTMLElementContent;
 
   private __currentProps: TProps;
 

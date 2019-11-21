@@ -33,6 +33,7 @@ type RuntimeComponent = ComponentPrototype & HTMLElement;
 
 export interface ComponentInstance extends RuntimeComponent {
   constructor: ComponentType;
+  styles: HTMLElementContent;
   props: object;
   state: object;
   defaultProps: object;
