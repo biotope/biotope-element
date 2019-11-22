@@ -152,6 +152,12 @@ And clicking the button will result in the click event being printed to the cons
 import Component, { html } from '@biotope/element';
 ```
 
+> __⚠️ Important:__ When creating partials, altering the HTML structure of the `this.html` that
+consumes that partial (i.e. adding/removing nodes before the partial is used) will trigger the
+elements inside the partial to be re-rendered. To avoid this, you can use the `this.html.for`
+function to hard-wire the elements and prevent the re-render or simply don't alter the HTML
+structure - CSS is your friend here. More documentation in [this link](https://github.com/WebReflection/lighterhtml#whats-the-api--whats-in-the-export-).
+
 ### Loops
 It is generally a good idea to split your render function into multiple pieces otherwise it may end
 up too messy. You can do this by using `this.html` as many times as you want. Only when the result
