@@ -1,0 +1,23 @@
+{
+  "version-4.0.0-docs": {
+    "Getting Started": [
+      "version-4.0.0-index",
+      "version-4.0.0-component",
+      "version-4.0.0-styling",
+      "version-4.0.0-nesting"
+    ],
+    "Advanced": [
+      "version-4.0.0-lifecycle",
+      "version-4.0.0-attr-parsing",
+      "version-4.0.0-events",
+      "version-4.0.0-references",
+      "version-4.0.0-typescript"
+    ],
+    "Misc": [
+      "version-4.0.0-peers",
+      "version-4.0.0-integration",
+      "version-4.0.0-migration",
+      "version-4.0.0-experimental"
+    ]
+  }
+}
