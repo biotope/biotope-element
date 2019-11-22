@@ -14,6 +14,12 @@ that page assembly libraries like React, Vue or Angular have the best possible e
 our components. This also means that every piece of knowledge you have about HTMLElements is
 applicable when working with `biotope-element`.
 
+## Documentation
+You can find the full documentation [here](https://element.biotope.sh).
+
+In order to contribute to the documentation you can start a local server with `npm start` and then
+start editing the files in `docs`.
+
 ## Installation
 You can install the biotope element in your project using npm:
 
@@ -88,9 +94,3 @@ which will load only the necessary polyfills.
 
 > __⚠️ Important:__ Remember to make sure that the polyfill is fully loaded before attempting to
 register any component. This is done via the `WebComponentsReady` event or by a blocking script tag.
-
-## Documentation
-You can find the documentation [here](https://element.biotope.sh).
-
-In order to contribute to the documentation you can start a local server with `npm start` and then
-start editing the files in `docs`.
