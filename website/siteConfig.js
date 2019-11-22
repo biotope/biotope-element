@@ -10,14 +10,6 @@
 
 // List of projects/orgs using your project for the users page.
 const users = [
-  {
-    caption: 'User1',
-    // You will need to prepend the image path with your baseUrl
-    // if it is not '/', like: '/test-site/img/image.jpg'.
-    image: '/img/logo.svg',
-    infoLink: 'https://www.facebook.com',
-    pinned: true,
-  },
 ];
 
 const siteConfig = {
@@ -100,6 +92,12 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/biotope/biotope-element',
+  
+  algolia: {
+    apiKey: '33e95f3987d6a80ee03dc011b4225502',
+    indexName: 'biotope-element-docs',
+    algoliaOptions: {} // Optional, if provided by Algolia
+  }
 };
 
 module.exports = siteConfig;
