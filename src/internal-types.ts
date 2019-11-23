@@ -41,6 +41,7 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentProps: object;
   __currentState: object;
   __html: Renderer<HTMLFragment>;
+  __styles: HTMLElementContent;
   __created: boolean;
   __rendered: boolean;
   __attributeChangedCallbackStack: (() => void)[];
