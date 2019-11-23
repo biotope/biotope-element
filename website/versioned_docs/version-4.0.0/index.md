@@ -1,7 +1,8 @@
-# Biotope Element
-
-[![Build Status](https://travis-ci.org/biotope/biotope-element.svg?branch=master)](https://travis-ci.org/biotope/biotope-element)
-[![codecov](https://codecov.io/gh/biotope/biotope-element/branch/master/graph/badge.svg)](https://codecov.io/gh/biotope/biotope-element)
+---
+id: version-4.0.0-index
+title: Introduction
+original_id: index
+---
 
 `biotope-element` is a library to create Web Components in a simple way, taking advantage of simple
 yet powerful concepts from other frontend libraries to empower you, the developer, and your clients'
@@ -14,11 +15,10 @@ that page assembly libraries like React, Vue or Angular have the best possible e
 our components. This also means that every piece of knowledge you have about HTMLElements is
 applicable when working with `biotope-element`.
 
-## Documentation
-You can find the full documentation [here](https://element.biotope.sh).
-
-In order to contribute to the documentation you can start a local server with `npm start` and then
-start editing the files in `docs`.
+This documentation shows you how `biotope-element` works and how to create components using it. It
+also assumes that you have no knowledge of what a Web Component is, which means we will explain some
+Web Component concepts as we go along but not all and certainly not to an unnecessary depth. You can
+read more about Web Components [here](https://www.webcomponents.org/introduction).
 
 ## Installation
 You can install the biotope element in your project using npm:
