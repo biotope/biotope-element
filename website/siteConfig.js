@@ -41,7 +41,7 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: '##f17c61',
+    primaryColor: '#f17c61',
     secondaryColor: '#ffb376',
   },
 
@@ -92,12 +92,12 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/biotope/biotope-element',
-  
+
   algolia: {
     apiKey: '33e95f3987d6a80ee03dc011b4225502',
     indexName: 'biotope-element-docs',
-    algoliaOptions: {} // Optional, if provided by Algolia
-  }
+    algoliaOptions: {}, // Optional, if provided by Algolia
+  },
 };
 
 module.exports = siteConfig;
