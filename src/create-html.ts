@@ -19,4 +19,5 @@ export const createRender = (
   return (): HTMLFragment => (context.__created ? renderFunction() : null);
 };
 
-export const createPartial = (): Renderer<HTMLFragment> => html;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createPartial = (): Renderer<HTMLFragment> => html as any;
