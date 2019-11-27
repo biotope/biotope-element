@@ -33,7 +33,7 @@ type RuntimeComponent = ComponentPrototype & HTMLElement;
 
 export interface ComponentInstance extends RuntimeComponent {
   constructor: ComponentType;
-  styles: HTMLElementContent;
+  styleContent: HTMLElementContent;
   props: object;
   state: object;
   defaultProps: object;
@@ -41,7 +41,7 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentProps: object;
   __currentState: object;
   __html: Renderer<HTMLFragment>;
-  __styles: HTMLElementContent;
+  __styleContent: HTMLElementContent;
   __created: boolean;
   __rendered: boolean;
   __attributeChangedCallbackStack: (() => void)[];

@@ -4,7 +4,7 @@ import * as styles from './styles.scss';
 class ExampleButton extends Component {
   constructor() {
     super();
-    this.styles = styles;
+    this.styleContent = styles;
   }
 
   render() {
