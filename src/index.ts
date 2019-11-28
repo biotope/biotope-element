@@ -96,10 +96,26 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public disconnectedCallback(): void {}
 
+  /* istanbul ignore next */
+  // eslint-disable-next-line class-methods-use-this
+  public beforeAttributeChanged(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    name: string, previous: PropValue, current: PropValue,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ): void {}
+
   public attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return attributeChangedCallback(this as any, name, previous, current);
   }
+
+  /* istanbul ignore next */
+  // eslint-disable-next-line class-methods-use-this
+  public afterAttributeChanged(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    name: string, previous: PropValue, current: PropValue,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ): void {}
 
   // eslint-disable-next-line class-methods-use-this
   public render(): HTMLFragment {
