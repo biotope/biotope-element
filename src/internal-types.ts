@@ -26,9 +26,9 @@ export interface ComponentPrototype extends Function {
   created: () => void;
   connectedCallback: () => void;
   disconnectedCallback: () => void;
-  beforeAttributeChanged: (name: string, oldValue: PropValue, newValue: PropValue) => void;
+  beforePropsChanged: (name: string, oldValue: PropValue, newValue: PropValue) => void;
   attributeChangedCallback: (name: string, oldValue: PropValue, newValue: PropValue) => void;
-  afterAttributeChanged: (name: string, oldValue: PropValue, newValue: PropValue) => void;
+  afterPropsChanged: (name: string, oldValue: PropValue, newValue: PropValue) => void;
   render: RenderFunction;
   rendered: () => void;
   emit: <TEvent>(name: string, detail?: TEvent, singleEmit?: boolean) => boolean;

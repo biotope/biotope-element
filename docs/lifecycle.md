@@ -16,17 +16,17 @@ When registering and rendering a component for the first time, you can expect th
 order:
   1. `constructor`
   2. `connectedCallback`
-  3. `beforeAttributeChanged` (once per attribute)
+  3. `beforePropsChanged` (once per attribute)
   4. `attributeChangedCallback` (once per attribute)
-  5. `afterAttributeChanged` (once per attribute)
+  5. `afterPropsChanged` (once per attribute)
   6. `render`
   7. `rendered`
 
 When a component is rendered and idle on the page and one of its attributes changes, these hooks are
 called in this order:
-  1. `beforeAttributeChanged`
+  1. `beforePropsChanged`
   2. `attributeChangedCallback`
-  3. `afterAttributeChanged`
+  3. `afterPropsChanged`
   4. `render`
   5. `rendered`
 
@@ -85,13 +85,13 @@ it determines that the props need to be changed. If they don't, no new render wi
 
 This hook will be called once per attribute changed, even if two attributes change at the same time.
 
-When all the "attributes hooks" finish (`beforeAttributeChanged`, `attributeChangedCallback` and
-`afterAttributeChanged`), it emits a non-bubbling `attributechanged` event with no `detail`.
+When all the "attributes hooks" finish (`beforePropsChanged`, `attributeChangedCallback` and
+`afterPropsChanged`), it emits a non-bubbling `attributechanged` event with no `detail`.
 
 > __⚠️ Important:__ This hook should only be overridden when you need to change the way a prop gets
 updated - which is almost never the case if you're using the `attributes` property correctly.
 
-### beforeAttributeChanged and afterAttributeChanged
+### beforePropsChanged and afterPropsChanged
 These hooks exist so that we can create functions to deal with attribute/prop changes in an explicit
 way, without the need to override `attributeChangedCallback` and insert code before and after a
 `super` call (that implicitly changes the `props` property).
@@ -101,10 +101,10 @@ explicit about what the code is doing and where it's inserted in the component l
 
 ```javascript
 class MyButton extends Component {
-  beforeAttributeChanged(...) {
+  beforePropsChanged(...) {
     // runs before "this.props" is updated
   }
-  afterAttributeChanged(...) {
+  afterPropsChanged(...) {
     // runs after "this.props" is updated
   }
 }
@@ -172,7 +172,7 @@ export class MyButton extends Component {
     console.log('CC');
   }
 
-  beforeAttributeChanged(name, previous, current) {
+  beforePropsChanged(name, previous, current) {
     console.log('BAC', name);
   }
 
@@ -181,7 +181,7 @@ export class MyButton extends Component {
     console.log('ACC', name);
   }
 
-  afterAttributeChanged(name, previous, current) {
+  afterPropsChanged(name, previous, current) {
     console.log('AAC', name);
   }
 

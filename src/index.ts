@@ -98,7 +98,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
-  public beforeAttributeChanged(
+  public beforePropsChanged(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     name: string, previous: PropValue, current: PropValue,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -111,7 +111,7 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
-  public afterAttributeChanged(
+  public afterPropsChanged(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     name: string, previous: PropValue, current: PropValue,
   // eslint-disable-next-line @typescript-eslint/no-empty-function

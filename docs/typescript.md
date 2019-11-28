@@ -55,7 +55,7 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
     // do some cleanup here
   }
 
-  public beforeAttributeChanged(name: string, previous: PropValue, current: PropValue): void {
+  public beforePropsChanged(name: string, previous: PropValue, current: PropValue): void {
     // runs before "this.props" is updated
   }
 
@@ -63,7 +63,7 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
     // override how a "prop" gets updated
   }
 
-  public afterAttributeChanged(name: string, previous: PropValue, current: PropValue): void {
+  public afterPropsChanged(name: string, previous: PropValue, current: PropValue): void {
     // runs after "this.props" is updated
   }
 
