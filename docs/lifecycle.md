@@ -16,15 +16,19 @@ When registering and rendering a component for the first time, you can expect th
 order:
   1. `constructor`
   2. `connectedCallback`
-  3. `attributeChangedCallback` (once per attribute)
-  4. `render`
-  5. `rendered`
+  3. `beforeAttributeChanged` (once per attribute)
+  4. `attributeChangedCallback` (once per attribute)
+  5. `afterAttributeChanged` (once per attribute)
+  6. `render`
+  7. `rendered`
 
 When a component is rendered and idle on the page and one of its attributes changes, these hooks are
 called in this order:
-  1. `attributeChangedCallback`
-  2. `render`
-  3. `rendered`
+  1. `beforeAttributeChanged`
+  2. `attributeChangedCallback`
+  3. `afterAttributeChanged`
+  4. `render`
+  5. `rendered`
 
 When the component is removed from the page, only the `disconnectedCallback` hook gets triggered.
 
@@ -79,35 +83,42 @@ In `biotope-element`however, this order is switched for render optimization purp
 This hook is called when an attribute has changed on the component. It can trigger a new render if
 it determines that the props need to be changed. If they don't, no new render will be triggered.
 
-You can use this function for 2 main purposes. Here is an example:
+This hook will be called once per attribute changed, even if two attributes change at the same time.
+
+When all the "attributes hooks" finish (`beforeAttributeChanged`, `attributeChangedCallback` and
+`afterAttributeChanged`), it emits a non-bubbling `attributechanged` event with no `detail`.
+
+> __⚠️ Important:__ This hook should only be overridden when you need to change the way a prop gets
+updated - which is almost never the case if you're using the `attributes` property correctly.
+
+### beforeAttributeChanged and afterAttributeChanged
+These hooks exist so that we can create functions to deal with attribute/prop changes in an explicit
+way, without the need to override `attributeChangedCallback` and insert code before and after a
+`super` call (that implicitly changes the `props` property).
+
+As en example, both of the following components have the same behavior, but the first one is more
+explicit about what the code is doing and where it's inserted in the component lifecycle.
 
 ```javascript
 class MyButton extends Component {
-  attributeChangedCallback(name, previous, current) {
-    // Here, no props have changed yet
-    // You can do any check you want on the "current" attribute
-
-    super.attributeChangedCallback(name, previous, current)
-
-    // Here, prop with the name in "name" has changed
-    // You can access "this.props[name]" and the result is the value of "current"
-    // Here you can do state changes if you need to update it based on the new prop
+  beforeAttributeChanged(...) {
+    // runs before "this.props" is updated
   }
-
-  render() {
-    // Will only be triggered if the "current" value is not equal to "previous"
-    …
+  afterAttributeChanged(...) {
+    // runs after "this.props" is updated
   }
 }
 ```
 
-This hook will be called once per attribute changed, even if two attributes change at the same time.
-
-This is the only hook that requires you to call the `super` function in order to work as intended.
-Remember to always call it, otherwise no props will get changed, unless you do it manually - we
-don't advise it.
-
-When this hook finishes, it emits a non-bubbling `attributechanged` event with no `detail`.
+```javascript
+class MyButton extends Component {
+  attributeChangedCallback(...) {
+    // runs before "this.props" is updated
+    super.attributeChangedCallback(...) // updates "this.props"
+    // runs after "this.props" is updated
+  }
+}
+```
 
 ### render
 This is the first hook provided by `biotope-element`. It's responsible for returning the HTML that
@@ -154,32 +165,40 @@ import Component from '@biotope/element';
 export class MyButton extends Component {
   constructor() {
     super();
-    console.log('first');
+    console.log('C');
   }
 
   connectedCallback() {
-    console.log('second');
+    console.log('CC');
+  }
+
+  beforeAttributeChanged(name, previous, current) {
+    console.log('BAC', name);
   }
 
   attributeChangedCallback(name, previous, current) {
     super.attributeChangedCallback(name, previous, current);
-    console.log('third', name);
+    console.log('ACC', name);
+  }
+
+  afterAttributeChanged(name, previous, current) {
+    console.log('AAC', name);
   }
 
   render() {
-    console.log('fourth');
+    console.log('R');
     return this.html`
       …
     `;
   }
 
   rendered() {
-    console.log('fifth');
+    console.log('RD');
     // do some event listener attaching here
   }
 
   disconnectedCallback() {
-    console.log('sixth');
+    console.log('DC');
     // do some cleanup here
   }
 }
@@ -199,16 +218,16 @@ Considering the component above, and given this next HTML:
 Then the outputs to the console would be:
 
 ```bash
-> first
-> second
-> fourth
-> fifth
+> C
+> CC
+> R
+> RD
 ```
 
 If we then remove the element from the DOM, it would just output:
 
 ```bash
-> sixth
+> DC
 ```
 
 ### Two attributes
@@ -224,10 +243,14 @@ Considering the component above, and given this next HTML:
 Then the outputs to the console would be:
 
 ```bash
-> first
-> second
-> third text
-> third another-text
-> fourth
-> fifth
+> C
+> CC
+> BAC text
+> ACC text
+> AAC text
+> BAC another-text
+> ACC another-text
+> AAC another-text
+> R
+> RD
 ```
