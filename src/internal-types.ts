@@ -3,7 +3,12 @@ import {
 } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
+type BaseRenderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
+
+export interface Renderer<TRender> extends BaseRenderer<TRender> {
+  for: (object: object, id?: string) => BaseRenderer<TRender>;
+  node: BaseRenderer<TRender>;
+}
 
 export type RenderFunction = () => HTMLFragment;
 

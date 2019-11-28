@@ -1,8 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { render, html } from 'lighterhtml';
+import { render, html as internalHtml } from 'lighterhtml';
 
 import { HTMLFragment } from './types';
 import { Renderer, ComponentInstance, RenderFunction } from './internal-types';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const html = internalHtml as any as Renderer<HTMLFragment>;
 
 export { html };
 
@@ -19,5 +22,4 @@ export const createRender = (
   return (): HTMLFragment => (context.__created ? renderFunction() : null);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createPartial = (): Renderer<HTMLFragment> => html as any;
+export const createPartial = (): Renderer<HTMLFragment> => html;
