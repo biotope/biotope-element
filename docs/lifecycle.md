@@ -173,7 +173,7 @@ export class MyButton extends Component {
   }
 
   beforePropsChanged(name, previous, current) {
-    console.log('BAC', name);
+    console.log('BPC', name);
   }
 
   attributeChangedCallback(name, previous, current) {
@@ -182,7 +182,7 @@ export class MyButton extends Component {
   }
 
   afterPropsChanged(name, previous, current) {
-    console.log('AAC', name);
+    console.log('APC', name);
   }
 
   render() {
@@ -245,12 +245,12 @@ Then the outputs to the console would be:
 ```bash
 > C
 > CC
-> BAC text
+> BPC text
 > ACC text
-> AAC text
-> BAC another-text
+> APC text
+> BPC another-text
 > ACC another-text
-> AAC another-text
+> APC another-text
 > R
 > RD
 ```
