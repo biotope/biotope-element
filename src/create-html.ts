@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render, html } from 'lighterhtml';
 
-import { HTMLFragment } from './types';
+import { HTMLFragment, HTMLElementContent } from './types';
 import { Renderer, ComponentInstance, RenderFunction } from './internal-types';
 
 export { html };
@@ -21,3 +21,8 @@ export const createRender = (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createPartial = (): Renderer<HTMLFragment> => html as any;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createStyle = (content: HTMLElementContent): HTMLFragment => (html as any)`
+  <style>${contentToString(content)}</style>
+`;
