@@ -1,13 +1,25 @@
 import { render, html } from 'lighterhtml';
+import { HTMLElementContent, HTMLFragment } from '../src/types';
 import { ComponentInstance } from '../src/internal-types';
-import { createPartial, createRender } from '../src/create-html';
+import {
+  createPartial, createRender, createStyle, createRaw,
+} from '../src/create-html';
+
+// const realHtml: typeof html = require.requireActual('html');
 
 jest.mock('lighterhtml', (): object => ({
   render: jest.fn(),
-  html: jest.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  html: jest.fn((template: TemplateStringsArray, ...args: any[]) => template
+    .reduce((accumulator, hole, index) => `${accumulator}${hole}${args.length - 1 >= index ? args[index] : ''}`, '')),
 }));
 
-describe('#dom-wrappers', () => {
+const createStyleRetyped = (style: HTMLElementContent): string => (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createStyle(style) as any as string
+);
+
+describe('DOM wrappers', () => {
   afterEach(() => {
     (render as jest.Mock).mockClear();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,6 +104,61 @@ describe('#dom-wrappers', () => {
 
       it('original render is not called', () => {
         expect(mockRender.mock.calls).toHaveLength(0);
+      });
+    });
+  });
+
+  describe('#createStyle', () => {
+    describe('is given a string', (): void => {
+      it('sets innerHTML to it', (): void => {
+        const result = createStyleRetyped('mock-style').trim();
+        expect(result).toBe('<style>mock-style</style>');
+      });
+    });
+
+    describe('is not given a string', (): void => {
+      it('sets innerHTML to the result of ".toString()"', (): void => {
+        const styles = {};
+        styles.toString = (): string => 'mock-style';
+
+        const result = createStyleRetyped(styles).trim();
+        expect(result).toBe('<style>mock-style</style>');
+      });
+    });
+  });
+
+  describe('#createRaw', () => {
+    it('converts a string', () => {
+      expect(createRaw('hello')).toBe('hello');
+    });
+
+    it('converts an object', () => {
+      expect(createRaw(['hello', 'world'])).toBe('hello,world');
+    });
+
+    it('converts nulls', () => {
+      expect(createRaw(null)).toBe('null');
+      expect(createRaw(undefined)).toBe('undefined');
+    });
+
+    describe('the html function', () => {
+      const myInput = {};
+      let result: HTMLFragment;
+
+      beforeEach(() => {
+        result = createRaw(myInput);
+      });
+
+      it('is called once', () => {
+        expect((html as jest.MockedFunction<typeof html>).mock.calls).toHaveLength(1);
+      });
+
+      it('is called with a TemplateStringsArray', () => {
+        expect((html as jest.MockedFunction<typeof html>).mock.calls[0]).toEqual([['[object Object]']]);
+      });
+
+      it('is returned', () => {
+        expect(result).toBe('[object Object]');
       });
     });
   });
