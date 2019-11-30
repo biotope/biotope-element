@@ -1,7 +1,7 @@
 import { getComponentName } from './get-component-name';
 import { isRegistered } from './is-registered';
 import { attributeName } from './attribute-mapper';
-import { kebabToCamel } from './case-converters';
+import { kebabToCamel } from './converters';
 import { ComponentInstance, ComponentType } from './internal-types';
 import { PropValue } from './types';
 
