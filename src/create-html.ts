@@ -28,7 +28,7 @@ export const createStyle = (content: HTMLElementContent): HTMLFragment => (html 
   <style>${contentToString(content)}</style>
 `;
 
-export const createFragmentFromString = (
+export const createRaw = (
   content: HTMLElementContent,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): HTMLFragment => (html as any)(stringToTemplateLiteral(contentToString(content)));

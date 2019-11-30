@@ -1,6 +1,6 @@
 import { register } from './register';
 import {
-  createRender, createPartial, html, createStyle, createFragmentFromString as stringToFragment,
+  createRender, createPartial, html, createStyle, createRaw,
 } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
@@ -14,7 +14,7 @@ export * from './types';
 export {
   html,
   createStyle,
-  stringToFragment,
+  createRaw,
 };
 
 // eslint-disable-next-line import/no-default-export
@@ -119,9 +119,9 @@ export default abstract class Component<TProps = object, TState = object> extend
     return emit(this as any, name, detail, singleEmit);
   }
 
-  protected stringToFragment = stringToFragment;
-
   protected createStyle = createStyle;
+
+  protected createRaw = createRaw;
 
   protected setState(state: Partial<TState> | ((state: TState) => Partial<TState>)): void {
     // eslint-disable-next-line no-underscore-dangle
