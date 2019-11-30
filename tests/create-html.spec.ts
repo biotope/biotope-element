@@ -5,8 +5,6 @@ import {
   createPartial, createRender, createStyle, createRaw,
 } from '../src/create-html';
 
-// const realHtml: typeof html = require.requireActual('html');
-
 jest.mock('lighterhtml', (): object => ({
   render: jest.fn(),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
