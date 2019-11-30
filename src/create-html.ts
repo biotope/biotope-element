@@ -3,6 +3,7 @@ import { render, html } from 'lighterhtml';
 
 import { HTMLFragment, HTMLElementContent } from './types';
 import { Renderer, ComponentInstance, RenderFunction } from './internal-types';
+import { contentToString, stringToTemplateLiteral } from './converters';
 
 export { html };
 
@@ -26,3 +27,8 @@ export const createPartial = (): Renderer<HTMLFragment> => html as any;
 export const createStyle = (content: HTMLElementContent): HTMLFragment => (html as any)`
   <style>${contentToString(content)}</style>
 `;
+
+export const createFragmentFromString = (
+  content: HTMLElementContent,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): HTMLFragment => (html as any)(stringToTemplateLiteral(contentToString(content)));

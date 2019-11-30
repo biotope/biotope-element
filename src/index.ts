@@ -1,8 +1,9 @@
 import { register } from './register';
-import { createRender, createPartial, html } from './create-html';
+import {
+  createRender, createPartial, html, createStyle, createFragmentFromString as stringToFragment,
+} from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
-import { createStyle } from './create-style';
 import { render, rendered } from './create-renders';
 import { Attribute, PropValue, HTMLFragment } from './types';
 import { Renderer } from './internal-types';
@@ -10,8 +11,11 @@ import { Renderer } from './internal-types';
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
-export * from './create-style';
-export { html };
+export {
+  html,
+  createStyle,
+  stringToFragment,
+};
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -114,6 +118,8 @@ export default abstract class Component<TProps = object, TState = object> extend
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return emit(this as any, name, detail, singleEmit);
   }
+
+  protected stringToFragment = stringToFragment;
 
   protected createStyle = createStyle;
 
