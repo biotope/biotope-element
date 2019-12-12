@@ -49,9 +49,12 @@ export const register = (context: ComponentType, outputToConsole: boolean): bool
         this.attributeChangedCallback(name, this.props[nameCamel], value);
       },
     };
-
-    Object.defineProperty(context.prototype, name, prop);
-    Object.defineProperty(context.prototype, nameCamel, prop);
+    if(!context.prototype.hasOwnProperty(name)) {
+      Object.defineProperty(context.prototype, name, prop);
+    }
+    if(!context.prototype.hasOwnProperty(nameCamel)) {
+      Object.defineProperty(context.prototype, nameCamel, prop);
+    }
   });
 
   const originalConnectedCallback = context.prototype.connectedCallback;
