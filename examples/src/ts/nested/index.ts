@@ -14,10 +14,6 @@ export class ExampleParent extends Component<ExampleParentProps> {
     ExampleChild as typeof Component,
   ];
 
-  public get text() {
-    return 'Another text';
-  }
-
   public constructor() {
     super(false);
   }

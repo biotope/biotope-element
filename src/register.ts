@@ -49,10 +49,10 @@ export const register = (context: ComponentType, outputToConsole: boolean): bool
         this.attributeChangedCallback(name, this.props[nameCamel], value);
       },
     };
-    if(!context.prototype.hasOwnProperty(name)) {
+    if (!Object.prototype.hasOwnProperty.call(context, name)) {
       Object.defineProperty(context.prototype, name, prop);
     }
-    if(!context.prototype.hasOwnProperty(nameCamel)) {
+    if (!Object.prototype.hasOwnProperty.call(context, name)) {
       Object.defineProperty(context.prototype, nameCamel, prop);
     }
   });
