@@ -55,9 +55,16 @@ export class MyButton extends Component<MyButtonProps, MyButtonState> {
     // do some cleanup here
   }
 
+  public beforePropsChanged(name: string, previous: PropValue, current: PropValue): void {
+    // runs before "this.props" is updated
+  }
+
   public attributeChangedCallback(name: string, previous: PropValue, current: PropValue): void {
-    super.attributeChangedCallback(name, previous, current);
-    // update state given a set of new props
+    // override how a "prop" gets updated
+  }
+
+  public afterPropsChanged(name: string, previous: PropValue, current: PropValue): void {
+    // runs after "this.props" is updated
   }
 
   public render(): HTMLFragment {

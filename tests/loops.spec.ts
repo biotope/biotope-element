@@ -27,6 +27,8 @@ describe('loops', () => {
   });
 
   it('works with array maps', () => {
-    expect((createPartial() as jest.Mock).mock.calls).toHaveLength(calls + 1);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const partial = createPartial() as any as jest.Mock;
+    expect(partial.mock.calls).toHaveLength(calls + 1);
   });
 });
