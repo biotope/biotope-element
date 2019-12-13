@@ -45,7 +45,7 @@
     "basichtml": "~1.1",
     "basichtml-elements": "~0.1",
     "codecov": "~3.6",
-    "cpy-cli": "~2.0",
+    "cpy-cli": "~3.0.0",
     "docusaurus": "~1.14",
     "eslint-plugin-jest": "~23.0",
     "jest": "~24.9",
