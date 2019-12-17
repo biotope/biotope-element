@@ -1,4 +1,4 @@
-import { ComponentInstance, RenderFunction, ReadyFunction } from './internal-types';
+import { ComponentInstance, RenderFunction } from './internal-types';
 import { HTMLFragment } from './types';
 
 const emitRendered = (context: ComponentInstance, elements: ComponentInstance[]): void => {
@@ -13,7 +13,9 @@ const emitRendered = (context: ComponentInstance, elements: ComponentInstance[])
 };
 
 export const ready = (context: ComponentInstance): void => {
-  if(!context.__ready) {
+  // eslint-disable-next-line no-underscore-dangle
+  if (!context.__ready) {
+    // eslint-disable-next-line no-underscore-dangle,no-param-reassign
     context.__ready = true;
     context.ready();
     context.emit('ready', undefined, true);

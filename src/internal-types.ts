@@ -7,8 +7,6 @@ export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[])
 
 export type RenderFunction = () => HTMLFragment;
 
-export type ReadyFunction = () => void;
-
 export interface ComponentType extends Function {
   componentName: string;
   attributes: (string | Attribute)[];

@@ -86,9 +86,9 @@ export default abstract class Component<TProps = object, TState = object> extend
       this as any,
       () => render(this as any, originalRender),
       () => {
-        rendered(this as any),
-        ready(this as any)
-      }
+        rendered(this as any);
+        ready(this as any);
+      },
       /* eslint-enable @typescript-eslint/no-explicit-any */
     );
   }
@@ -115,15 +115,17 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public rendered(): void {}
 
+  /* istanbul ignore next */
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public ready(): void {}
 
   public addEventListener(type, listener, options): void {
-    if(type === 'ready' &&this.__ready) {
+    // eslint-disable-next-line no-underscore-dangle
+    if (type === 'ready' && this.__ready) {
       listener();
     } else {
       super.addEventListener(type, listener, options);
     }
-
   }
 
   protected emit<TEvent>(name: string, detail?: TEvent, singleEmit = false): boolean {
