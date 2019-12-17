@@ -1,4 +1,4 @@
-import { ComponentInstance, RenderFunction } from './internal-types';
+import { ComponentInstance, RenderFunction, ReadyFunction } from './internal-types';
 import { HTMLFragment } from './types';
 
 const emitRendered = (context: ComponentInstance, elements: ComponentInstance[]): void => {
@@ -9,6 +9,14 @@ const emitRendered = (context: ComponentInstance, elements: ComponentInstance[])
     context.emit('rendered', undefined, true);
   } else {
     setTimeout(() => emitRendered(context, elements));
+  }
+};
+
+export const ready = (context: ComponentInstance): void => {
+  if(!context.__ready) {
+    context.__ready = true;
+    context.ready();
+    context.emit('ready', undefined, true);
   }
 };
 
