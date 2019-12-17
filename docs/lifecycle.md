@@ -19,6 +19,7 @@ order:
   3. `attributeChangedCallback` (once per attribute)
   4. `render`
   5. `rendered`
+  6. `ready` (once per life)
 
 When a component is rendered and idle on the page and one of its attributes changes, these hooks are
 called in this order:
@@ -136,6 +137,15 @@ This hook emits a non-bubbling `rendered` event with no `detail` when both of th
 conditions are met:
   - the hook has finished
   - all children of this component are fully rendered and their DOM is already updated.
+
+### ready
+This hook will only be called once when the first `rendered` hook got fired.
+
+This hook is for the purpose of making sure the component has been registered, rendered and is available for your usage.
+It emits a non-bubbling `ready` event with no `detail`.
+
+> __⚠️ Important:__ If you add a `ready` event listener **after** the ready event was fired, the listener will be directly called, 
+as the component is already ready
 
 ### disconnectedCallback
 The counterpart of the `connectedCallback` hook. This hook gets called whenever a component leaves
