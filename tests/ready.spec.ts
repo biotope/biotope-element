@@ -59,7 +59,7 @@ describe('#ready', () => {
 
   describe('event', () => {
     let eventListener;
-    let lateEventListener
+    let lateEventListener;
     beforeEach(() => {
       eventListener = jest.fn();
       lateEventListener = jest.fn();
@@ -70,12 +70,12 @@ describe('#ready', () => {
       }
       element = new TestElement();
       mockRegister(element);
-      element.addEventListener('ready', eventListener)
+      element.addEventListener('ready', eventListener);
       element.render();
       element.render();
       setTimeout(() => {
-        element.addEventListener('ready', lateEventListener)
-      })
+        element.addEventListener('ready', lateEventListener);
+      });
     });
 
     it('emits a ready event', (done) => setTimeout(() => {
