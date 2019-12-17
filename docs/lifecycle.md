@@ -188,8 +188,12 @@ export class MyButton extends Component {
     // do some event listener attaching here
   }
 
-  disconnectedCallback() {
+  ready() {
     console.log('sixth');
+  }
+
+  disconnectedCallback() {
+    console.log('seventh');
     // do some cleanup here
   }
 }
@@ -213,12 +217,13 @@ Then the outputs to the console would be:
 > second
 > fourth
 > fifth
+> sixth
 ```
 
 If we then remove the element from the DOM, it would just output:
 
 ```bash
-> sixth
+> seventh
 ```
 
 ### Two attributes
@@ -240,4 +245,5 @@ Then the outputs to the console would be:
 > third another-text
 > fourth
 > fifth
+> sixth
 ```
