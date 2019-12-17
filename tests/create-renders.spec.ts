@@ -1,6 +1,6 @@
 import { HTMLFragment } from '../src/types';
 import { ComponentInstance } from '../src/internal-types';
-import { render, rendered } from '../src/create-renders';
+import { render, rendered, ready } from '../src/create-renders';
 
 describe('#render', () => {
   const fragment: HTMLFragment = {
@@ -102,5 +102,29 @@ describe('#rendered', () => {
       expect(component.querySelectorAll.mock.calls).toHaveLength(1);
       expect(component.querySelectorAll.mock.calls[0]).toEqual(['*']);
     });
+  });
+});
+
+describe('#createReady', () => {
+  let component;
+
+  beforeEach(() => {
+    component = {
+      ready: jest.fn(),
+      emit: jest.fn(),
+    };
+  });
+
+  it('calls the original ready', () => {
+    ready(component);
+    expect(component.ready.mock.calls).toHaveLength(1);
+    expect(component.ready.mock.calls[0]).toEqual([]);
+  });
+
+  it('calls the original ready ONLY once', () => {
+    ready(component);
+    ready(component);
+    expect(component.ready.mock.calls).toHaveLength(1);
+    expect(component.ready.mock.calls[0]).toEqual([]);
   });
 });

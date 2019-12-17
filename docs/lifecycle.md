@@ -19,6 +19,7 @@ order:
   3. `attributeChangedCallback` (once per attribute)
   4. `render`
   5. `rendered`
+  6. `ready` (once per life)
 
 When a component is rendered and idle on the page and one of its attributes changes, these hooks are
 called in this order:
@@ -137,6 +138,15 @@ conditions are met:
   - the hook has finished
   - all children of this component are fully rendered and their DOM is already updated.
 
+### ready
+This hook will only be called once when the first `rendered` hook got fired.
+
+This hook is for the purpose of making sure the component has been registered, rendered and is available for your usage.
+It emits a non-bubbling `ready` event with no `detail`.
+
+> __⚠️ Important:__ If you add a `ready` event listener **after** the ready event was fired, the listener will be directly called, 
+as the component is already ready
+
 ### disconnectedCallback
 The counterpart of the `connectedCallback` hook. This hook gets called whenever a component leaves
 the DOM. Just like `connectedCallback`, this hook will be called again if the component gets
@@ -178,8 +188,12 @@ export class MyButton extends Component {
     // do some event listener attaching here
   }
 
-  disconnectedCallback() {
+  ready() {
     console.log('sixth');
+  }
+
+  disconnectedCallback() {
+    console.log('seventh');
     // do some cleanup here
   }
 }
@@ -203,12 +217,13 @@ Then the outputs to the console would be:
 > second
 > fourth
 > fifth
+> sixth
 ```
 
 If we then remove the element from the DOM, it would just output:
 
 ```bash
-> sixth
+> seventh
 ```
 
 ### Two attributes
@@ -230,4 +245,5 @@ Then the outputs to the console would be:
 > third another-text
 > fourth
 > fifth
+> sixth
 ```
