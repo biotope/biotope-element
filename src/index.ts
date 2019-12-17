@@ -119,7 +119,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public ready(): void {}
 
-  public addEventListener(type, listener, options): void {
+  public addEventListener(type, listener, options?): void {
     // eslint-disable-next-line no-underscore-dangle
     if (type === 'ready' && this.__ready) {
       listener();
