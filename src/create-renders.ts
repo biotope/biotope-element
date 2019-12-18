@@ -1,5 +1,5 @@
 import { ComponentInstance, RenderFunction } from './internal-types';
-import { HTMLFragment } from './types';
+import { HTMLFragment, SVGFragment } from './types';
 
 const emitRendered = (context: ComponentInstance, elements: ComponentInstance[]): void => {
   // eslint-disable-next-line no-underscore-dangle
@@ -34,7 +34,7 @@ export const rendered = (context: ComponentInstance): void => {
 
 export const render = (
   context: ComponentInstance, renderFunction: RenderFunction,
-): HTMLFragment => {
+): HTMLFragment | SVGFragment => {
   // eslint-disable-next-line no-underscore-dangle,no-param-reassign
   context.__rendered = false;
   return renderFunction();

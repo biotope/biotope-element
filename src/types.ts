@@ -23,6 +23,11 @@ export interface HTMLFragment {
   args: TemplateStringsArray;
 }
 
+export interface SVGFragment {
+  type: 'svg';
+  args: TemplateStringsArray;
+}
+
 export interface RefObject<TRef> {
   current?: TRef;
 }

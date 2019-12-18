@@ -1,11 +1,11 @@
 import {
-  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+  Attribute, PropValue, HTMLFragment, HTMLElementContent, SVGFragment,
 } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Renderer<TRender> = (template: TemplateStringsArray, ...args: any[]) => TRender;
 
-export type RenderFunction = () => HTMLFragment;
+export type RenderFunction = () => HTMLFragment | SVGFragment;
 
 export interface ComponentType extends Function {
   componentName: string;
@@ -18,6 +18,7 @@ export interface ComponentType extends Function {
 
 export interface ComponentPrototype extends Function {
   html: Renderer<HTMLFragment>;
+  svg: Renderer<SVGFragment>;
   created: () => void;
   connectedCallback: () => void;
   disconnectedCallback: () => void;
@@ -41,6 +42,7 @@ export interface ComponentInstance extends RuntimeComponent {
   __currentProps: object;
   __currentState: object;
   __html: Renderer<HTMLFragment>;
+  __svg: Renderer<SVGFragment>
   __created: boolean;
   __rendered: boolean;
   __ready: boolean;

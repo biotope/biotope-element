@@ -1,17 +1,17 @@
 import { register } from './register';
-import { createRender, createPartial, html } from './create-html';
+import { createRender, createPartial, html, svg, createSVGPartial } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
 import { render, rendered, ready } from './create-renders';
-import { Attribute, PropValue, HTMLFragment } from './types';
+import { Attribute, PropValue, HTMLFragment, SVGFragment } from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
 export * from './create-style';
-export { html };
+export { html, svg };
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -50,6 +50,15 @@ export default abstract class Component<TProps = object, TState = object> extend
     /* eslint-enable no-underscore-dangle */
   }
 
+  protected get svg(): Renderer<SVGFragment> {
+    /* eslint-disable no-underscore-dangle */
+    if (!this.__svg) {
+      this.__svg = createSVGPartial();
+    }
+    return this.__svg;
+    /* eslint-enable no-underscore-dangle */
+  }
+
   protected readonly defaultProps: TProps;
 
   protected readonly defaultState: TState;
@@ -59,6 +68,8 @@ export default abstract class Component<TProps = object, TState = object> extend
   private __currentState: TState;
 
   private __html: Renderer<HTMLFragment>;
+
+  private __svg: Renderer<SVGFragment>;
 
   private __created = false;
 
@@ -107,7 +118,7 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public render(): HTMLFragment {
+  public render(): HTMLFragment | SVGFragment {
     return null;
   }
 

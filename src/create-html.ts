@@ -1,10 +1,11 @@
+import { SVGFragment } from './types';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { render, html } from 'lighterhtml';
+import { render, html, svg } from 'lighterhtml';
 
 import { HTMLFragment } from './types';
 import { Renderer, ComponentInstance, RenderFunction } from './internal-types';
 
-export { html };
+export { html, svg };
 
 export const createRender = (
   context: ComponentInstance, originalRender: Function, postFunction: Function,
@@ -16,8 +17,9 @@ export const createRender = (
       return element;
     });
   // eslint-disable-next-line no-underscore-dangle
-  return (): HTMLFragment => (context.__created ? renderFunction() : null);
+  return (): HTMLFragment | SVGFragment => (context.__created ? renderFunction() : null);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createPartial = (): Renderer<HTMLFragment> => html as any;
+export const createSVGPartial = (): Renderer<SVGFragment> => svg as any;
