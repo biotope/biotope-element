@@ -1,8 +1,9 @@
 import { register } from './register';
-import { createRender, createPartial, html } from './create-html';
+import {
+  createRender, createPartial, html, createStyle, createRaw,
+} from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
-import { createStyle } from './create-style';
 import { render, rendered, ready } from './create-renders';
 import { Attribute, PropValue, HTMLFragment } from './types';
 import { Renderer } from './internal-types';
@@ -10,8 +11,11 @@ import { Renderer } from './internal-types';
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
-export * from './create-style';
-export { html };
+export {
+  html,
+  createStyle,
+  createRaw,
+};
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -134,6 +138,8 @@ export default abstract class Component<TProps = object, TState = object> extend
   }
 
   protected createStyle = createStyle;
+
+  protected createRaw = createRaw;
 
   protected setState(state: Partial<TState> | ((state: TState) => Partial<TState>)): void {
     // eslint-disable-next-line no-underscore-dangle

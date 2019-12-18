@@ -1,4 +1,4 @@
-import { camelToKebab } from './case-converters';
+import { camelToKebab } from './converters';
 import { ComponentType } from './internal-types';
 
 export const getComponentName = (context: ComponentType): string => context.componentName

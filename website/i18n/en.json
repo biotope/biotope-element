@@ -8,8 +8,11 @@
       "attr-parsing": {
         "title": "Attribute Parsing"
       },
+      "attributes": {
+        "title": "Attributes, Props and State"
+      },
       "component": {
-        "title": "Component"
+        "title": "Component and Rendering"
       },
       "events": {
         "title": "Events"
@@ -70,6 +73,45 @@
       },
       "version-3.2.0/version-3.2.0-usedWith": {
         "title": "Used with..."
+      },
+      "version-4.0.0/version-4.0.0-attr-parsing": {
+        "title": "Attribute Parsing"
+      },
+      "version-4.0.0/version-4.0.0-component": {
+        "title": "Component"
+      },
+      "version-4.0.0/version-4.0.0-events": {
+        "title": "Events"
+      },
+      "version-4.0.0/version-4.0.0-experimental": {
+        "title": "Experimental"
+      },
+      "version-4.0.0/version-4.0.0-index": {
+        "title": "Introduction"
+      },
+      "version-4.0.0/version-4.0.0-integration": {
+        "title": "IDE Integration"
+      },
+      "version-4.0.0/version-4.0.0-lifecycle": {
+        "title": "Lifecycle Hooks"
+      },
+      "version-4.0.0/version-4.0.0-migration": {
+        "title": "Migration"
+      },
+      "version-4.0.0/version-4.0.0-nesting": {
+        "title": "Nesting"
+      },
+      "version-4.0.0/version-4.0.0-peers": {
+        "title": "Peer Packages"
+      },
+      "version-4.0.0/version-4.0.0-references": {
+        "title": "References"
+      },
+      "version-4.0.0/version-4.0.0-styling": {
+        "title": "Styling"
+      },
+      "version-4.0.0/version-4.0.0-typescript": {
+        "title": "TypeScript"
       }
     },
     "links": {
