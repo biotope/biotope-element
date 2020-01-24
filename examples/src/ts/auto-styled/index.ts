@@ -7,7 +7,7 @@ import * as styles from './styles.scss';
 class ExampleButton extends Component {
   public static componentName = 'example-button';
 
-  protected styleContent = styles;
+  protected styles = styles;
 
   public render(): HTMLFragment {
     return this.html`
