@@ -3,6 +3,7 @@
     "Getting Started": [
       "index",
       "component",
+      "attributes",
       "styling",
       "nesting"
     ],

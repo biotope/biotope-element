@@ -1,9 +1,11 @@
 import { register } from './register';
-import { createRender, createPartial, html } from './create-html';
+import {
+  createRender, createPartial, html, createStyle, createRaw,
+} from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { createStyle } from './create-style';
-import { render, rendered } from './create-renders';
+import { render, rendered, ready } from './create-renders';
 import {
   Attribute, PropValue, HTMLFragment, HTMLElementContent,
 } from './types';
@@ -12,8 +14,11 @@ import { Renderer } from './internal-types';
 export * from './refs';
 export * from './attribute-converters';
 export * from './types';
-export * from './create-style';
-export { html };
+export {
+  html,
+  createStyle,
+  createRaw,
+};
 
 // eslint-disable-next-line import/no-default-export
 export default abstract class Component<TProps = object, TState = object> extends HTMLElement {
@@ -79,6 +84,8 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   private __rendered = false;
 
+  private __ready = false;
+
   private __attributeChangedCallbackStack: (() => void)[] = [];
 
   public static register(outputToConsole = false): boolean {
@@ -98,7 +105,10 @@ export default abstract class Component<TProps = object, TState = object> extend
       /* eslint-disable @typescript-eslint/no-explicit-any */
       this as any,
       () => render(this as any, originalRender),
-      () => rendered(this as any),
+      () => {
+        rendered(this as any);
+        ready(this as any);
+      },
       /* eslint-enable @typescript-eslint/no-explicit-any */
     );
   }
@@ -125,12 +135,27 @@ export default abstract class Component<TProps = object, TState = object> extend
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
   public rendered(): void {}
 
+  /* istanbul ignore next */
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-empty-function
+  public ready(): void {}
+
+  public addEventListener(type, listener, options?): void {
+    // eslint-disable-next-line no-underscore-dangle
+    if (type === 'ready' && this.__ready) {
+      listener();
+    } else {
+      super.addEventListener(type, listener, options);
+    }
+  }
+
   protected emit<TEvent>(name: string, detail?: TEvent, singleEmit = false): boolean {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return emit(this as any, name, detail, singleEmit);
   }
 
   protected createStyle = createStyle;
+
+  protected createRaw = createRaw;
 
   protected setState(state: Partial<TState> | ((state: TState) => Partial<TState>)): void {
     // eslint-disable-next-line no-underscore-dangle

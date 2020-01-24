@@ -1,6 +1,7 @@
 ---
-id: lifecycle
+id: version-4.1.0-lifecycle
 title: Lifecycle Hooks
+original_id: lifecycle
 ---
 
 A `biotope-element` component goes through several lifecycle stages which have callbacks associated.

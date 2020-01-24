@@ -1,6 +1,7 @@
 ---
-id: component
+id: version-4.2.0-component
 title: Component and Rendering
+original_id: component
 ---
 
 We trust in the web.

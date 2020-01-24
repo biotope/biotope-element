@@ -12,6 +12,16 @@ const emitRendered = (context: ComponentInstance, elements: ComponentInstance[])
   }
 };
 
+export const ready = (context: ComponentInstance): void => {
+  // eslint-disable-next-line no-underscore-dangle
+  if (!context.__ready) {
+    // eslint-disable-next-line no-underscore-dangle,no-param-reassign
+    context.__ready = true;
+    context.ready();
+    context.emit('ready', undefined, true);
+  }
+};
+
 export const rendered = (context: ComponentInstance): void => {
   context.rendered();
 
