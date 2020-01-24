@@ -4,7 +4,6 @@ import {
 } from './create-html';
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
-import { createStyle } from './create-style';
 import { render, rendered, ready } from './create-renders';
 import {
   Attribute, PropValue, HTMLFragment, HTMLElementContent,
@@ -66,13 +65,14 @@ export default abstract class Component<TProps = object, TState = object> extend
     return this.__styles;
   }
 
+  /* eslint-disable no-underscore-dangle */
   protected set styles(value: HTMLElementContent) {
-    if(this.__styles !== value) {
-      // eslint-disable-next-line no-underscore-dangle
+    if (this.__styles !== value) {
       this.__styles = value;
       this.render();
     }
   }
+  /* eslint-enable no-underscore-dangle */
 
   private __currentProps: TProps;
 

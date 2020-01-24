@@ -1,5 +1,5 @@
 import * as styles from './styles.scss';
-import BaseButton from './BaseButton';
+import { BaseButton } from './base-button';
 
 class ExampleButton extends BaseButton {
   constructor() {

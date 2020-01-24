@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
-import Component, {HTMLFragment} from '../src';
+import Component, { HTMLFragment } from '../src';
 
-const mockRegister = (element: any): void => {
+const mockRegister = (element): void => {
   // eslint-disable-next-line no-underscore-dangle,no-param-reassign
   element.__created = true;
 };
@@ -9,23 +9,10 @@ const mockRegister = (element: any): void => {
 describe('#autoStyles', (): void => {
   let element: Component;
 
-  // beforeEach((): void => {
-  //   class TestElement extends Component<any, any> {
-  //     public static componentName = 'test-element';
-    
-  //     public render(): HTMLFragment {
-  //       return this.html`Simple Content`;
-  //     }
-  //   }
-  //   element = new TestElement();
-  //   mockRegister(element);
-  //   element.render();
-  // });
-
   it('writes no styles if none defined', (): void => {
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
-    
+
       public render(): HTMLFragment {
         return this.html`Simple Content`;
       }
@@ -38,13 +25,13 @@ describe('#autoStyles', (): void => {
   });
 
   it('writes styles if defined', (): void => {
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
 
       public styles = `html {
         color: blue;
       }`
-    
+
       public render(): HTMLFragment {
         return this.html`Simple Content`;
       }
@@ -56,13 +43,13 @@ describe('#autoStyles', (): void => {
   });
 
   it('adds styles to existing', (): void => {
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
 
       public styles = `html {
         color: blue;
       }`
-    
+
       public render(): HTMLFragment {
         return this.html`Simple Content${this.createStyle('html {background-color: black}')}`;
       }
@@ -74,13 +61,13 @@ describe('#autoStyles', (): void => {
   });
 
   it('does not add styles more than once', (): void => {
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
 
       public styles = `html {
         color: blue;
       }`
-    
+
       public render(): HTMLFragment {
         return this.html`Simple Content`;
       }
@@ -94,17 +81,17 @@ describe('#autoStyles', (): void => {
 
   it('causes rerender on styles change', (): void => {
     const mockRender = jest.fn();
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
 
       public styles = `html {
         color: blue;
       }`;
 
-      public changeStyles = () => {
-        this.styles = ``;
+      public changeStyles = (): void => {
+        this.styles = '';
       }
-    
+
       public render = mockRender;
     }
 
@@ -116,15 +103,15 @@ describe('#autoStyles', (): void => {
 
   it('does not cause rerender on when styles did not change', (): void => {
     const mockRender = jest.fn();
-    class TestElement extends Component<any, any> {
+    class TestElement extends Component<null, null> {
       public static componentName = 'test-element';
 
-      public styles = `html {color: blue;}`;
+      public styles = 'html {color: blue;}';
 
-      public changeStyles = () => {
-        this.styles = `html {color: blue;}`;
+      public changeStyles = (): void => {
+        this.styles = 'html {color: blue;}';
       }
-    
+
       public render = mockRender;
     }
 

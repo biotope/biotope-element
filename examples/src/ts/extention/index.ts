@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference,spaced-comment
 /// <reference path="./locals.d.ts" />
 
-import BaseButton from './BaseButton';
+import { BaseButton } from './base-button';
 import * as styles from './styles.scss';
 
 class ExampleButton extends BaseButton {
