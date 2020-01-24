@@ -72,5 +72,66 @@ describe('#autoStyles', (): void => {
     element.render();
     expect(element.shadowRoot.innerHTML.match(new RegExp('<style>', 'g'))).toHaveLength(2);
   });
+
+  it('does not add styles more than once', (): void => {
+    class TestElement extends Component<any, any> {
+      public static componentName = 'test-element';
+
+      public styles = `html {
+        color: blue;
+      }`
+    
+      public render(): HTMLFragment {
+        return this.html`Simple Content`;
+      }
+    }
+    element = new TestElement();
+    mockRegister(element);
+    element.render();
+    element.render();
+    expect(element.shadowRoot.innerHTML.match(new RegExp('<style>', 'g'))).toHaveLength(1);
+  });
+
+  it('causes rerender on styles change', (): void => {
+    const mockRender = jest.fn();
+    class TestElement extends Component<any, any> {
+      public static componentName = 'test-element';
+
+      public styles = `html {
+        color: blue;
+      }`;
+
+      public changeStyles = () => {
+        this.styles = ``;
+      }
+    
+      public render = mockRender;
+    }
+
+    element = new TestElement();
+    mockRegister(element);
+    (element as TestElement).changeStyles();
+    expect(mockRender).toHaveBeenCalled();
+  });
+
+  it('does not cause rerender on when styles did not change', (): void => {
+    const mockRender = jest.fn();
+    class TestElement extends Component<any, any> {
+      public static componentName = 'test-element';
+
+      public styles = `html {color: blue;}`;
+
+      public changeStyles = () => {
+        this.styles = `html {color: blue;}`;
+      }
+    
+      public render = mockRender;
+    }
+
+    element = new TestElement();
+    mockRegister(element);
+    (element as TestElement).changeStyles();
+    expect(mockRender).not.toHaveBeenCalled();
+  });
 });
 /* eslint-enable max-classes-per-file */
