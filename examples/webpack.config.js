@@ -13,7 +13,7 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.scss', '.css'],
   },
   module: {
     rules: [
@@ -30,6 +30,17 @@ module.exports = {
             ['@babel/plugin-transform-classes', { loose: true }],
           ],
         },
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
     ],
   },

@@ -5,7 +5,9 @@ import {
 import { attributeChangedCallback } from './attribute-changed-callback';
 import { emit } from './emit';
 import { render, rendered, ready } from './create-renders';
-import { Attribute, PropValue, HTMLFragment } from './types';
+import {
+  Attribute, PropValue, HTMLFragment, HTMLElementContent,
+} from './types';
 import { Renderer } from './internal-types';
 
 export * from './refs';
@@ -58,11 +60,27 @@ export default abstract class Component<TProps = object, TState = object> extend
 
   protected readonly defaultState: TState;
 
+  protected get styles(): HTMLElementContent {
+    // eslint-disable-next-line no-underscore-dangle
+    return this.__styles;
+  }
+
+  /* eslint-disable no-underscore-dangle */
+  protected set styles(value: HTMLElementContent) {
+    if (this.__styles !== value) {
+      this.__styles = value;
+      this.render();
+    }
+  }
+  /* eslint-enable no-underscore-dangle */
+
   private __currentProps: TProps;
 
   private __currentState: TState;
 
   private __html: Renderer<HTMLFragment>;
+
+  private __styles: HTMLElementContent;
 
   private __created = false;
 

@@ -7,26 +7,27 @@ class ExampleButton extends Component {
       <style>
         :host {
           --base-font-size: 24px;
+          --base-color: blue;
         }
 
         :host button {
-          font-size: var(--base-font-size);
-          background: transparent;
-          border-radius: 3px;
-          border: 2px dotted blue;
-          color: blue;
-          margin: 0 1em;
-          padding: 0.25em 1em;
-          outline: none;
           position: relative;
+          margin: 0 1em;
+          border: 2px dotted var(--base-color);
+          border-radius: 3px;
+          padding: .25em 1em;
+          background: transparent;
+          color: var(--base-color);
+          font-size: var(--base-font-size);
+          outline: none;
         }
 
         :host button:hover,
         :host button:active,
         :host button:focus {
-          border-style: solid;
           top: 1px;
           left: 1px;
+          border-style: solid;
         }
 
         /* *************************************
@@ -38,26 +39,27 @@ class ExampleButton extends Component {
          * ************************************* */
         example-button {
           --base-font-size: 24px;
+          --base-color: blue;
         }
 
         example-button button {
-          font-size: var(--base-font-size);
-          background: transparent;
-          border-radius: 3px;
-          border: 2px dotted blue;
-          color: blue;
-          margin: 0 1em;
-          padding: 0.25em 1em;
-          outline: none;
           position: relative;
+          margin: 0 1em;
+          border: 2px dotted var(--base-color);
+          border-radius: 3px;
+          padding: .25em 1em;
+          background: transparent;
+          color: var(--base-color);
+          font-size: var(--base-font-size);
+          outline: none;
         }
 
         example-button button:hover,
         example-button button:active,
         example-button button:focus {
-          border-style: solid;
           top: 1px;
           left: 1px;
+          border-style: solid;
         }
         /* ************************************* */
       </style>

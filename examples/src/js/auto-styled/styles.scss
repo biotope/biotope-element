@@ -1,0 +1,27 @@
+@import '../../../node_modules/@biotope/element/lib/host.mixin';
+
+@include host(example-button) {
+  --base-font-size: 24px;
+  --base-color: blue;
+
+  button {
+    position: relative;
+    margin: 0 1em;
+    border: 2px dotted var(--base-color);
+    border-radius: 3px;
+    padding: .25em 1em;
+    background: transparent;
+    color: var(--base-color);
+    font-size: var(--base-font-size);
+    // stylelint-disable-next-line plugin/no-unsupported-browser-features
+    outline: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+      top: 1px;
+      left: 1px;
+      border-style: solid;
+    }
+  }
+}

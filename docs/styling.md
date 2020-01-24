@@ -41,6 +41,90 @@ return this.html`
 `;
 ```
 
+### `styles` property
+You have the possibility to define styles on the component itself. Just set the `styles` property to a valid css string.
+This will automatically append the styles to your rendered components html.
+
+Here is the example:
+
+```javascript
+// Component
+SimpleComponent.styles = `
+  div {
+    color: red;
+  }
+`;
+```
+
+```javascript
+// render function
+return this.html`
+  <div>
+    Hello World 🐤
+  </div>
+`;
+```
+
+This will produce the same result as the previous example.  
+
+This is the prefered method to set styles, as it allows inheritance with the possibility to overwrite styles as well as simple dynamic styles
+> __⚠ Important__ The reassignment of the `styles` property will cause the component to rerender if its content changes. So do not set it inside the render method!
+
+### Dynamic styles
+Since a component is fully written in JavaScript, it can be very tempting to just interpolate inside
+the `style` element and add in your JavaScript variable to the style. However, due to how the Web
+Components polyfill works, this is a very bad practice as the modified style will get applied to the
+entire page. This means that any component-specific state-dependant modification can be applied to
+all components of a page.
+
+To avoid this, either use a second class to add/modify some properties on a specific element or
+use inline styles (shown in the next section).
+
+Here is an example of adding a modifier class using the `classnames` package.
+
+```javascript
+import classnames from 'classnames';
+…
+
+// render function
+const mainClasses = classnames('myMainClass', {
+  'myMainClass--modifier': someValue,
+});
+return this.html`
+  <div class=${mainClasses}>
+    Hello World 🐤
+  </div>
+`;
+```
+
+### Inline styles
+Whether you're a fan of css-in-js or not, `biotope-element` provides you a way to inline CSS in an
+easy and maintainable way, just like css-in-js. Just send an object to the HTMLElement inside the
+`style` property.
+
+If we take the previous styling example, here is an example of how inline CSS can be done:
+
+```javascript
+// render function
+return this.html`
+  <div style=${{ color: 'red' }}>
+    Hello World 🐤
+  </div>
+`;
+```
+
+In the same manner of css-in-js, and in order to have an easy dev experience in JavaScript, any
+kebab-cased CSS properties are available as camelCase, like so:
+
+```javascript
+// render function
+return this.html`
+  <div style=${{ marginTop: '10px' }}>
+    Hello World 🐤
+  </div>
+`;
+```
+
 ### createStyle function
 We provide you with a pretty cool function to do most of this automatically - the `createStyle`
 function. It can take a string (or an object with a `toString` function) and convert it into a `style`
@@ -98,61 +182,6 @@ a loader throws at you and print your CSS seamlessly.
 > __📝 Note:__ The `this.createStyle` function is also provided out of the box, like so:
 ```javascript
 import Component, { createStyle } from '@biotope/element';
-```
-
-### Dynamic styles
-Since a component is fully written in JavaScript, it can be very tempting to just interpolate inside
-the `style` element and add in your JavaScript variable to the style. However, due to how the Web
-Components polyfill works, this is a very bad practice as the modified style will get applied to the
-entire page. This means that any component-specific state-dependant modification can be applied to
-all components of a page.
-
-To avoid this, either use a second class to add/modify some properties on a specific element or
-use inline styles (shown in the next section).
-
-Here is an example of adding a modifier class using the `classnames` package.
-
-```javascript
-import classnames from 'classnames';
-…
-
-// render function
-const mainClasses = classnames('myMainClass', {
-  'myMainClass--modifier': someValue,
-});
-return this.html`
-  <div class=${mainClasses}>
-    Hello World 🐤
-  </div>
-`;
-```
-
-## Inline styles
-Whether you're a fan of css-in-js or not, `biotope-element` provides you a way to inline CSS in an
-easy and maintainable way, just like css-in-js. Just send an object to the HTMLElement inside the
-`style` property.
-
-If we take the previous styling example, here is an example of how inline CSS can be done:
-
-```javascript
-// render function
-return this.html`
-  <div style=${{ color: 'red' }}>
-    Hello World 🐤
-  </div>
-`;
-```
-
-In the same manner of css-in-js, and in order to have an easy dev experience in JavaScript, any
-kebab-cased CSS properties are available as camelCase, like so:
-
-```javascript
-// render function
-return this.html`
-  <div style=${{ marginTop: '10px' }}>
-    Hello World 🐤
-  </div>
-`;
 ```
 
 ## The host SCSS mixin
