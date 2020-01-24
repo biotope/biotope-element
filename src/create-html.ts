@@ -12,10 +12,10 @@ export const createRender = (
   const renderFunction: RenderFunction = render
     .bind(context, context.shadowRoot || context, (): void => {
       let element = originalRender();
-      if (context.styleContent) {
+      if (context.styles) {
         element = context.html`
           ${element}
-          ${context.createStyle(context.styleContent)}
+          ${context.createStyle(context.styles)}
         `;
       }
       setTimeout(postFunction);
