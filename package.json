@@ -52,7 +52,7 @@
     "lighterhtml": "~2.0",
     "np": "~6.0.0",
     "prismjs": "~1.17",
-    "rollup": "~1.27",
+    "rollup": "~1.31.0",
     "rollup-plugin-babel": "~4.3",
     "rollup-plugin-commonjs": "~10.1",
     "rollup-plugin-node-resolve": "~5.2",
