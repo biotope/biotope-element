@@ -1,5 +1,5 @@
 import { attributeName, attributeValue } from './attribute-mapper';
-import { kebabToCamel } from './case-converters';
+import { kebabToCamel } from './converters';
 import { ComponentInstance } from './internal-types';
 import { PropValue } from './types';
 

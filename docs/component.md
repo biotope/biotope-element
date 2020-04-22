@@ -1,6 +1,6 @@
 ---
 id: component
-title: Component
+title: Component and Rendering
 ---
 
 We trust in the web.
@@ -85,7 +85,7 @@ following:
 </my-button>
 ```
 
-### Partials
+## Partials
 The `html` function can be used to convert string HTML to actual HTML components. In this sense, if
 you need to render a non-HTML string, then you can simply interpolate it inside the template string
 that you pass to the `this.html` function. You can even use regular JavaScript - inline conditions
@@ -190,394 +190,78 @@ The result would be:
 </my-button>
 ```
 
-## Attributes
-This is the main way of passing information to any component.
+### Raw HTML
+You may have the necessity for creating partials from a raw string that contains raw HTML, like when
+you import an `svg` from a file.
 
-Every component has its own attributes. If you have any experience with adding for example
-`class`es, `id`s, `src`s or `data-*` attributes on regular HTMLElements, then you already know how
-to add/modify/remove attributes in`biotope-element`.
-
-To add or modify an attribute to a `biotope-element` component, you can simply do:
-
-```html
-<my-button></my-button>
-<script>
-  const myElement = document.querySelector('my-button');
-  myElement.setAttribute('example-attribute', 'Hello Foo World');
-</script>
-```
-
-Which will result in:
-
-```html
-<my-button example-attribute="Hello Foo World"></my-button>
-<script>
-  const myElement = document.querySelector('my-button');
-  myElement.setAttribute('example-attribute', 'Hello Foo World');
-</script>
-```
-
-Additionally, you can use a short notation that we provide in `biotope-element`.
+In this scenario, you can simply do this to render it:
 
 ```javascript
-myElement.setAttribute('example-attribute', 'Hello Foo World');
-// is the same as
-myElement.exampleAttribute = 'Hello Foo World';
-// also the same as
-myElement['example-attribute'] = 'Hello Foo World';
+import svg from './chevron.svg';
+
+// render function
+return this.html`
+  <div>
+    ${{ html: svg }}
+  </div>
+`;
 ```
 
-All three of these instructions will result in the same HTML.
-
-Likewise, to remove attributes, you can use native JavaScript:
-
-```html
-<my-button example-attribute="Hello Foo World"></my-button>
-<script>
-  const myElement = document.getElementsByTagName('my-button');
-  myElement.removeAttribute('example-attribute');
-  // is the same as
-  myElement.exampleAttribute = null;
-  // also the same as
-  myElement['example-attribute'] = null;
-</script>
-```
-
-Which will result in:
-
-```html
-<my-button></my-button>
-```
-
-> __📝 Note:__ Passing non-string attributes through the shorthand notation we provide is possible,
-however they will not be printed in the HTML - instead, they will just be passed to the props. You
-can learn more about props in the next section.
-
-### Props
-Since attributes are the main API for passing information to your component, we decided to add props
-to our components to simplify and streamline this process. This means that, props are the result of
-picking and parsing of all the attributes of the component. However, this is only efficient if the
-component knows which attributes to watch and which ones to ignore.
-
-A prop change will always trigger a new render. Consider this next example component, with a `greet`
-attribute. We can customize the greeting message the component outputs by sending it through that
-same attribute and accessing it in the prop.
+Considering that the import will return an `svg` in a string, this render function will create a `div`
+with an `svg` element inside. This is effectively the same as creating an element with `document.createElement`
+and inserting it directly like so:
 
 ```javascript
-// my-button.js
-import Component from '@biotope/element';
+import svg from './chevron.svg';
+
+// render function
+const containerElement = document.createElement('div');
+containerElement.innerHTML = svg;
+const svgElement = containerElement.children[0];
+
+return this.html`
+  <div>
+    ${svgElement}
+  </div>
+`;
+```
+
+The only difference between these two approaches is that, while `document.createElement` is slower
+than inserting the element through `{ html: … }`, it will allow you to perform any native
+HTMLElement action (like `addEventListener` or `classList.add`).
+
+The downside of these two approaches is that the `svg` element will always be re-rendered when the `render`
+function is called, even if nothing inside the svg element changes.
+
+To counter this we provide you with a `createRaw` function that creates a full partial out of the
+string. You can call it once and use it in wherever component you want as it will always render a
+different HTMLElement.
+
+```javascript
+import svg from './chevron.svg';
+const svgElement = createRaw(svg);
+
+// render function
+return this.html`
+  <div>
+    ${svgElement}
+  </div>
+`;
+```
+
+The `createRaw` function will create a fragment that is re-usable and will not be re-rendered.
+However, like the `{ html: … }` approach, you will not be able to perform any native HTMLElement
+action on it.
+
+> __📝 Note:__ We provide the `createRaw` function both out of the box and inside the component,
+should you need it, like so:
+```javascript
+import Component, { createRaw } from '@biotope/element';
 
 class MyButton extends Component {
   render() {
-    return this.html`
-      <div>
-        ${this.props.greet} 🐤
-      </div>
-    `;
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.attributes = ['greet']; // Here are the attributes that should be watched
-MyButton.register();
-```
-
-By adding this HTML to the page:
-
-```html
-<script src="my-button.js"></script>
-<my-button greet="Hello Foo World"></my-button>
-```
-
-The output will be:
-
-```html
-<script src="my-button.js"></script>
-<my-button greet="Hello Foo World">
-  <div>
-    Hello Foo World 🐤
-  <div>
-</my-button>
-```
-
-Adding other attributes to elements inside the `render` function is also possible - and so is
-interpolating attributes or content. Notice that attributes in HTML are written in kebab-case,
-however when used inside `this.props`, they can be accessed through camelCase.
-
-```javascript
-// my-button.js
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  render() {
-    return this.html`
-      <div>
-        ${this.props.greet} 🐤
-      </div>
-      <div class="my-${this.props.customClass}">
-        Some ${this.props.text}
-      </div>
-    `;
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.attributes = [
-  'greet',
-  'custom-class',
-  'text',
-];
-MyButton.register();
-```
-
-```html
-<script src="my-button.js"></script>
-<my-button
-  greet="Hello Foo World"
-  custom-class="fancy-class"
-  text="extra content"
-></my-button>
-```
-
-The above code will output the following:
-
-```html
-<script src="my-button.js"></script>
-<my-button
-  greet="Hello Foo World"
-  custom-class="fancy-class"
-  text="extra content"
->
-  <div>
-    Hello Foo World 🐤
-  </div>
-  <div class="my-fancy-class">
-    Some extra content
-  </div>
-</my-button>
-```
-
-### Default Props
-Default props are exactly what they sound like. They are the values of props when no attributes are
-set. This is an important mechanic for you, the developer, to avoid a lot of `if`s to check whether
-a prop exists, can be accessed and used.
-
-`defaultProps` are only set once. This means that you shouldn't treat them as fallback values for
-your props every time you set/reset them. They are rather just initial values.
-
-Looking at this example:
-
-```javascript
-// my-button.js
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  constructor() {
-    super();
-    this.defaultProps = {
-      greet: 'Hello World',
-    };
-  }
-
-  render() {
-    return this.html`
-      <div>
-        ${this.props.greet} 🐤
-      </div>
-    `;
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.attributes = ['greet'];
-MyButton.register();
-```
-
-```html
-<script src="my-button.js"></script>
-<my-button></my-button>
-```
-
-The above code will output the following:
-
-```html
-<script src="my-button.js"></script>
-<my-button>
-  <div>
-    Hello World 🐤
-  </div>
-</my-button>
-```
-
-And after you change that attribute normally:
-
-```html
-<script src="my-button.js"></script>
-<my-button greet="Hello Foo World">
-  …
-</my-button>
-```
-
-The result will be as expected:
-
-```html
-<script src="my-button.js"></script>
-<my-button greet="Hello Foo World">
-  <div>
-    Hello Foo World 🐤
-  </div>
-</my-button>
-```
-
-## State
-Every component can have its own internal state. This internal state should be used the same way as
-other frontend libraries (like React). Basically, the sum of `props` and `state` should reflect all
-the information of a component. The HTML that is rendered should just be a reflection of these two
-variables and should not add to it in any way.
-
-A state change will always trigger a new render. The state of a component can be changed using the
-`setState` function. Let's take this next example of a simple component that, after the user clicks
-the button, the component changes its state to reflect it.
-
-```javascript
-// my-button.js
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  render() {
-    const { userClicked } = this.state;
-    return this.html`
-      <div>
-        The user has${!userClicked ? ' not' : ''} clicked me!
-        The type of "userClicked" is ${typeof userClicked}.
-      </div>
-      <button onclick=${this.handleClick}>Click me!</button>
-    `;
-  }
-
-  handleClick() {
-    this.setState({
-      userClicked: true,
-    });
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.register();
-```
-
-Initially, the component will look like the following:
-
-```html
-<my-button>
-  <div>
-    The user has not clicked me!
-    The type of "userClicked" is undefined.
-  </div>
-  <button>Click me!</button>
-</my-button>
-```
-
-And after the state change, it will show:
-
-```html
-<my-button>
-  <div>
-    The user has clicked me!
-    The type of "userClicked" is boolean.
-  </div>
-  <button>Click me!</button>
-</my-button>
-```
-
-Alternatively to setting the state using an object (like in the example above), you can also do it
-by passing a function. This function will receive the current state and should return the new state.
-This can be very useful when programming in a functional approach. Here's an example:
-
-```javascript
-const increment = ({ counter }) => ({
-  counter: counter + 1,
-});
-
-class MyButton extends Component {
-  incrementCounter() {
-    // this will take the current counter and increment it y 1
-    this.setState(increment);
-  }
-
-  render() {
+    this.createRaw(…)
     …
   }
 }
-```
-
-The `setState` function is a synchronous process, so right after it's finished, you can be sure the
-component has re-rendered and DOM has been updated.
-
-> __⚠️ Important:__ Do not try to update the state inside the render function or inside any function
-that is called by the render function as this can lead to infinite render loops!
-
-### Default State
-The `defaultState` property follows the same mechanic as the `defaultProps`. They are the initial
-values for your state.
-
-Looking at the same example as above:
-
-```javascript
-// my-button.js
-import Component from '@biotope/element';
-
-class MyButton extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-
-    this.defaultState = {
-      userClicked: false,
-    };
-  }
-
-  render() {
-    const { userClicked } = this.state;
-    return this.html`
-      <div>
-        The user has${!userClicked ? ' not' : ''} clicked me!
-        The type of "userClicked" is ${typeof userClicked}.
-      </div>
-      <button onclick=${this.handleClick}>Click me!</button>
-    `;
-  }
-
-  handleClick() {
-    this.setState({
-      userClicked: true,
-    });
-  }
-}
-
-MyButton.componentName = 'my-button';
-MyButton.register();
-```
-
-which will initially render this (**⚠️ notice the initial type change!**):
-
-```html
-<my-button>
-  The user has not clicked me!
-  The type of "userClicked" is boolean.
-</my-button>
-```
-
-But after the user clicks the button, the component will re-render to:
-
-```html
-<my-button>
-  The user has clicked me!
-  The type of "userClicked" is boolean.
-</my-button>
 ```
