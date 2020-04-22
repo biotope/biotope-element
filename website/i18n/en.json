@@ -112,6 +112,18 @@
       },
       "version-4.0.0/version-4.0.0-typescript": {
         "title": "TypeScript"
+      },
+      "version-4.1.0/version-4.1.0-lifecycle": {
+        "title": "Lifecycle Hooks"
+      },
+      "version-4.2.0/version-4.2.0-attributes": {
+        "title": "Attributes, Props and State"
+      },
+      "version-4.2.0/version-4.2.0-component": {
+        "title": "Component and Rendering"
+      },
+      "version-4.3.0/version-4.3.0-styling": {
+        "title": "Styling"
       }
     },
     "links": {

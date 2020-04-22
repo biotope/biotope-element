@@ -94,8 +94,8 @@ const siteConfig = {
   repoUrl: 'https://github.com/biotope/biotope-element',
 
   algolia: {
-    apiKey: '33e95f3987d6a80ee03dc011b4225502',
-    indexName: 'biotope-element-docs',
+    apiKey: '0b379d50fa429b5e2643aba8c2d0bbc0',
+    indexName: 'biotope_element',
     algoliaOptions: {}, // Optional, if provided by Algolia
   },
 };
