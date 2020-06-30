@@ -20,8 +20,9 @@ describe('#ready', () => {
       class TestElement extends Component {
         public static componentName = 'test-element';
 
+        // eslint-disable-next-line class-methods-use-this
         public render(): HTMLFragment {
-          return this.html``;
+          return null;
         }
 
         public ready = mockReady;

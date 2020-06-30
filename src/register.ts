@@ -94,7 +94,8 @@ export const register = (context: ComponentType, outputToConsole: boolean): bool
     instance.emit('disconnected', undefined, true);
   };
 
-  customElements.define(context.componentName, context);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  customElements.define(context.componentName, context as any);
 
   return true;
   /* eslint-enable no-param-reassign,no-underscore-dangle,func-names */
